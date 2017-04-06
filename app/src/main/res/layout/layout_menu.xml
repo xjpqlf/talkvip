@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <group
+        android:checkableBehavior="single"
+        android:title="Home items">
+
+        <item
+            android:id="@+id/nav_blog"
+            android:icon="@mipmap/ic_account_balance_black_24dp"
+            android:title="账户信息" />
+
+        <item
+            android:id="@+id/nav_ver"
+            android:icon="@mipmap/ic_account_balance_black_24dp"
+            android:title="问题反馈" />
+
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@mipmap/ic_account_balance_black_24dp"
+            android:title="设置" />
+
+    </group>
+
+
+
+</menu>
