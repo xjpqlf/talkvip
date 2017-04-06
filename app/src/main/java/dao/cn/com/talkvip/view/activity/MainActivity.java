@@ -1,5 +1,6 @@
 package dao.cn.com.talkvip.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -29,6 +30,11 @@ public class MainActivity extends BaseActivity implements Toolbar.OnMenuItemClic
 
     private NavigationView navigationView;
 
+
+    @Override
+    protected void initHead() {
+
+    }
 
     @Override
     protected int getContentView() {
@@ -72,12 +78,14 @@ public class MainActivity extends BaseActivity implements Toolbar.OnMenuItemClic
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
 
-                    case R.id.nav_blog:
-                    //    startActivity(new Intent(MainActivity.this, BlogActivity.class));
+                    case R.id.nav_account:
+                       startActivity(new Intent(MainActivity.this, AccountActivity.class));
                         break;
-                    case R.id.nav_ver:
+                    case R.id.nav_qustion:
+                        startActivity(new Intent(MainActivity.this, FeedbackActivity.class));
                         break;
-                    case R.id.nav_about:
+                    case R.id.nav_setting:
+                        startActivity(new Intent(MainActivity.this, SettingActivity.class));
                         break;
                 }
                 menuItem.setChecked(true);

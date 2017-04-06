@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:id="@+id/iv_iocn"
+
+        android:src="@mipmap/ic_launcher"
+        />
+
+
+        <EditText
+            android:layout_below="@+id/iv_iocn"
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_loginac"
+            android:hint="@string/loginac"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/back" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="18dp"
+        android:layout_marginLeft="18dp"
+        android:textColor="@color/red"
+        android:layout_below="@+id/tv_loginac"
+        android:id="@+id/tv_erroac"
+        android:text=""/>
+
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_loginac"
+            android:hint="@string/password"
+            android:id="@+id/tv_logpwd"
+
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+             android:layout_marginTop="30dp"
+            android:textColor="@color/back" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="18dp"
+        android:layout_marginLeft="18dp"
+        android:textColor="@color/red"
+        android:id="@+id/tv_erropwd"
+        android:layout_below="@+id/tv_logpwd"
+        android:text=""/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:background="@drawable/login_shap"
+        android:layout_below="@+id/tv_logpwd"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="40dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:layout_centerInParent="true"
+        android:text="@string/login"/>
+    </RelativeLayout>
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+   android:layout_centerInParent="true"
+    android:layout_marginBottom="10dp"
+    android:layout_alignParentBottom="true">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/agree"
+        android:id="@+id/tv_agree"
+       />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/protocol"
+        android:textColor="@color/bule"
+
+        android:layout_toRightOf="@+id/tv_agree"/>
+</RelativeLayout>
+</RelativeLayout>
