@@ -107,7 +107,7 @@ public class MainActivity extends BaseActivity implements Toolbar.OnMenuItemClic
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         List<String> tabList = new ArrayList<>();
         tabList.add("未拨打");
-        tabList.add("带跟进");
+        tabList.add("待跟进");
         tabList.add("未接通");
         tabList.add("无意愿");
         tabList.add("已提取");
