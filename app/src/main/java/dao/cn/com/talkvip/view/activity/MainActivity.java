@@ -43,35 +43,7 @@ public class MainActivity extends BaseActivity implements Toolbar.OnMenuItemClic
 
     @Override
     protected void initView() {
-//        final TextInputLayout inputLayout = findView(R.id.textInput);
-//        inputLayout.setHint("请输入姓名:");
-//
-//        EditText editText = inputLayout.getEditText();
-//        editText.setHintTextColor(getResources().getColor(android.R.color.holo_blue_bright));
-//        editText.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                if (s.length() > 4) {
-//                    inputLayout.setErrorEnabled(true);
-//                    inputLayout.setError("姓名长度不能超过4个");
-//                } else {
-//                    inputLayout.setErrorEnabled(false);
-//                }
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//            }
-//        });
-
-
-
-
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+    drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -95,7 +67,7 @@ public class MainActivity extends BaseActivity implements Toolbar.OnMenuItemClic
         });
 
 
-        initToolbar();
+      initToolbar();
         initTabLayout();
 
 

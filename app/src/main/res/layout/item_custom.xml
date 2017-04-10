@@ -56,6 +56,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/iv_item_go"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:src="@mipmap/icon_go"/>

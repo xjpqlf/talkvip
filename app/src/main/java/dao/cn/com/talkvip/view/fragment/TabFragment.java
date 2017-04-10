@@ -46,8 +46,7 @@ public class TabFragment extends Fragment {
     ProgressBar progressBar1;
     @Bind(R.id.tv_pager)
     TextView tvPager;
-    @Bind(R.id.tv_total)
-    TextView tvTotal;
+
     private View view;
     private String str;
     private CustomAdapter mAdapter;
