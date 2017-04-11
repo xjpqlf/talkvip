@@ -123,6 +123,7 @@ public class MainActivity extends BaseActivity implements Toolbar.OnMenuItemClic
         toolbar.setNavigationIcon(R.mipmap.ic_list_black_24dp);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setOnMenuItemClickListener(this);
+
     }
 
 

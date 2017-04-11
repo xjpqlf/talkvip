@@ -167,6 +167,15 @@ public class WelcomeActivity extends BaseActivity {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         DebugFlags.logD("失败" + e.toString());
+
+
+                        Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
+
+                        startActivity(intent);
+                        finish();
+
+
+
                     }
 
                     @Override
