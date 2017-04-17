@@ -1,6 +1,7 @@
 package dao.cn.com.talkvip.view.activity;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -40,7 +41,7 @@ public class LoginActivity extends BaseActivity {
 
     private EditText mEtac;
     private EditText mEtpwd;
-    private TextView mTverroac;
+    private TextView tvTest;
     private TextView mTverropwd;
     private RelativeLayout mRl;
 
@@ -56,11 +57,21 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+
+        tvTest = (TextView) findViewById(R.id.tv_pro);
+
+
+
+        tvTest.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
+        tvTest.getPaint().setAntiAlias(true);//抗锯齿
+
+
+
+
         mEtac = (EditText) findViewById(R.id.tv_loginac);
         mEtpwd = (EditText) findViewById(R.id.tv_logpwd);
 
-        mTverroac = (TextView) findViewById(R.id.tv_erroac);
-        mTverropwd = (TextView) findViewById(R.id.tv_erropwd);
+
         mRl = (RelativeLayout) findViewById(R.id.bt_login);
         mRl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,27 +137,27 @@ public class LoginActivity extends BaseActivity {
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 intent.putExtra("name", name);
                                 startActivity(intent);
-
+                                 finish();
                             } else if ("1001".equals(code)) {
-                                mTverropwd.setText("");
-                                mTverroac.setText("用户名有误");
+
+                                ToastUtil.showInCenter("用户名有误");
 
 
                             } else if ("1002".equals(code)) {
-                                mTverroac.setText("");
-                                mTverropwd.setText("密码有误");
+
+                                ToastUtil.showInCenter("密码有误");
                             } else if ("1003".equals(code)) {
 
-                                mTverropwd.setText("");
-                                mTverroac.setText("账号和密码有误");
+
+                                ToastUtil.showInCenter("账号和密码有误");
 
                             } else if ("1004".equals(code)) {
-                                mTverropwd.setText("");
-                                mTverroac.setText("账号不存在");
+
+                                ToastUtil.showInCenter("账号不存在");
 
                             } else if ("1005".equals(code)) {
-                                mTverropwd.setText("");
-                                mTverroac.setText("账号已关闭");
+
+                                ToastUtil.showInCenter("账号已关闭");
 
                             }
 

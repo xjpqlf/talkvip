@@ -13,7 +13,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!-- 向SD卡中创建或者删除的权限。 -->
+    <uses-permission android:name="andorid.permission.MONUN_UNMOUNT_FILESYSTEMS"/>
     <application
         android:name=".TVApplication"
         android:allowBackup="true"
@@ -53,7 +55,7 @@
         <activity android:name=".view.activity.AccountActivity"></activity>
         <activity android:name=".view.activity.MainActivity"></activity>
         <activity android:name=".view.activity.FeedbackActivity"></activity>
-        <activity android:name=".view.activity.LoginActivity"></activity>
+        <activity android:name=".view.activity.LoginActivity"   android:screenOrientation="portrait"></activity>
         <activity android:name=".view.activity.SettingActivity"></activity>
         <activity android:name=".view.activity.Detail"></activity>
 

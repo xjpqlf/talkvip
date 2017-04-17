@@ -8,7 +8,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/grey"
+        android:background="@color/grey_400"
 
 
 
@@ -127,6 +127,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
+            android:id="@+id/tv_cleans"
             android:background="@drawable/cache_shap">
 
             <TextView
@@ -143,7 +144,8 @@
    <RelativeLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:background="@color/grey">
+       android:id="@+id/rl_out"
+       android:background="@color/grey_400">
 
 
      <TextView

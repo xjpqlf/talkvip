@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ import okhttp3.Call;
 public class TabFragment extends Fragment {
 
     @Bind(R.id.recyclerview1)
-    XRecyclerView   mRecyclerView;
+    XRecyclerView mRecyclerView;
     @Bind(R.id.progressBar1)
     ProgressBar progressBar1;
     @Bind(R.id.tv_pager)
@@ -51,12 +52,16 @@ public class TabFragment extends Fragment {
     private String str;
     private CustomAdapter mAdapter;
     private List mMP;
+    private int mFirstItemPosition;
+    private String mTotal;
+    private ProgressBar mP;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.item, container, false);
         ButterKnife.bind(this, view);
         return view;
+
     }
 
     @Override
@@ -65,6 +70,12 @@ public class TabFragment extends Fragment {
         str = getArguments().getString("content");
 
         initData();
+        initView();
+    }
+
+    private void initView() {
+
+        mP = (ProgressBar) getActivity().findViewById(R.id.progressBar04_id);
     }
 
 
@@ -93,15 +104,18 @@ public class TabFragment extends Fragment {
         }
 
 
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
+        //int f= layoutManager.findFirstVisibleItemPosition();
+
+
         mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {         outRect.set(0, 0, 0, 1);     } });
-
-
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                outRect.set(0, 0, 0, 1);
+            }
+        });
 
 
     }
@@ -126,36 +140,70 @@ public class TabFragment extends Fragment {
                 Message ms = JSON.parseObject(response, Message.class);
 
                 Data data = ms.getData();
+                mTotal = data.getTotal();
                 mMP = data.getList();
 
+                tvPager.setText(1 + "/" + mTotal);
+
+
+                mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                        super.onScrolled(recyclerView, dx, dy);
+                    }
+
+                    @Override
+                    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                        super.onScrollStateChanged(recyclerView, newState);
+                        RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+                        //判断是当前layoutManager是否为LinearLayoutManager
+                        // 只有LinearLayoutManager才有查找第一个和最后一个可见view位置的方法
+                        if (layoutManager instanceof LinearLayoutManager) {
+                            LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
+                            // 获取最后一个可见view的位置
+                            int lastItemPosition = linearManager.findLastVisibleItemPosition();
+                            // 获取第一个可见view的位置
+                            mFirstItemPosition = linearManager.findFirstVisibleItemPosition();
+                            int i = mFirstItemPosition + 1;
+                            tvPager.setText(i + "/" + mTotal);
+
+
+                            if (!TextUtils.isEmpty(mTotal)) {
+                                int a = Integer.parseInt(mTotal);
+
+
+                                mP.setProgress(lastItemPosition * 100 / a);
+
+                                System.out.println(lastItemPosition + "   " + mFirstItemPosition + "b=====" + lastItemPosition * 100 / a);
+                            }
+                        }
+                    }
+                });
+
+
                 mAdapter = new CustomAdapter(getActivity(), R.layout.item_custom, mMP);
+
                 mRecyclerView.setAdapter(mAdapter);
 
-                mAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener()
-                {
+
+                mAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
                     @Override
-                    public void onItemClick(View view, RecyclerView.ViewHolder holder, int position)
-                    {
+                    public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                         Toast.makeText(getActivity(), "pos = " + position, Toast.LENGTH_SHORT).show();
                         //adapter.notifyItemRemoved(position);
                     }
 
                     @Override
-                    public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position)
-                    {
+                    public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
                         return false;
                     }
                 });
-
-
 
 
             }
         });
 
     }
-
-
 
 
     @Override

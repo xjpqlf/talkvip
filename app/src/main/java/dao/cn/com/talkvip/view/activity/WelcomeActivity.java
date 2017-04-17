@@ -21,6 +21,7 @@ import java.util.Date;
 import dao.cn.com.talkvip.Constants;
 import dao.cn.com.talkvip.R;
 import dao.cn.com.talkvip.utils.DebugFlags;
+import dao.cn.com.talkvip.utils.ImageHelper;
 import dao.cn.com.talkvip.utils.RsaU;
 import dao.cn.com.talkvip.utils.SPUtils;
 import okhttp3.Call;
@@ -46,6 +47,11 @@ public class WelcomeActivity extends BaseActivity {
     @Override
     protected void initView() {
         iv = (ImageView) findViewById(R.id.welcome_iv);
+
+        String url = "http://a3.qpic.cn/psb?/V130mBVT10Mxsi/rmpNG7SBqfj8UY.G*exBQz8kCr21PGxnp8WuHw3N0AE!/b/dB8BAAAAAAAA&bo=gAJyBAAAAAADB9Y!&rf=viewer_4";
+
+       new  ImageHelper(this).display(iv,url);
+
 
     }
 

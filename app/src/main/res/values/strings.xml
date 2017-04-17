@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TalkVip</string>
+    <string name="app_name">探客</string>
     <string name="assess">评价我们</string>
     <string name="about">关于</string>
     <string name="clean">清除缓存 (</string>
@@ -8,4 +8,6 @@
     <string name="agree">注册登录即表示您同意我们的</string>
     <string name="protocol">用户许可协议</string>
     <string name="loginac">登陆名</string>
+    <string name="protocco">用户使用协议</string>
+    <string name="ac">登陆名</string>
 </resources>
