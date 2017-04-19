@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:orientation="vertical">
+               >
+
+    <RelativeLayout
+        android:layout_width="20dp"
+      android:layout_alignParentLeft="true"
+        android:id="@+id/rl_guid"
+        android:visibility="gone"
+        android:layout_height="80dp">
 
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:src="@mipmap/guide"/>
+    </RelativeLayout>
 
 
     <RelativeLayout
+        android:layout_toRightOf="@+id/rl_guid"
         android:id="@+id/rl_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_marginRight="40dp"
         >
 

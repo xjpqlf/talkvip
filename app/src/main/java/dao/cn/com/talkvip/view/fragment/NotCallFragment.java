@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +38,7 @@ import okhttp3.Call;
  * Time: 15:03
  */
 
-public class TabFragment extends Fragment {
+public class NotCallFragment extends Fragment {
 
     @Bind(R.id.recyclerview1)
     XRecyclerView mRecyclerView;
@@ -47,6 +46,8 @@ public class TabFragment extends Fragment {
     ProgressBar progressBar1;
     @Bind(R.id.tv_pager)
     TextView tvPager;
+    @Bind(R.id.progressBar04_id)
+    ProgressBar mP;
 
     private View view;
     private String str;
@@ -54,14 +55,17 @@ public class TabFragment extends Fragment {
     private List mMP;
     private int mFirstItemPosition;
     private String mTotal;
-    private ProgressBar mP;
+
     private LinearLayoutManager mLayoutManager;
     private int mLastItemPosition;
+    private int mF;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.item, container, false);
         ButterKnife.bind(this, view);
+        initData();
+        initView();
         return view;
 
     }
@@ -69,50 +73,20 @@ public class TabFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        str = getArguments().getString("content");
+        // str = getArguments().getString("content");
 
-        initData();
-        initView();
+
     }
 
     private void initView() {
-
-        mP = (ProgressBar) getActivity().findViewById(R.id.progressBar04_id);
-    }
-
-
-    private void initData() {
-
-        if ("未拨打".equals(str)) {
-            progressBar1.setVisibility(View.VISIBLE);
-            getCall("/Callphone/serviceNotCall");
-
-
-        } else if ("待跟进".equals(str)) {
-            progressBar1.setVisibility(View.VISIBLE);
-            getCall("/Callphone/serviceFollowUp");
-
-        } else if ("未接通".equals(str)) {
-            progressBar1.setVisibility(View.VISIBLE);
-            getCall("/Callphone/serviceNotThrough");
-
-        } else if ("无意愿".equals(str)) {
-            progressBar1.setVisibility(View.VISIBLE);
-            getCall("/Callphone/serviceNoDesire");
-
-        } else if ("已提取".equals(str)) {
-            progressBar1.setVisibility(View.VISIBLE);
-            getCall("/Callphone/serviceExtracted");
-        }
+        progressBar1.setVisibility(View.VISIBLE);
 
 
         mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mF = mLayoutManager.findFirstVisibleItemPosition();
+
         mRecyclerView.setLayoutManager(mLayoutManager);
-        int l= mLayoutManager.findLastVisibleItemPosition();
-
-
-
 
         mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
@@ -120,6 +94,60 @@ public class TabFragment extends Fragment {
                 outRect.set(0, 0, 0, 1);
             }
         });
+        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+                //判断是当前layoutManager是否为LinearLayoutManager
+                // 只有LinearLayoutManager才有查找第一个和最后一个可见view位置的方法
+                if (layoutManager instanceof LinearLayoutManager) {
+                    LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
+                    // 获取最后一个可见view的位置
+                    mLastItemPosition = linearManager.findLastVisibleItemPosition();
+                    int total = linearManager.getItemCount() - 2;
+                    // 获取第一个可见view的位置
+                    mFirstItemPosition = linearManager.findFirstVisibleItemPosition();
+                    int i = mFirstItemPosition + 1;
+                    tvPager.setText(mFirstItemPosition + "/" + mMP.size());
+                    mP.setProgress(mLastItemPosition);
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+              /*  RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+                //判断是当前layoutManager是否为LinearLayoutManager
+                // 只有LinearLayoutManager才有查找第一个和最后一个可见view位置的方法
+                if (layoutManager instanceof LinearLayoutManager) {
+                    LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
+                    // 获取最后一个可见view的位置
+                    mLastItemPosition = linearManager.findLastVisibleItemPosition();
+                    int total=linearManager.getItemCount()-2;
+                    // 获取第一个可见view的位置
+                    mFirstItemPosition = linearManager.findFirstVisibleItemPosition();
+                    int i = mFirstItemPosition + 1;
+                    tvPager.setText(i + "/" + total);
+            mP.setProgress(mLastItemPosition*100/total);
+
+  //  DebugFlags.logD("进度条"+   mLastItemPosition  + "   " + mFirstItemPosition + "b=====" +  mLastItemPosition  * 100 / total);
+
+
+                }*/
+            }
+        });
+    }
+
+
+    private void initData() {
+
+
+        getCall("/Callphone/serviceNotCall");
 
 
     }
@@ -147,41 +175,9 @@ public class TabFragment extends Fragment {
                 mTotal = data.getTotal();
                 mMP = data.getList();
 
-                tvPager.setText(1 + "/" + mTotal);
-            mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-                    @Override
-                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                        super.onScrolled(recyclerView, dx, dy);
-                    }
+                tvPager.setText(1 + "/" + mMP.size());
+                mP.setProgress(100 / mMP.size());
 
-                    @Override
-                    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                        super.onScrollStateChanged(recyclerView, newState);
-                        RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-                        //判断是当前layoutManager是否为LinearLayoutManager
-                        // 只有LinearLayoutManager才有查找第一个和最后一个可见view位置的方法
-                        if (layoutManager instanceof LinearLayoutManager) {
-                            LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
-                            // 获取最后一个可见view的位置
-                            mLastItemPosition = linearManager.findLastVisibleItemPosition();
-                            // 获取第一个可见view的位置
-                            mFirstItemPosition = linearManager.findFirstVisibleItemPosition();
-                            int i = mFirstItemPosition + 1;
-                            tvPager.setText(i + "/" + mTotal);
-
-
-
-                        }
-                    }
-                });
-                if (!TextUtils.isEmpty(mTotal)) {
-                    int a = Integer.parseInt(mTotal);
-
-
-                    mP.setProgress(mFirstItemPosition*100/a);
-
-                    System.out.println(   mLastItemPosition  + "   " + mFirstItemPosition + "b=====" +  mLastItemPosition  * 100 / a);
-                }
 
                 mAdapter = new CustomAdapter(getActivity(), R.layout.item_custom, mMP);
 
@@ -213,4 +209,6 @@ public class TabFragment extends Fragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
+
 }

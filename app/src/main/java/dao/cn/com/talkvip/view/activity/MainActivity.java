@@ -1,7 +1,6 @@
 package dao.cn.com.talkvip.view.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -16,7 +15,12 @@ import java.util.List;
 
 import dao.cn.com.talkvip.R;
 import dao.cn.com.talkvip.adapter.TabFragmentAdapter;
-import dao.cn.com.talkvip.view.fragment.TabFragment;
+import dao.cn.com.talkvip.view.fragment.ExtractedFragment;
+import dao.cn.com.talkvip.view.fragment.FollowUpFragment;
+import dao.cn.com.talkvip.view.fragment.ImportFragment;
+import dao.cn.com.talkvip.view.fragment.NoDesireFragment;
+import dao.cn.com.talkvip.view.fragment.NotCallFragment;
+import dao.cn.com.talkvip.view.fragment.NotThroughFragment;
 
 
 public class MainActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener {
@@ -99,13 +103,27 @@ public class MainActivity extends BaseActivity implements Toolbar.OnMenuItemClic
 
 
         List<Fragment> fragmentList = new ArrayList<>();
-        for (int i = 0; i < tabList.size(); i++) {
+      /*  for (int i = 0; i < tabList.size(); i++) {
             Fragment f1 = new TabFragment();
             Bundle bundle = new Bundle();
             bundle.putString("content", tabList.get(i));
             f1.setArguments(bundle);
             fragmentList.add(f1);
-        }
+        }*/
+      Fragment  f1=new NotCallFragment();
+       Fragment  f2=new FollowUpFragment();
+      Fragment  f3=new NotThroughFragment();
+     Fragment  f4=new NoDesireFragment();
+      Fragment  f5=new ExtractedFragment();
+        Fragment  f6=new ImportFragment();
+        fragmentList.add(f1);
+        fragmentList.add(f2);
+        fragmentList.add(f3);
+        fragmentList.add(f4);
+        fragmentList.add(f5);
+        fragmentList.add(f6);
+
+
 
         TabFragmentAdapter fragmentAdapter = new TabFragmentAdapter(getSupportFragmentManager(), fragmentList, tabList);
         viewPager.setAdapter(fragmentAdapter);//给ViewPager设置适配器

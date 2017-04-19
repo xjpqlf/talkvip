@@ -39,7 +39,7 @@ import okhttp3.Call;
  * Time: 15:03
  */
 
-public class TabFragment extends Fragment {
+public class NoDesireFragment extends Fragment {
 
     @Bind(R.id.recyclerview1)
     XRecyclerView mRecyclerView;
@@ -69,7 +69,7 @@ public class TabFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        str = getArguments().getString("content");
+        // str = getArguments().getString("content");
 
         initData();
         initView();
@@ -83,7 +83,7 @@ public class TabFragment extends Fragment {
 
     private void initData() {
 
-        if ("未拨打".equals(str)) {
+      /*  if ("未拨打".equals(str)) {
             progressBar1.setVisibility(View.VISIBLE);
             getCall("/Callphone/serviceNotCall");
 
@@ -104,8 +104,9 @@ public class TabFragment extends Fragment {
             progressBar1.setVisibility(View.VISIBLE);
             getCall("/Callphone/serviceExtracted");
         }
-
-
+*/
+        progressBar1.setVisibility(View.VISIBLE);
+        getCall("/Callphone/serviceNoDesire");
         mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -148,7 +149,7 @@ public class TabFragment extends Fragment {
                 mMP = data.getList();
 
                 tvPager.setText(1 + "/" + mTotal);
-            mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
                     @Override
                     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                         super.onScrolled(recyclerView, dx, dy);
