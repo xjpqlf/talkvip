@@ -1,15 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/rl_detail"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <include layout="@layout/layout_head"></include>
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:id="@+id/ll_head"
+       android:background="@mipmap/bg">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:id="@+id/iv_backb"
+        android:layout_marginLeft="15dp"
+        android:src="@mipmap/back"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@+id/tv_theme"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:text="详情"/>
 
 
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/recyclerview"
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/beizhu"
+        android:id="@+id/iv_edit"
+        android:layout_centerVertical="true"
+         android:layout_marginRight="12dp"/>
+</RelativeLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+       <RelativeLayout
+           android:layout_width="70dp"
+           android:layout_height="wrap_content"
+           android:id="@+id/ll_neixing"
+           android:background="@mipmap/lable">
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="待跟进"
+               android:id="@+id/tv_neixing"
+               android:layout_centerVertical="true"
+               android:textColor="@color/bule"
+             android:layout_marginRight="10dp"
+               android:layout_marginLeft="6dp"
+
+              />
+
+
+
+
+       </RelativeLayout>
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+
+           android:textSize="28sp"
+       android:layout_centerHorizontal="true"
+           android:textColor="@color/white"
+           android:text="232323"/>
+
+
+    <TextView
+        android:layout_below="@+id/ll_neixing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/detail_phone"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+       android:layout_centerHorizontal="true"
+        android:text="1212121212121212"/>
+    <TextView
+        android:layout_below="@+id/detail_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_margin="8dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:layout_centerHorizontal="true"
+        android:text="我的睡觉觉阿斯兰的骄傲施蒂利克静安寺点开链接"/>
+</RelativeLayout>
+
+
+
+   </LinearLayout>
+
+    <ListView
+
+        android:id="@+id/lv"
+        android:scrollbars="none"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/ll_head"
+        android:divider="#00000000"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="250dp"
         />
 
 <ImageView
@@ -19,17 +121,8 @@
     android:src="@mipmap/call"
     android:layout_centerHorizontal="true"
     android:layout_alignParentBottom="true"
-    android:layout_marginBottom="30dp"/>
-    <ImageView
-        android:id="@+id/iv_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/edit"
-        android:layout_centerHorizontal="true"
-       android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="30dp"/>
+    android:layout_marginBottom="15dp"/>
+
 
 
 </RelativeLayout>

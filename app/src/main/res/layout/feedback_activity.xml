@@ -5,4 +5,43 @@
               android:layout_height="match_parent">
     <include  layout="@layout/layout_head"></include>
 
+
+    <EditText
+
+        android:id="@+id/tv_feedback"
+       android:layout_marginTop="15dp"
+        android:textCursorDrawable="@null"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_toRightOf="@+id/iv_phone"
+        android:gravity="top"
+        android:layout_margin="10dp"
+        android:singleLine="false"
+        android:layout_centerVertical="true"
+        android:paddingLeft="2dp"
+       android:background="@null"
+
+        android:hint="请输入内容"
+
+        android:textColorHint="@color/hint"
+        android:textSize="15sp"
+
+        />
+<View
+    android:layout_width="wrap_content"
+    android:layout_height="1dp"
+  android:layout_marginRight="20dp"
+    android:layout_marginLeft="20dp"
+    android:background="@color/linecorlor"></View>
+
+
+    <ImageView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/word"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"/>
+
 </LinearLayout>

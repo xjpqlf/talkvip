@@ -64,4 +64,9 @@ public class ToastUtil {
         }
         win.setAttributes(winParams);
     }
+    /**
+     * 获取版本号
+     * @return 当前应用的版本号
+     */
+
 }

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+
+              android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/close"
+        android:id="@+id/iv_cloae"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentRight="true"
+        />
+
+
+
+<TextView
+    android:layout_below="@+id/iv_cloae"
+    android:layout_width="match_parent"
+    android:layout_height="53dp"
+    android:text="添加备注"
+    android:gravity="center"
+    android:textSize="24sp"
+    android:id="@+id/tv_bjhead"
+    android:textColor="@color/white"
+    android:background="@mipmap/top"/>
+<RelativeLayout
+    android:layout_below="@+id/tv_bjhead"
+    android:layout_width="match_parent"
+    android:background="@drawable/detai_shap"
+    android:layout_height="wrap_content">
+    <EditText
+
+        android:id="@+id/tv_edbj"
+      android:layout_marginTop="18dp"
+        android:textCursorDrawable="@null"
+
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+
+        android:gravity="top"
+          android:background="@null"
+        android:singleLine="false"
+        android:paddingLeft="4dp"
+
+
+        android:hint="备注："
+
+        android:textColorHint="@color/hint"
+        android:textSize="19sp"
+
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tv_edbj"
+        android:id="@+id/view"
+        android:background="@color/grey_200"></View>
+
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/view"
+       android:id="@+id/ll_choos"
+       android:layout_marginTop="24dp"
+       android:orientation="horizontal">
+
+       <TextView
+           android:layout_width="0dp"
+           android:layout_weight="1"
+           android:background="@drawable/cache_shaps"
+           android:text="@string/notCall"
+           android:gravity="center"
+           android:layout_marginLeft="15dp"
+           android:layout_height="wrap_content"/>
+
+       <TextView
+           android:layout_width="0dp"
+           android:layout_weight="1"
+           android:layout_marginLeft="15dp"
+           android:background="@drawable/cache_shaps"
+           android:text="@string/impornt"
+           android:gravity="center"
+           android:layout_height="wrap_content"/>
+       <TextView
+           android:layout_width="0dp"
+           android:layout_weight="1"
+           android:layout_marginLeft="15dp"
+           android:background="@drawable/cache_shaps"
+           android:text="@string/follwup"
+           android:gravity="center"
+
+           android:layout_height="wrap_content"/>
+       <TextView
+           android:layout_width="0dp"
+           android:layout_weight="1"
+           android:gravity="center"
+           android:layout_marginLeft="15dp"
+           android:background="@drawable/cache_shaps"
+           android:text="@string/nothink"
+           android:layout_marginRight="15dp"
+           android:layout_height="wrap_content"/>
+
+   </LinearLayout>
+
+    <TextView
+        android:layout_below="@+id/ll_choos"
+        android:layout_width="212dp"
+        android:layout_height="38dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/save"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/login_shap"/>
+
+</RelativeLayout>
+</RelativeLayout>

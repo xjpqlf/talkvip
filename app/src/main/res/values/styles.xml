@@ -35,4 +35,30 @@
         <item name="editTextColor">@android:color/white</item>
         <item name="android:textColorHint">@color/hint_foreground_material_dark</item>
     </style>
+    <style name="Notitle" parent="@style/Theme.AppCompat.Light.NoActionBar">
+
+        <item name="android:windowNoTitle">true</item>
+
+    </style>
+
+    <style name="MenuTextStyle">
+
+
+        <item name="android:textSize">15sp</item>
+
+
+    </style>
+
+
+    <style name="MyStyle">
+        <item name="android:textSize">19sp</item>
+    </style>
+
+    <!--  这个是加入的代码 --> <style name="mypopwindow_anim_style">
+    <item name="android:windowEnterAnimation">@anim/popshow</item>
+    <!-- 指定显示的动画xml -->
+
+    <item name="android:windowExitAnimation">@anim/pophide</item>
+    <!-- 指定消失的动画xml -->
+</style>
 </resources>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                 android:orientation="horizontal"
+
+                android:layout_height="110dp">
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="110dp"
+    android:layout_marginLeft="12dp"
+
+
+    >
+    <RelativeLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="110dp"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+    <TextView
+        android:layout_centerInParent="true"
+        android:id="@+id/tv_nian"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/item_id"
+
+        android:text="2017-22-22"/>
+
+    <TextView
+        android:id="@+id/tv_sj"
+        android:layout_below="@+id/tv_nian"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/item_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10;22;22"/>
+
+    </RelativeLayout>
+</RelativeLayout>
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="110dp"
+                  android:gravity="center_horizontal"
+                  android:layout_marginLeft="16dp"
+                  android:orientation="vertical"
+                 >
+        <View android:layout_width="0.5dp"
+              android:layout_height="50dp"
+              android:id="@+id/line_tops"
+              android:background="#CBCBCB" />
+        <ImageView android:layout_width="20dp"
+                   android:layout_height="20dp"
+                   android:id="@+id/iv_bodabeiju"
+                   android:background="@mipmap/boda_beizhu" />
+        <View android:layout_width="0.5dp"
+              android:layout_height="50dp"
+              android:id="@+id/line_unders"
+              android:background="#CBCBCB" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_marginLeft="20dp"
+      android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#60718d"
+            android:id="@+id/tv_bj"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:text="这点电话不好试试水几点啦看得见阿来得及阿拉山口就爱上了肯德基阿卡丽圣诞节啊"
+           android:textSize="15sp"/>
+
+       <RelativeLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentRight="true"
+        android:layout_above="@+id/line_time"
+           android:id="@+id/rl_time"
+          android:layout_marginBottom="10dp"
+           >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_time"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:src="@mipmap/time"/>
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/tv_calltime"
+    android:layout_toRightOf="@+id/iv_time"
+    android:layout_centerHorizontal="true"
+    android:layout_marginRight="12dp"
+    android:text=""
+     />
+
+       </RelativeLayout>
+
+<View
+    android:layout_width="match_parent"
+    android:background="@color/line"
+   android:id="@+id/line_time"
+   android:layout_alignParentBottom="true"
+    android:layout_height="0.5dp"></View>
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

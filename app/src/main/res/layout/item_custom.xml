@@ -9,16 +9,18 @@
         android:layout_width="20dp"
       android:layout_alignParentLeft="true"
         android:id="@+id/rl_guid"
-        android:visibility="gone"
+        android:layout_marginTop="15dp"
         android:layout_height="80dp">
 
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/iv_guids"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
-            android:src="@mipmap/guide"/>
+
+            android:src="@mipmap/dingwei"/>
     </RelativeLayout>
 
 
@@ -27,6 +29,7 @@
         android:id="@+id/rl_name"
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:layout_marginTop="15dp"
         android:layout_marginRight="40dp"
         >
 
@@ -36,16 +39,18 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:text="21212"
-            android:textSize="20sp"/>
+            android:textColor="@color/item_phone"
+            android:textSize="23sp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
                 android:id="@+id/tv_mobile"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="24dp"
+            android:textColor="@color/item_phone"
             android:text="13989999999"
-            android:textSize="15sp"/>
+            android:textSize="18sp"/>
 
 
         <TextView
@@ -53,11 +58,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_name"
             android:layout_marginLeft="15dp"
-            android:maxLength="100"
+
             android:id="@+id/tv_dc"
+            android:layout_marginTop="14dp"
             android:singleLine="false"
-            android:text="我的我的我的我的我的我的我的我的我的我的"
-            android:textSize="15sp"/>
+            android:textColor="@color/item_dc"
+            android:text=""
+            android:textSize="16sp"/>
 
     </RelativeLayout>
 
@@ -66,8 +73,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/iv_item_go"
+        android:layout_marginRight="7dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:src="@mipmap/icon_go"/>
+        android:src="@mipmap/go"/>
 
 </RelativeLayout>

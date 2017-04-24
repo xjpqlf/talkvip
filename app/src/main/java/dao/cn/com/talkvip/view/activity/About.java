@@ -1,10 +1,13 @@
 package dao.cn.com.talkvip.view.activity;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import dao.cn.com.talkvip.R;
+import dao.cn.com.talkvip.TVApplication;
 
 /**
  * @name dao.cn.com.talkvip.view.activity
@@ -39,6 +42,25 @@ public class About extends BaseActivity {
 
     @Override
     protected void initView() {
+        TextView version=(TextView)findViewById(R.id.tv_version);
+       version.setText("探客V"+getVersion());
 
+
+
+    }
+
+
+
+    public String getVersion() {
+        TVApplication context = TVApplication.getInstance();
+        try {
+            PackageManager manager = context.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            String version = info.versionName;
+            return  version;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 }

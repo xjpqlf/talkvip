@@ -75,9 +75,9 @@ public class InfoAdapter extends BaseAdapter {
         holder.dc.setText(custom.getInputtime());
         if (list.get(position).isFirst()){
 
-            holder.guid.setVisibility(View.VISIBLE);
+            holder.guid.getChildAt(0).setVisibility(View.VISIBLE);
         }else{
-            holder.guid.setVisibility(View.GONE);
+            holder.guid.getChildAt(0).setVisibility(View.GONE);
         }
 
 
@@ -97,7 +97,7 @@ holder.iv.setOnClickListener(new View.OnClickListener() {
         TextView  mobile;
         TextView dc;
         ImageView iv;
-        RelativeLayout guid;
+      RelativeLayout guid;
 
     }
 

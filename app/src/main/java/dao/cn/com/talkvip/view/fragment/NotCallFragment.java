@@ -147,7 +147,7 @@ public class NotCallFragment extends Fragment {
     private void initData() {
 
 
-        getCall("/Callphone/serviceNotCall");
+      //  getCall("/Callphone/serviceNotCall");
 
 
     }

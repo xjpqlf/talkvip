@@ -2,7 +2,7 @@
     <string name="app_name">探客</string>
     <string name="assess">评价我们</string>
     <string name="about">关于</string>
-    <string name="clean">清除缓存 (</string>
+    <string name="clean">清除缓存</string>
     <string name="login">登 录</string>
     <string name="password">密码</string>
     <string name="agree">注册登录即表示您同意我们的</string>
@@ -10,4 +10,10 @@
     <string name="loginac">登陆名</string>
     <string name="protocco">用户使用协议</string>
     <string name="ac">登陆名</string>
+    <string name="firstpager">首页</string>
+    <string name="notCall">未拨打</string>
+    <string name="impornt">重点</string>
+    <string name="follwup">待跟进</string>
+    <string name="nothink">无意愿</string>
+    <string name="save">保存</string>
 </resources>

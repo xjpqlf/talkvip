@@ -133,7 +133,7 @@ public class ExtractedFragment extends Fragment {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
 
-
+               
 
             }
 

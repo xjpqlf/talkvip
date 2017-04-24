@@ -14,14 +14,14 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/bule"
             app:layout_scrollFlags="scroll|enterAlways" >
   <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
-                android:text="@string/app_name"
+                android:text="@string/firstpager"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -34,12 +34,19 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabTextColor="@android:color/white"
-            app:tabBackground="@android:color/holo_blue_dark"
-            app:tabSelectedTextColor="@android:color/holo_red_light"
+            app:tabTextColor="#9CA7B5"
+            app:tabBackground="@color/white"
+            app:tabSelectedTextColor="#5a89ff"
+            app:tabIndicatorColor="#5a89ff"
+       app:tabTextAppearance="@style/MyStyle"
             app:tabGravity="fill" />
 
+<!--<View
+    android:layout_width="wrap_content"
+    android:background="@color/bule"
+    android:layout_height="2dp">
 
+</View>-->
 
     <!--可滑动的布局内容-->
     <android.support.v4.view.ViewPager

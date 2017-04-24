@@ -76,6 +76,12 @@ public class LoginActivity extends BaseActivity {
         mRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+              //  intent.putExtra("name", name);
+                startActivity(intent);
+                finish();
+
                 Login();
             }
         });

@@ -9,7 +9,7 @@
     <color name="back">#666666</color>
     <color name="white">#ffffff</color>
     <color name="grey">#4f91ff</color>
-    <color name="bule">#0099FF</color>
+    <color name="bule">#60A3FF</color>
     <color name="red">#FF0000</color>
     <color name="grey_200">#F2F2F2</color>
     <color name="grey_300">#ECECEC</color>
@@ -18,4 +18,16 @@
     <color name="grey_600">#F4F5F5</color>
     <color name="grey_word">#989898</color>
     <color name="hint">#d9e3ef</color>
+    <color name="grey_back">#EEF2F7</color>
+    <color name="item_dc">#94a6bd</color>
+    <color name="item_phone">#60718d</color>
+    <color name="item_id">#94a6bd</color>
+    <color name="detail_textcolor">#60718d</color>
+    <color name="line">#BDBDBD</color>
+    <color name="edhint">#60718d</color>
+    <color name="drawcorlor">#60718d</color>
+    <color name="cacecorlor">#5a89ff</color>
+    <color name="linecorlor">#eef2f7</color>
+
+
 </resources>

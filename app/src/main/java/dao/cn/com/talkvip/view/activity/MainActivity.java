@@ -47,9 +47,15 @@ public class MainActivity extends BaseActivity implements Toolbar.OnMenuItemClic
 
     @Override
     protected void initView() {
-
+       // View decorView = getWindow().getDecorView();
+     /*   int option = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(option);*/
     drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navigationView);
+
+        navigationView.getMenu().getItem(0).setChecked(true);
+
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -139,7 +145,7 @@ public class MainActivity extends BaseActivity implements Toolbar.OnMenuItemClic
         toolbar.setTitle("");
         toolbar.setSubtitle("");
 
-        toolbar.setNavigationIcon(R.mipmap.ic_list_black_24dp);
+        toolbar.setNavigationIcon(R.mipmap.muen);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setOnMenuItemClickListener(this);
 

@@ -49,6 +49,25 @@ public class SettingActivity  extends BaseActivity {
 
         final TextView tvahe= (TextView) findViewById(R.id.cache);
         RelativeLayout clean= (RelativeLayout) findViewById(R.id.tv_cleans);
+        RelativeLayout about= (RelativeLayout) findViewById(R.id.rl_about);
+        RelativeLayout coument= (RelativeLayout) findViewById(R.id.rl_coument);
+
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingActivity.this,About.class));
+
+            }
+        });
+
+        coument.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               ToastUtil.showInCenter("评价我们");
+
+            }
+        });
+
 
         try {
             tvahe.setText(DataCleanManager.getTotalCacheSize(SettingActivity.this));
@@ -60,7 +79,7 @@ public class SettingActivity  extends BaseActivity {
 
                     DataCleanManager.clearAllCache(SettingActivity.this);
                     ToastUtil.showInCenter("清理完成");
-                    tvahe.setText(0+"K");
+                    tvahe.setText(0+"k");
                 }
             });
         } catch (Exception e) {

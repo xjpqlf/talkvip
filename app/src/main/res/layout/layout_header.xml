@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:background="?attr/colorPrimary"
+    android:layout_height="200dp"
+    android:background="@color/white"
     android:gravity="center"
     android:orientation="horizontal">
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_marginTop="57dp"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:scaleType="centerCrop"
           android:id="@+id/civ_image"
-        android:src="@mipmap/header" />
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/portrait"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:textSize="25sp"
-       android:layout_toRightOf="@+id/civ_image"
+
+        android:textSize="24sp"
+        android:textColor="@color/drawcorlor"
+        android:layout_below="@+id/civ_image"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:text="谁最帅"
-        android:textColor="@android:color/white" />
+        android:text="嗨，探客"
+        android:textStyle="bold"/>
 
 </RelativeLayout>

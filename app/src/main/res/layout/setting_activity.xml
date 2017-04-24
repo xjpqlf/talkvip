@@ -7,17 +7,17 @@
     <include layout="@layout/layout_head" ></include>
     <View
         android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/grey_400"
+        android:layout_height="15dp"
+        android:background="@color/grey_back"
 
 
 
         ></View>
 
     <RelativeLayout
-        android:id="@+id/rl_clean"
+        android:id="@+id/rl_coument"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="43dp"
 
         android:background="@color/white"
         >
@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
                android:textSize="18sp"
             android:layout_marginLeft="20dp"
+            android:textColor="@color/item_phone"
             android:layout_centerVertical="true"
             android:text="@string/assess"
             />
@@ -36,21 +37,21 @@
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="12dp"
             android:src="@mipmap/icon_go"
             />
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/grey"
+        android:background="@color/grey_back"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"    ></View>
 
     <RelativeLayout
-        android:id="@+id/rl_ass"
+        android:id="@+id/rl_about"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="43dp"
 
         android:background="@color/white"
         >
@@ -59,6 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
+            android:textColor="@color/item_phone"
             android:layout_marginLeft="20dp"
             android:layout_centerVertical="true"
             android:text="@string/about"
@@ -69,21 +71,20 @@
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="12dp"
             android:src="@mipmap/icon_go"
             />
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/grey"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"    ></View>
+        android:layout_height="20dp"
+        android:background="@color/grey_back"
+            ></View>
 
     <RelativeLayout
         android:id="@+id/rl_my_wallet"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="43dp"
 
         android:background="@color/white"
         >
@@ -93,6 +94,7 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:id="@+id/tv_clean"
+            android:textColor="@color/item_phone"
             android:layout_marginLeft="20dp"
             android:layout_centerVertical="true"
             android:text="@string/clean"
@@ -103,28 +105,14 @@
 
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:textSize="20sp"
-            android:layout_toRightOf="@+id/tv_clean"
-            android:id="@+id/cache"
-            android:text="6M"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/cache"
-            android:layout_centerVertical="true"
-            android:textSize="20sp"
-            android:text=")"/>
+
+
 
 
         <RelativeLayout
-            android:layout_width="50dp"
+            android:layout_width="70dp"
             android:layout_height="30dp"
-            android:layout_alignParentRight="true"
+           android:layout_toLeftOf="@+id/iv_cleans_go"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
             android:id="@+id/tv_cleans"
@@ -134,28 +122,39 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-
-                android:text="清除"/>
+              android:id="@+id/cache"
+                android:textSize="17sp"
+                android:textColor="@color/cacecorlor"
+                android:text="15M"/>
 
         </RelativeLayout>
-
+        <ImageView
+            android:id="@+id/iv_cleans_go"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:src="@mipmap/icon_go"
+            />
 
     </RelativeLayout>
    <RelativeLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:id="@+id/rl_out"
-       android:background="@color/grey_400">
+       android:background="@color/grey_back">
 
 
      <TextView
          android:layout_width="match_parent"
          android:layout_height="50dp"
          android:background="@color/white"
-         android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
          android:text="退出登录"
          android:textSize="18sp"
          android:gravity="center"
+         android:textColor="@color/item_id"
          android:layout_marginBottom="50dp"/>
 
 
