@@ -2,6 +2,7 @@ package dao.cn.com.talkvip.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,20 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import dao.cn.com.talkvip.R;
 import dao.cn.com.talkvip.bean.Custom;
 import dao.cn.com.talkvip.bean.CustomFrist;
+import dao.cn.com.talkvip.utils.Rsa;
 import dao.cn.com.talkvip.view.activity.Detail;
+import okhttp3.Call;
 
 /**
  * Created by uway on 2016/9/10.
@@ -62,6 +71,7 @@ public class InfoAdapter extends BaseAdapter {
                     .findViewById(R.id.tv_dc);
     holder.iv= (ImageView) convertView.findViewById(R.id.iv_item_go);
     holder.guid= (RelativeLayout) convertView.findViewById(R.id.rl_guid);
+    holder.rl= (RelativeLayout) convertView.findViewById(R.id.rl_name);
 
             convertView.setTag(holder);
 
@@ -90,6 +100,23 @@ holder.iv.setOnClickListener(new View.OnClickListener() {
         context.startActivity(intent);
     }
 });
+
+
+        holder.rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                getPhoneNum(list.get(position).getCustom().getMobile());
+
+
+
+
+
+
+
+            }
+        });
         return convertView;
     }
     class ViewHolder {
@@ -98,9 +125,54 @@ holder.iv.setOnClickListener(new View.OnClickListener() {
         TextView dc;
         ImageView iv;
       RelativeLayout guid;
+      RelativeLayout rl;
 
     }
 
+    private void getPhoneNum(String phone) {
 
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm");
+        Date curDate = new Date(System.currentTimeMillis());
+        String str = formatter.format(curDate);
+        Random rand = new Random();
+        int i = rand.nextInt(100);
+
+        int mA=rand.nextInt(10000000);
+
+        String accountId = "1";
+        String timeStamp = i + str;
+        String order = mA + "";
+        String sign = accountId + timeStamp + order;
+
+
+        String mSigns = Rsa.encryptByPublic(sign);
+        Log.d("时间戳", mSigns);
+        OkHttpUtils.post()
+                .url("http://c1.dev.talkvip.cn/Authorization")
+                .addParams("accuntID", accountId)
+                .addParams("callingPhone", "15102720175")
+                .addParams("calledPhone", "13659827958")
+                .addParams("dataID", 1 + "")
+                .addParams("order", order)
+                .addParams("timeStamp", timeStamp)
+                .addParams("resultURL", "www.baidu.com")
+                .addParams("notifyURL", "www.baidu.com")
+                .addParams("remark", "")
+                .addParams("type", "2")
+                .addParams("line", "2")
+                .addParams("signInfo", mSigns).build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                Log.d("电话", "onResponse: " + response);
+            }
+        });
+
+
+    }
 
 }

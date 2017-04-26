@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import dao.cn.com.talkvip.bean.CustomFrist;
 import dao.cn.com.talkvip.bean.Data;
 import dao.cn.com.talkvip.bean.Message;
 import dao.cn.com.talkvip.utils.DebugFlags;
+import dao.cn.com.talkvip.utils.ToastUtil;
 import dao.cn.com.talkvip.widget.MyPtrRefresher;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
@@ -174,7 +176,12 @@ public class ExtractedFragment extends Fragment {
             }
         });
 
-
+     lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+         @Override
+         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+             ToastUtil.showInCenter(mList.get(position).getMobile());
+         }
+     });
 
     }
 

@@ -77,10 +77,10 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+              /*  Intent intent = new Intent(LoginActivity.this, MainActivity.class);
               //  intent.putExtra("name", name);
                 startActivity(intent);
-                finish();
+                finish();*/
 
                 Login();
             }

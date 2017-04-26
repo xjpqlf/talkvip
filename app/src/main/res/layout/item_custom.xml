@@ -3,6 +3,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:descendantFocusability="blocksDescendants"
+
                >
 
     <RelativeLayout
@@ -28,9 +30,10 @@
         android:layout_toRightOf="@+id/rl_guid"
         android:id="@+id/rl_name"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="70dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="40dp"
+
         >
 
         <TextView
@@ -70,12 +73,14 @@
 
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:id="@+id/iv_item_go"
         android:layout_marginRight="7dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+       android:focusable="false"
+        android:clickable="true"
         android:src="@mipmap/go"/>
 
 </RelativeLayout>

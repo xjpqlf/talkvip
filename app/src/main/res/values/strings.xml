@@ -16,4 +16,6 @@
     <string name="follwup">待跟进</string>
     <string name="nothink">无意愿</string>
     <string name="save">保存</string>
+    <string name="pick">提取</string>
+    <string name="Notconnected">未接通</string>
 </resources>
