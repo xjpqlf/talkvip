@@ -86,7 +86,7 @@ public class FollowUpFragment extends Fragment {
 
 
         progressBar1.setVisibility(View.VISIBLE);
-        getCall("/Callphone/serviceFollowUp");
+      //  getCall("/Callphone/serviceFollowUp");
         mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);

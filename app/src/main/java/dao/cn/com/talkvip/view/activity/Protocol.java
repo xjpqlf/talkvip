@@ -1,9 +1,15 @@
 package dao.cn.com.talkvip.view.activity;
 
+import android.os.Build;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ZoomButtonsController;
+
+import java.lang.reflect.Method;
 
 import dao.cn.com.talkvip.R;
 
@@ -12,6 +18,8 @@ import dao.cn.com.talkvip.R;
  */
 public class Protocol extends BaseActivity {
 
+
+    private WebView mWebView;
 
     @Override
     protected void initHead() {
@@ -35,10 +43,66 @@ public class Protocol extends BaseActivity {
     @Override
     protected void initView() {
 
-        WebView wb= (WebView) findViewById(R.id.wv_shop_webView);
+        mWebView = (WebView) findViewById(R.id.wv_shop_webView);
+
+
+        initWebView();
+
+
+
+
+
+
+
+
+
 
     }
+
+    private void initWebView() {
+        mWebView.requestFocus();
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        mWebView.getSettings().setSupportZoom(true);
+        //   mWebView.getSettings().setBuiltInZoomControls(true);
+        mWebView.setWebViewClient(new MyWebViewClient());
+        //   mWebView.getSettings().setBuiltInZoomControls(false);
+        mWebView.loadUrl("www.baidu.com");
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            // Use the API 11+ calls to disable the controls
+            mWebView.getSettings().setBuiltInZoomControls(true);
+            mWebView.getSettings().setDisplayZoomControls(false);
+        } else {
+            // Use the reflection magic to make it work on earlier APIs
+            getControlls();
+        }
+    }
+    private final class MyWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+            view.loadUrl(url);
+            return true;
+        }
+    }
+
+
+    private void getControlls() {
+        try {
+            Class webview = Class.forName("android.webkit.WebView");
+            Method method = webview.getMethod("getZoomButtonsController");
+            ZoomButtonsController zoom_controll = (ZoomButtonsController) method.invoke(this, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 }
+
 
 
 

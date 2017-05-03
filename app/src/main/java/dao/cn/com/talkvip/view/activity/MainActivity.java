@@ -15,6 +15,7 @@ import java.util.List;
 
 import dao.cn.com.talkvip.R;
 import dao.cn.com.talkvip.adapter.TabFragmentAdapter;
+import dao.cn.com.talkvip.utils.ToastUtil;
 import dao.cn.com.talkvip.view.fragment.ExtractedFragment;
 import dao.cn.com.talkvip.view.fragment.FollowUpFragment;
 import dao.cn.com.talkvip.view.fragment.ImportFragment;
@@ -31,7 +32,7 @@ public class MainActivity extends BaseActivity implements Toolbar.OnMenuItemClic
     private ViewPager viewPager;
 
     private DrawerLayout drawerLayout;
-
+    private long exitAppTimeCount;
     private NavigationView navigationView;
 
 
@@ -175,6 +176,18 @@ public class MainActivity extends BaseActivity implements Toolbar.OnMenuItemClic
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
 
+                if (System.currentTimeMillis() - exitAppTimeCount > 2000) {
+                     ToastUtil.show("再按一次退出程序");
+                      exitAppTimeCount = System.currentTimeMillis();
+                } else {
+                    super.onBackPressed();
+
+                }
+
+
+    }
 
 }

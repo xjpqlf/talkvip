@@ -2,16 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="70.0dip"
-              android:background="#DDDDDD"
+              android:background="@color/refercorlor"
               android:gravity="center"
               android:orientation="horizontal"
               android:padding="20.0dip">
 
     <ImageView
         android:id="@+id/id_header_iv_img"
-        android:layout_width="30.0dip"
-        android:layout_height="30.0dip"
-        android:background="@mipmap/ic_launcher"
+        android:layout_width="60.0dip"
+        android:layout_height="60.0dip"
+
         android:contentDescription="@string/app_name"
         android:scaleType="fitXY" />
 
@@ -20,8 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10.0dip"
-        android:text="Loading......"
-
+        android:text=""
+        android:visibility="gone"
         android:textSize="16.0sp"
         android:textStyle="normal" />
 

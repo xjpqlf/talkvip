@@ -3,9 +3,9 @@
     <!--  设置背景色（蓝色）  -->
     <item  android:id="@android:id/background" >
         <shape>
-            <corners android:radius="6dp" />
-            <gradient android:startColor="#0000ff"
-                      android:endColor="#0000ff" />
+            <corners android:radius="20dp" />
+            <gradient android:startColor="@color/grey_400"
+                      android:endColor="@color/grey_400" />
         </shape>
     </item>
 
@@ -13,9 +13,9 @@
     <item  android:id="@android:id/progress" >
         <clip>
             <shape>
-                <corners android:radius="6dp" />
-                <gradient  android:startColor="#ff0000"
-                           android:endColor="#ff0000" />
+                <corners android:radius="20dp" />
+                <gradient  android:startColor="@color/cacecorlor"
+                           android:endColor="@color/cacecorlor" />
             </shape>
         </clip>
     </item>

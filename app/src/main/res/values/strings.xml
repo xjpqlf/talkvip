@@ -18,4 +18,6 @@
     <string name="save">保存</string>
     <string name="pick">提取</string>
     <string name="Notconnected">未接通</string>
+    <string name="edit">编辑</string>
+    <string name="saves">保存</string>
 </resources>

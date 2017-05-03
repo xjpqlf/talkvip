@@ -4,7 +4,54 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <include  layout="@layout/layout_head"/>
+    <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:background="@color/bule"
+                    android:layout_height="50dp">
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/iv_back"
+            android:src="@mipmap/back"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/tv_theme"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:text="账户信息"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_edit"
+            android:text="@string/edit"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_save"
+            android:text="@string/saves"
+            android:visibility="gone"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
+            />
+
+    </RelativeLayout>
 
 
     <RelativeLayout
@@ -24,15 +71,18 @@
     <EditText
 
         android:id="@+id/tv_email"
-     android:layout_centerVertical="true"
+
+         android:layout_centerVertical="true"
         android:textCursorDrawable="@null"
-         android:layout_marginTop="10dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_toRightOf="@+id/iv_mail"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="40dp"
-   android:textColor="@color/item_dc"
+        android:textColor="@color/item_dc"
+
+        android:gravity="center_vertical"
         android:paddingLeft="5dp"
         android:background="@null"
 
@@ -41,6 +91,7 @@
         android:textSize="22sp"
 
         />
+
         <View
             android:layout_width="match_parent"
             android:layout_below="@+id/tv_email"
@@ -74,18 +125,23 @@ android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+             android:inputType="phone"
             android:layout_toRightOf="@+id/iv_phone"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="40dp"
         android:layout_centerVertical="true"
             android:paddingLeft="5dp"
             android:background="@null"
-
+            android:gravity="center_vertical"
             android:maxLength="20"
             android:textColorHint="@color/hint"
             android:textSize="22sp"
 
             />
+
+
+
+
         <View
             android:layout_width="match_parent"
             android:layout_below="@+id/tv_phone"

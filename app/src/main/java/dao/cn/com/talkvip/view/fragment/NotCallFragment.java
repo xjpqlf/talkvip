@@ -1,6 +1,7 @@
 package dao.cn.com.talkvip.view.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,6 +35,7 @@ import dao.cn.com.talkvip.bean.Data;
 import dao.cn.com.talkvip.bean.Message;
 import dao.cn.com.talkvip.utils.DebugFlags;
 import dao.cn.com.talkvip.utils.Rsa;
+import dao.cn.com.talkvip.widget.MyAnimationDrawable;
 import dao.cn.com.talkvip.widget.MyPtrRefresher;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
@@ -51,18 +54,23 @@ public class NotCallFragment extends Fragment {
     ListView lv;
     @Bind(R.id.ptr_layout)
     PtrClassicFrameLayout ptrLayout;
-    @Bind(R.id.progressBar1)
-    ProgressBar progressBar1;
+
     @Bind(R.id.tv_pager)
     TextView tvPager;
     @Bind(R.id.progressBar04_id)
     ProgressBar progressBar04Id;
+    @Bind(R.id.iv_loading)
+    ImageView image;
+
 
     private View mView;
     private List<Custom> mList;
     private InfoAdapter mAdapter;
     private List<CustomFrist> mC;
     private int mA;
+
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,6 +79,18 @@ public class NotCallFragment extends Fragment {
 
 
         ButterKnife.bind(this, mView);
+
+        MyAnimationDrawable.animateRawManuallyFromXML(R.drawable.loadings, image, new Runnable() {
+            @Override
+            public void run() {
+                // TODO onStart
+                // 动画开始时回调
+                 Log.d("","start"); } }, new Runnable() {
+            @Override
+            public void run() {
+            // TODO onComplete // 动画结束时回调
+             Log.d("","end"); } });
+
         initData();
         initView();
         return mView;
@@ -78,12 +98,22 @@ public class NotCallFragment extends Fragment {
 
     }
 
+    private void showLoadingView() {
+    image.setVisibility(View.VISIBLE);
+
+    }
+
+    private void hiddenLoadingView() {
+  image.setVisibility(View.GONE);
+
+    }
 
     @Override
     public void onResume() {
         super.onResume();
-        initData();
-        initView();
+       // image.setVisibility(View.GONE);
+       // initData();
+      //  initView();
 
 
     }
@@ -105,7 +135,7 @@ public class NotCallFragment extends Fragment {
                         ptrLayout.refreshComplete();
 
                     }
-                }, 1000);
+                }, 3000);
             }
 
             @Override
@@ -117,34 +147,30 @@ public class NotCallFragment extends Fragment {
                         ptrLayout.refreshComplete();
 
                     }
-                }, 1000);
+                }, 3000);
 
 
             }
         });
 
 
-
-
     }
 
 
-
-
-
-
-
-
     private void initData() {
-        progressBar1.setVisibility(View.VISIBLE);
-        getData();
-
+        showLoadingView();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getData();
+            }
+        }, 4000);
 
 
         lv.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-
 
 
             }
@@ -153,23 +179,20 @@ public class NotCallFragment extends Fragment {
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
                 progressBar04Id.setMax(totalItemCount);
-                tvPager.setText((firstVisibleItem+1+"/"+totalItemCount));
+                tvPager.setText((firstVisibleItem + 1 + "/" + totalItemCount));
                 progressBar04Id.setProgress(firstVisibleItem);
-                if (mC!=null){
-                    for (int i = 0; i <mC.size() ; i++) {
-                        if (firstVisibleItem==i){
+                if (mC != null) {
+                    for (int i = 0; i < mC.size(); i++) {
+                        if (firstVisibleItem == i) {
 
 
                             mC.get(i).setFirst(true);
                             mAdapter.notifyDataSetChanged();
-                        }else{
+                        } else {
 
 
                             mC.get(i).setFirst(false);
                             mAdapter.notifyDataSetChanged();
-
-
-
 
 
                         }
@@ -180,12 +203,8 @@ public class NotCallFragment extends Fragment {
                 }
 
 
-
-
-
             }
         });
-
 
 
     }
@@ -237,7 +256,6 @@ public class NotCallFragment extends Fragment {
     }
 
 
-
     private void getData() {
 
         OkHttpUtils.get()
@@ -248,27 +266,28 @@ public class NotCallFragment extends Fragment {
                 .build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-                progressBar1.setVisibility(View.GONE);
+                hiddenLoadingView();
+
             }
 
             @Override
             public void onResponse(String response, int id) {
                 DebugFlags.logD("数据" + response);
-                progressBar1.setVisibility(View.GONE);
+                hiddenLoadingView();
                 Message ms = JSON.parseObject(response, Message.class);
 
                 Data data = ms.getData();
                 mList = data.getList();
-                tvPager.setText(1+"/"+mList.size());
-                mC=new ArrayList<CustomFrist>();
-                for (int i = 0; i <mList.size(); i++) {
-                    mC.add(new CustomFrist(mList.get(i),false));
+                tvPager.setText(1 + "/" + mList.size());
+                mC = new ArrayList<CustomFrist>();
+                for (int i = 0; i < mList.size(); i++) {
+                    mC.add(new CustomFrist(mList.get(i), false));
 
                 }
 
                 mC.get(0).setFirst(true);
 
-                mAdapter = new InfoAdapter(getActivity(),mC);
+                mAdapter = new InfoAdapter(getActivity(), mC);
 
                 lv.setAdapter(mAdapter);
 
@@ -277,6 +296,7 @@ public class NotCallFragment extends Fragment {
         });
 
     }
+
 
     @Override
     public void onDestroyView() {

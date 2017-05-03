@@ -17,8 +17,9 @@
         app:headerLayout="@layout/layout_header"
         app:menu="@layout/layout_menu"
         app:itemTextColor="#8898AB"
-
-        app:theme="@style/MenuTextStyle"/>
+  app:paddingStart="90dp"
+        app:itemTextAppearance="@style/MyStyle"
+        app:theme="@style/Base.Theme.DesignDemo"/>
 
 
 </android.support.v4.widget.DrawerLayout>

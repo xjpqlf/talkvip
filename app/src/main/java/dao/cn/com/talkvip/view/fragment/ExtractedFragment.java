@@ -48,8 +48,7 @@ public class ExtractedFragment extends Fragment {
     ListView lv;
     @Bind(R.id.ptr_layout)
     PtrClassicFrameLayout ptrLayout;
-    @Bind(R.id.progressBar1)
-    ProgressBar progressBar1;
+
     @Bind(R.id.tv_pager)
     TextView tvPager;
     @Bind(R.id.progressBar04_id)
@@ -126,7 +125,7 @@ public class ExtractedFragment extends Fragment {
 
 
     private void initData() {
-        progressBar1.setVisibility(View.VISIBLE);
+
          getData();
 
 
@@ -195,18 +194,18 @@ public class ExtractedFragment extends Fragment {
                 .build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-                progressBar1.setVisibility(View.GONE);
+
             }
 
             @Override
             public void onResponse(String response, int id) {
                 DebugFlags.logD("数据" + response);
-                progressBar1.setVisibility(View.GONE);
+
                 Message ms = JSON.parseObject(response, Message.class);
 
                 Data data = ms.getData();
                   mList = data.getList();
-                tvPager.setText(1+"/"+mList.size());
+             //   tvPager.setText(1+"/"+mList.size());
                 mC=new ArrayList<CustomFrist>();
                 for (int i = 0; i <mList.size(); i++) {
                     mC.add(new CustomFrist(mList.get(i),false));

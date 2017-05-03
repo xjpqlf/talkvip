@@ -1,6 +1,7 @@
 package dao.cn.com.talkvip.view.activity;
 
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,7 +21,12 @@ import dao.cn.com.talkvip.R;
 public class AccountActivity extends BaseActivity {
 
 
-
+    private TextView mTvEdit;
+    private TextView mSave;
+    private EditText mEmil;
+    private EditText mPhone;
+    private TextView mPhonetext;
+    private TextView mEmiltext;
 
     @Override
     protected int getContentView() {
@@ -31,11 +37,42 @@ public class AccountActivity extends BaseActivity {
     @Override
     protected void initHead() {
 
-        TextView tvTheme= (TextView) findViewById(R.id.tv_theme);
-        TextView tvEdit= (TextView) findViewById(R.id.tv_edit);
 
-        tvEdit.setText("编辑");
-        tvTheme.setText("账户信息");
+        mTvEdit = (TextView) findViewById(R.id.tv_edit);
+        mSave = (TextView) findViewById(R.id.tv_save);
+
+
+
+
+        mTvEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTvEdit.setVisibility(View.GONE);
+                mSave.setVisibility(View.VISIBLE);
+                mEmil.setFocusable(true);
+                mEmil.setFocusableInTouchMode(true);
+                mPhone.setFocusable(true);
+                mPhone.setFocusableInTouchMode(true);
+
+
+
+            }
+        });
+
+mSave.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        mTvEdit.setVisibility(View.VISIBLE);
+        mSave.setVisibility(View.GONE);
+
+        mEmil.setFocusable(false);
+        mEmil.setFocusableInTouchMode(false);
+        mPhone.setFocusable(false);
+        mPhone.setFocusableInTouchMode(false);
+
+    }
+});
+
     }
 
     @Override
@@ -48,7 +85,12 @@ public class AccountActivity extends BaseActivity {
             }
         });
 
-
+        mEmil = (EditText)findViewById(R.id.tv_email);
+        mPhone = (EditText)findViewById(R.id.tv_phone);
+        mEmil.setFocusable(false);
+        mEmil.setFocusableInTouchMode(false);
+        mPhone.setFocusable(false);
+        mPhone.setFocusableInTouchMode(false);
 
 
 

@@ -91,7 +91,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:background="@drawable/cache_shaps"
+            android:background="@mipmap/tnb"
             android:text="@string/pick"
             android:gravity="center"
             android:layout_marginLeft="15dp"
@@ -99,7 +99,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:background="@drawable/cache_shaps"
+            android:background="@mipmap/tnb"
             android:text="@string/impornt"
             android:gravity="center"
             android:layout_marginLeft="15dp"
@@ -108,7 +108,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_marginLeft="15dp"
-            android:background="@drawable/cache_shaps"
+            android:background="@mipmap/tnb"
             android:text="@string/nothink"
             android:gravity="center"
             android:layout_height="wrap_content"/>
@@ -116,7 +116,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_marginLeft="15dp"
-            android:background="@drawable/cache_shaps"
+            android:background="@mipmap/tnb"
             android:text="@string/follwup"
             android:gravity="center"
 
@@ -126,7 +126,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:layout_marginLeft="15dp"
-            android:background="@drawable/cache_shaps"
+            android:background="@mipmap/tnb"
             android:text="@string/Notconnected"
             android:layout_marginRight="15dp"
             android:layout_height="wrap_content"/>

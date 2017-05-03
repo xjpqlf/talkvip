@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:textColor="@color/drawcorlor"
         android:layout_below="@+id/civ_image"
         android:layout_centerHorizontal="true"

@@ -52,13 +52,13 @@
     </in.srain.cube.views.ptr.PtrClassicFrameLayout>
 
 
-    <ProgressBar
-        android:id="@+id/progressBar1"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/iv_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:src="@drawable/loadings"
         android:visibility="gone"
-
         android:layout_centerInParent="true"
         />
 
@@ -73,10 +73,12 @@
             android:id="@+id/tv_pager"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="18sp"
              android:layout_centerInParent="true"
-
-            android:text=""/>
+              android:textColor="@color/cacecorlor"
+            android:typeface="sans"
+            android:textStyle="bold"
+            android:text="2/1"/>
 
     <ProgressBar
         android:layout_below="@+id/tv_pager"
@@ -86,6 +88,6 @@
         android:max="100"
         android:progressDrawable="@drawable/bar_color"
         android:layout_width="match_parent"
-        android:layout_height="2dp" />
+        android:layout_height="6dp" />
 </RelativeLayout>
 </RelativeLayout>

@@ -44,6 +44,8 @@ public class LoginActivity extends BaseActivity {
     private TextView tvTest;
     private TextView mTverropwd;
     private RelativeLayout mRl;
+    private RelativeLayout mAc;
+    private RelativeLayout mPwd;
 
     @Override
     protected void initHead() {
@@ -53,6 +55,8 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected int getContentView() {
         return R.layout.login_activity;
+
+
     }
 
     @Override
@@ -73,18 +77,54 @@ public class LoginActivity extends BaseActivity {
 
 
         mRl = (RelativeLayout) findViewById(R.id.bt_login);
+        mAc = (RelativeLayout) findViewById(R.id.rl_ac);
+        mPwd = (RelativeLayout) findViewById(R.id.rl_logpwd);
+         mEtac.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+          @Override
+          public void onFocusChange(View v, boolean hasFocus) {
+              if (hasFocus){
+
+                  mAc.setBackgroundResource(R.mipmap.loginbg);
+              }else{
+                  mAc.setBackgroundResource(R.mipmap.lnb);
+
+              }
+          }
+      });
+        mEtpwd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+
+                    mPwd.setBackgroundResource(R.mipmap.loginbg);
+                }else{
+
+                    mPwd.setBackgroundResource(R.mipmap.lnb);
+                }
+            }
+        });
+
+
         mRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-              /*  Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
               //  intent.putExtra("name", name);
                 startActivity(intent);
-                finish();*/
+                finish();
 
                 Login();
             }
         });
+
+        tvTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,Protocol.class));
+            }
+        });
+
 
 
     }
@@ -177,5 +217,10 @@ public class LoginActivity extends BaseActivity {
                 });
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

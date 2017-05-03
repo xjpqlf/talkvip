@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_margin="5dp"
                 android:descendantFocusability="blocksDescendants"
 
@@ -11,7 +11,7 @@
         android:layout_width="20dp"
       android:layout_alignParentLeft="true"
         android:id="@+id/rl_guid"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_height="80dp">
 
 
@@ -30,44 +30,51 @@
         android:layout_toRightOf="@+id/rl_guid"
         android:id="@+id/rl_name"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="40dp"
 
         >
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:id="@+id/rl_id">
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:text="21212"
+            android:layout_centerVertical="true"
+
             android:textColor="@color/item_phone"
-            android:textSize="23sp"/>
+            android:textSize="21sp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
                 android:id="@+id/tv_mobile"
             android:layout_marginRight="24dp"
+
             android:textColor="@color/item_phone"
             android:text="13989999999"
-            android:textSize="18sp"/>
-
+            android:textSize="16sp"/>
+</RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_name"
+            android:layout_below="@+id/rl_id"
             android:layout_marginLeft="15dp"
-
-            android:id="@+id/tv_dc"
-            android:layout_marginTop="14dp"
+             android:id="@+id/tv_dc"
+           android:layout_marginTop="5dp"
             android:singleLine="false"
             android:textColor="@color/item_dc"
-            android:text=""
-            android:textSize="16sp"/>
+            android:text="我的一家是计算机技术"
+            android:textSize="14sp"/>
 
     </RelativeLayout>
 

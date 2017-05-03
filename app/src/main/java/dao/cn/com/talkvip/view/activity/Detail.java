@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.List;
 import dao.cn.com.talkvip.R;
 import dao.cn.com.talkvip.adapter.RemarkAdapter;
 import dao.cn.com.talkvip.bean.Remark;
+import dao.cn.com.talkvip.utils.ToastUtil;
 
 /**
  * @name dao.cn.com.talkvip.view.activity
@@ -88,6 +91,86 @@ public class Detail  extends BaseActivity {
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         mPopWindow.setContentView(contentView);
         //设置各个控件的点击响应
+        final TextView nc= (TextView) contentView.findViewById(R.id.tv_nc);
+        final TextView im= (TextView) contentView.findViewById(R.id.tv_im);
+        final TextView gj= (TextView) contentView.findViewById(R.id.tv_gj);
+        EditText et= (EditText) contentView.findViewById(R.id.tv_edbj);
+        TextView save= (TextView) contentView.findViewById(R.id.tv_save);
+        final TextView nt= (TextView) contentView.findViewById(R.id.tv_nt);
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.showInCenter("保存成功");
+                mPopWindow.dismiss();
+            }
+        });
+        final ImageView close= (ImageView) contentView.findViewById(R.id.iv_close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPopWindow.dismiss();
+            }
+        });
+        nc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nc.setTextColor(getResources().getColor(R.color.cacecorlor));
+                im.setTextColor(getResources().getColor(R.color.grey_word1));
+                gj.setTextColor(getResources().getColor(R.color.grey_word1));
+                nt.setTextColor(getResources().getColor(R.color.grey_word1));
+                nc.setBackgroundDrawable(getResources().getDrawable(R.mipmap.popbg));
+                im.setBackgroundDrawable(getResources().getDrawable(R.mipmap.tnb));
+                gj.setBackgroundDrawable(getResources().getDrawable(R.mipmap.tnb));
+                nt.setBackgroundDrawable(getResources().getDrawable(R.mipmap.tnb));
+
+            }
+        });
+
+       im.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                im.setTextColor(getResources().getColor(R.color.cacecorlor));
+                nc.setTextColor(getResources().getColor(R.color.grey_word1));
+                gj.setTextColor(getResources().getColor(R.color.grey_word1));
+                nt.setTextColor(getResources().getColor(R.color.grey_word1));
+                im.setBackgroundDrawable(getResources().getDrawable(R.mipmap.popbg));
+                nc.setBackgroundDrawable(getResources().getDrawable(R.mipmap.tnb));
+                gj.setBackgroundDrawable(getResources().getDrawable(R.mipmap.tnb));
+                nt.setBackgroundDrawable(getResources().getDrawable(R.mipmap.tnb));
+
+            }
+        });
+        gj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gj.setTextColor(getResources().getColor(R.color.cacecorlor));
+                im.setTextColor(getResources().getColor(R.color.grey_word1));
+                nc.setTextColor(getResources().getColor(R.color.grey_word1));
+                nt.setTextColor(getResources().getColor(R.color.grey_word1));
+                gj.setBackgroundDrawable(getResources().getDrawable(R.mipmap.popbg));
+                im.setBackgroundDrawable(getResources().getDrawable(R.mipmap.tnb));
+                nc.setBackgroundDrawable(getResources().getDrawable(R.mipmap.tnb));
+                nt.setBackgroundDrawable(getResources().getDrawable(R.mipmap.tnb));
+
+            }
+        });
+        nt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nt.setTextColor(getResources().getColor(R.color.cacecorlor));
+                im.setTextColor(getResources().getColor(R.color.grey_word1));
+                gj.setTextColor(getResources().getColor(R.color.grey_word1));
+                nc.setTextColor(getResources().getColor(R.color.grey_word1));
+                nt.setBackgroundDrawable(getResources().getDrawable(R.mipmap.popbg));
+                im.setBackgroundDrawable(getResources().getDrawable(R.mipmap.tnb));
+                gj.setBackgroundDrawable(getResources().getDrawable(R.mipmap.tnb));
+                nc.setBackgroundDrawable(getResources().getDrawable(R.mipmap.tnb));
+
+            }
+        });
+
+
          setBackgroundAlpha(0.3f);
        // mPopWindow.setBackgroundDrawable(new BitmapDrawable());
         View rootViews = findViewById(R.id.rl_detail);

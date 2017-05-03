@@ -28,6 +28,8 @@
     <color name="drawcorlor">#60718d</color>
     <color name="cacecorlor">#5a89ff</color>
     <color name="linecorlor">#eef2f7</color>
+    <color name="refercorlor">#e9ecf4</color>
+    <color name="grey_word1">#abc5e6</color>
 
 
 </resources>

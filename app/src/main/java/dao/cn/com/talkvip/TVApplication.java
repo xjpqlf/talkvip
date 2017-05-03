@@ -47,6 +47,10 @@ public class TVApplication extends Application {
 
     }
 
+    public static Context getAppContext() {
+        return context;
+    }
+
     private void init(){
 //        initLocationService();
 

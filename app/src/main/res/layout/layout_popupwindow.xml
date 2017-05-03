@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/close"
-        android:id="@+id/iv_cloae"
+        android:id="@+id/iv_close"
         android:layout_marginRight="20dp"
         android:layout_alignParentRight="true"
         />
@@ -17,7 +17,7 @@
 
 
 <TextView
-    android:layout_below="@+id/iv_cloae"
+    android:layout_below="@+id/iv_close"
     android:layout_width="match_parent"
     android:layout_height="53dp"
     android:text="添加备注"
@@ -63,44 +63,56 @@
 
    <LinearLayout
        android:layout_width="match_parent"
-       android:layout_height="wrap_content"
+       android:layout_height="40dp"
        android:layout_below="@+id/view"
        android:id="@+id/ll_choos"
-       android:layout_marginTop="24dp"
+       android:layout_marginTop="18dp"
        android:orientation="horizontal">
 
        <TextView
+           android:layout_gravity="center"
            android:layout_width="0dp"
            android:layout_weight="1"
-           android:background="@drawable/cache_shaps"
+           android:background="@mipmap/tnb"
            android:text="@string/notCall"
+           android:id="@+id/tv_nc"
            android:gravity="center"
            android:layout_marginLeft="15dp"
+           android:textColor="@color/grey_word1"
            android:layout_height="wrap_content"/>
 
        <TextView
+           android:layout_gravity="center"
            android:layout_width="0dp"
            android:layout_weight="1"
-           android:layout_marginLeft="15dp"
-           android:background="@drawable/cache_shaps"
+
+           android:background="@mipmap/tnb"
            android:text="@string/impornt"
+           android:textColor="@color/grey_word1"
+           android:id="@+id/tv_im"
            android:gravity="center"
            android:layout_height="wrap_content"/>
        <TextView
+           android:layout_gravity="center"
            android:layout_width="0dp"
            android:layout_weight="1"
-           android:layout_marginLeft="15dp"
-           android:background="@drawable/cache_shaps"
+
+           android:textColor="@color/grey_word1"
+           android:background="@mipmap/tnb"
            android:text="@string/follwup"
            android:gravity="center"
+           android:id="@+id/tv_gj"
 
            android:layout_height="wrap_content"/>
        <TextView
+           android:layout_gravity="center"
+           android:id="@+id/tv_nt"
            android:layout_width="0dp"
            android:layout_weight="1"
            android:gravity="center"
-           android:layout_marginLeft="15dp"
-           android:background="@drawable/cache_shaps"
+           android:textColor="@color/grey_word1"
+
+           android:background="@mipmap/tnb"
            android:text="@string/nothink"
            android:layout_marginRight="15dp"
            android:layout_height="wrap_content"/>
@@ -111,6 +123,7 @@
         android:layout_below="@+id/ll_choos"
         android:layout_width="212dp"
         android:layout_height="38dp"
+        android:id="@+id/tv_save"
         android:layout_centerHorizontal="true"
         android:text="@string/save"
         android:textColor="@color/white"

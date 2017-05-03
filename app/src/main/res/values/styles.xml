@@ -45,13 +45,16 @@
 
 
         <item name="android:textSize">15sp</item>
-
+       <!-- <&#45;&#45;正常状态下字体颜色和icon颜色&ndash;&gt; -->
+        <item name="android:textColorPrimary">@android:color/darker_gray</item>
+     <!--   <&#45;&#45;选中状态icon的颜色和字体颜色&ndash;&gt; -->
+        <item name="colorPrimary">@color/cacecorlor</item>
 
     </style>
 
 
     <style name="MyStyle">
-        <item name="android:textSize">19sp</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
     <!--  这个是加入的代码 --> <style name="mypopwindow_anim_style">
@@ -61,4 +64,14 @@
     <item name="android:windowExitAnimation">@anim/pophide</item>
     <!-- 指定消失的动画xml -->
 </style>
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="Base.Theme.DesignDemo" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/cacecorlor</item>
+        <item name="colorPrimaryDark">#512DA8</item>
+        <item name="colorAccent">#FF4081</item>
+        <item name="android:textSize">12sp</item>
+       <!-- <item name="android:windowBackground">@color/window_background</item>-->
+    </style>
 </resources>
