@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.neenbedankt.android-apt'
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.1"
@@ -39,4 +39,6 @@ dependencies {
     // Ultra-Pull-To-Refresh框架的依赖
     compile 'in.srain.cube:ptr-load-more:1.0.6'
     compile files('libs/commons-io-2.4.jar')
+    apt 'com.zhy:mpermission-compiler:1.0.0'
+    compile 'com.zhy:mpermission-api:1.0.0'
 }

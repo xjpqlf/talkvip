@@ -15,7 +15,7 @@ import java.util.List;
 
 public class Data {
 
-List<Custom> list;
+private List<Custom> list;
 
   private   String total;
    private String totalpage;

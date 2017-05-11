@@ -4,6 +4,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import dao.cn.com.talkvip.R;
@@ -25,7 +26,7 @@ public class About extends BaseActivity {
     protected void initHead() {
      TextView tvthem= (TextView) findViewById(R.id.tv_theme);
         tvthem.setText("关于");
-        ImageView iv=(ImageView)findViewById(R.id.iv_back);
+        RelativeLayout iv=(RelativeLayout)findViewById(R.id.rl_back);
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

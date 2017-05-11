@@ -18,7 +18,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp">
-
+<RelativeLayout
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:id="@+id/rl_bjback">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -26,14 +29,14 @@
                 android:id="@+id/iv_backb"
                 android:layout_marginLeft="15dp"
                 android:src="@mipmap/back"/>
-
+</RelativeLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:id="@+id/tv_theme"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:text="备注"/>
 
 
@@ -70,6 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:id="@+id/tv_ms"
                 android:layout_margin="8dp"
                 android:textColor="@color/white"
                 android:textSize="19sp"
@@ -94,20 +98,26 @@
             android:background="@mipmap/tnb"
             android:text="@string/pick"
             android:gravity="center"
-            android:layout_marginLeft="15dp"
+            android:id="@+id/tq"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/grey_word"
             android:layout_height="wrap_content"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:background="@mipmap/tnb"
             android:text="@string/impornt"
+            android:id="@+id/zd"
+            android:textColor="@color/grey_word"
             android:gravity="center"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="10dp"
             android:layout_height="wrap_content"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_marginLeft="15dp"
+            android:id="@+id/wyy"
+            android:textColor="@color/grey_word"
+            android:layout_marginLeft="10dp"
             android:background="@mipmap/tnb"
             android:text="@string/nothink"
             android:gravity="center"
@@ -115,17 +125,20 @@
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="10dp"
             android:background="@mipmap/tnb"
             android:text="@string/follwup"
+            android:textColor="@color/grey_word"
             android:gravity="center"
-
+            android:id="@+id/dgx"
             android:layout_height="wrap_content"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:id="@+id/wjt"
+            android:textColor="@color/grey_word"
             android:gravity="center"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="10dp"
             android:background="@mipmap/tnb"
             android:text="@string/Notconnected"
             android:layout_marginRight="15dp"
@@ -135,18 +148,18 @@
     <View
         android:layout_width="match_parent"
         android:background="@color/linecorlor"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="10dp"
         android:layout_height="1dp"></View>
 
 
     <EditText
 
         android:id="@+id/tv_bjhint"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="10dp"
         android:textCursorDrawable="@null"
    android:layout_marginLeft="5dp"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="180dp"
 
         android:gravity="top"
         android:background="@null"
@@ -163,21 +176,22 @@
     <View
         android:layout_width="match_parent"
         android:background="@color/linecorlor"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="12dp"
         android:layout_height="1dp"></View>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+      android:layout_marginTop="20dp"
         android:layout_marginLeft="12dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <CheckBox
             android:id="@+id/iv_xuan"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@drawable/check_selector"
             android:layout_centerVertical="true"
-            android:src="@mipmap/gouxuan_on"/>
+            android:button="@null"  />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -195,6 +209,7 @@
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
         android:text="@string/save"
+        android:id="@+id/tv_bc"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:gravity="center"

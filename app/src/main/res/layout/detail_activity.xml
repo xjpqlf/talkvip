@@ -14,7 +14,10 @@ android:id="@+id/rl_detail"
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="60dp">
-
+  <RelativeLayout
+      android:layout_width="60dp"
+      android:layout_height="60dp"
+      android:id="@+id/rl_ivback">
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,7 +25,7 @@ android:id="@+id/rl_detail"
         android:id="@+id/iv_backb"
         android:layout_marginLeft="15dp"
         android:src="@mipmap/back"/>
-
+  </RelativeLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,15 +35,20 @@ android:id="@+id/rl_detail"
         android:textSize="20sp"
         android:text="详情"/>
 
-
+<RelativeLayout
+    android:layout_width="60dp"
+    android:id="@+id/rl_remark"
+    android:layout_alignParentRight="true"
+    android:layout_height="60dp">
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
         android:src="@mipmap/beizhu"
         android:id="@+id/iv_edit"
         android:layout_centerVertical="true"
          android:layout_marginRight="12dp"/>
+</RelativeLayout>
 </RelativeLayout>
 <RelativeLayout
     android:layout_width="match_parent"
@@ -54,7 +62,8 @@ android:id="@+id/rl_detail"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:text="待跟进"
-               android:id="@+id/tv_neixing"
+
+               android:id="@+id/tv_type"
                android:layout_centerVertical="true"
                android:textColor="@color/bule"
                 android:layout_marginLeft="8dp"
@@ -70,7 +79,7 @@ android:id="@+id/rl_detail"
        <TextView
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-
+android:id="@+id/tv_deid"
            android:textSize="30sp"
        android:layout_centerHorizontal="true"
            android:textColor="@color/white"
@@ -78,6 +87,7 @@ android:id="@+id/rl_detail"
 
 
     <TextView
+
         android:layout_below="@+id/ll_neixing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -93,6 +103,7 @@ android:id="@+id/rl_detail"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_margin="8dp"
+        android:id="@+id/de_name"
         android:textColor="@color/white"
         android:textSize="17sp"
         android:layout_centerHorizontal="true"

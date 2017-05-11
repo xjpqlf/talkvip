@@ -1,17 +1,21 @@
 package dao.cn.com.talkvip.view.activity;
 
-import android.os.Build;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.ZoomButtonsController;
 
-import java.lang.reflect.Method;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import dao.cn.com.talkvip.Constants;
 import dao.cn.com.talkvip.R;
+import dao.cn.com.talkvip.utils.DebugFlags;
+import okhttp3.Call;
 
 /**
  * Created by uway on 2016/9/7.
@@ -24,8 +28,8 @@ public class Protocol extends BaseActivity {
     @Override
     protected void initHead() {
 
-   ImageView iv= (ImageView) findViewById(R.id.iv_back);
-     TextView tv= (TextView) findViewById(R.id.tv_theme);
+        RelativeLayout iv = (RelativeLayout) findViewById(R.id.rl_back);
+        TextView tv = (TextView) findViewById(R.id.tv_theme);
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,65 +50,54 @@ public class Protocol extends BaseActivity {
         mWebView = (WebView) findViewById(R.id.wv_shop_webView);
 
 
-        initWebView();
-
-
-
-
-
-
-
-
+        init();
 
 
     }
 
-    private void initWebView() {
-        mWebView.requestFocus();
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        mWebView.getSettings().setSupportZoom(true);
-        //   mWebView.getSettings().setBuiltInZoomControls(true);
-        mWebView.setWebViewClient(new MyWebViewClient());
-        //   mWebView.getSettings().setBuiltInZoomControls(false);
-        mWebView.loadUrl("www.baidu.com");
+    private void init() {
+
+        String url = Constants.BASE_URL+"/Agreement/getAgreement";
+        OkHttpUtils
+                .post()
+                .url(url)
+                .addParams("did", "225")
+
+                .build()
+                .execute(new StringCallback() {
+                             @Override
+                             public void onError(Call call, Exception e, int id) {
+
+                             }
+
+                             @Override
+                             public void onResponse(String response, int id) {
+                                 DebugFlags.logD("我的协议"+response);
+
+                                 try {
+
+                                     JSONObject j=new JSONObject(response);
+                                     String text1=j.getString("data");
+                                     JSONObject json=new JSONObject(text1);
+                                     String text=json.getString("text");
+                                     WebSettings webSettings = mWebView.getSettings();
+                                     webSettings.setDefaultTextEncodingName("UTF-8");
+                                     mWebView.loadData(text, "text/html; charset=UTF-8", null);
+                                     DebugFlags.logD("我的协议"+text);
+                                 } catch (JSONException e) {
+                                     e.printStackTrace();
+                                 }
+
+                             }
+                         }
+
+                );
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            // Use the API 11+ calls to disable the controls
-            mWebView.getSettings().setBuiltInZoomControls(true);
-            mWebView.getSettings().setDisplayZoomControls(false);
-        } else {
-            // Use the reflection magic to make it work on earlier APIs
-            getControlls();
-        }
     }
-    private final class MyWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
-            view.loadUrl(url);
-            return true;
-        }
-    }
-
-
-    private void getControlls() {
-        try {
-            Class webview = Class.forName("android.webkit.WebView");
-            Method method = webview.getMethod("getZoomButtonsController");
-            ZoomButtonsController zoom_controll = (ZoomButtonsController) method.invoke(this, true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 
 
 }
-
-
-
 
 
 

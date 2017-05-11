@@ -63,9 +63,12 @@
         />
 
 <RelativeLayout
-    android:layout_width="100dp"
+
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="20dp"
+    android:id="@+id/rl_bar"
+    android:visibility="gone"
     android:layout_centerHorizontal="true"
     android:layout_alignParentBottom="true">
 
@@ -81,13 +84,28 @@
             android:text="2/1"/>
 
     <ProgressBar
+
         android:layout_below="@+id/tv_pager"
         android:id="@+id/progressBar04_id"
         android:layout_marginTop="5dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:max="100"
+
+     android:layout_centerHorizontal="true"
         android:progressDrawable="@drawable/bar_color"
-        android:layout_width="match_parent"
-        android:layout_height="6dp" />
+        android:layout_width="60dp"
+        android:layout_height="5dp" />
 </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/iv_nodata"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+       android:src="@mipmap/tu"
+   android:visibility="gone"
+        />
+
+
 </RelativeLayout>

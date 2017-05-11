@@ -22,7 +22,7 @@
     android:layout_height="53dp"
     android:text="添加备注"
     android:gravity="center"
-    android:textSize="24sp"
+    android:textSize="22sp"
     android:id="@+id/tv_bjhead"
     android:textColor="@color/white"
     android:background="@mipmap/top"/>
@@ -128,7 +128,7 @@
         android:text="@string/save"
         android:textColor="@color/white"
         android:gravity="center"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/login_shap"/>

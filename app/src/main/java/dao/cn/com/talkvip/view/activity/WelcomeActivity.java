@@ -9,6 +9,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
+import com.alibaba.fastjson.JSON;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -17,9 +18,12 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import dao.cn.com.talkvip.Constants;
 import dao.cn.com.talkvip.R;
+import dao.cn.com.talkvip.bean.Aurl;
+import dao.cn.com.talkvip.bean.Display;
 import dao.cn.com.talkvip.utils.DebugFlags;
 import dao.cn.com.talkvip.utils.ImageHelper;
 import dao.cn.com.talkvip.utils.RsaU;
@@ -48,10 +52,30 @@ public class WelcomeActivity extends BaseActivity {
     protected void initView() {
         iv = (ImageView) findViewById(R.id.welcome_iv);
 
-        String url = "http://a3.qpic.cn/psb?/V130mBVT10Mxsi/rmpNG7SBqfj8UY.G*exBQz8kCr21PGxnp8WuHw3N0AE!/b/dB8BAAAAAAAA&bo=gAJyBAAAAAADB9Y!&rf=viewer_4";
+        //    String url = "http://a3.qpic.cn/psb?/V130mBVT10Mxsi/rmpNG7SBqfj8UY.G*exBQz8kCr21PGxnp8WuHw3N0AE!/b/dB8BAAAAAAAA&bo=gAJyBAAAAAADB9Y!&rf=viewer_4";
+        OkHttpUtils.get().url(Constants.BASE_URL + "/Agreement/getImgUrl").build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
 
-       new  ImageHelper(this).display(iv,url);
+            }
 
+            @Override
+            public void onResponse(String response, int id) {
+
+
+                Display display = JSON.parseObject(response, Display.class);
+                List<Aurl> r = display.getData();
+                String a = r.get(0).getUrl();
+
+
+           new ImageHelper(WelcomeActivity.this).display(iv, Constants.BASE_URL + "/" + a);
+              //  Glide.with(WelcomeActivity.this).load( Constants.BASE_URL + "/"+a).into(iv);
+
+
+            }
+        });
+
+        //
 
     }
 
@@ -127,30 +151,28 @@ public class WelcomeActivity extends BaseActivity {
     };
 
     private void goNextUi() {
-       String ac=SPUtils.getString(WelcomeActivity.this,"ac","");
-       String pwd=SPUtils.getString(WelcomeActivity.this,"pwd","");
-          if (!TextUtils.isEmpty(ac)&&!TextUtils.isEmpty(pwd)){
+        String ac = SPUtils.getString(WelcomeActivity.this, "ac", "");
+        String pwd = SPUtils.getString(WelcomeActivity.this, "pwd", "");
+        if (!TextUtils.isEmpty(ac) && !TextUtils.isEmpty(pwd)) {
 
-             Wlogin(ac,pwd);
-
-
-          }else {
+            Wlogin(ac, pwd);
 
 
-              Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
-
-              startActivity(intent);
-              finish();
+        } else {
 
 
+            Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
 
-          }
-
+            startActivity(intent);
+            finish();
 
 
         }
 
-    private void Wlogin(String ac,String pwd) {
+
+    }
+
+    private void Wlogin(String ac, String pwd) {
 
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -158,8 +180,6 @@ public class WelcomeActivity extends BaseActivity {
         String str = formatter.format(curDate);
         String sign = ac + "|" + pwd + "|" + str;
         String strs = RsaU.encryptByPublic(sign);
-
-
 
 
         OkHttpUtils.post()
@@ -181,7 +201,6 @@ public class WelcomeActivity extends BaseActivity {
                         finish();
 
 
-
                     }
 
                     @Override
@@ -197,6 +216,7 @@ public class WelcomeActivity extends BaseActivity {
                             JSONObject json1 = new JSONObject(data);
 
                             String token = json1.getString("token");
+                            SPUtils.putString(WelcomeActivity.this,"token",token);
                             String name = json1.getString("realname");
                             Constants.TOKEN = token;
                             if ("8888".equals(code)) {
@@ -206,7 +226,7 @@ public class WelcomeActivity extends BaseActivity {
                                 startActivity(intent);
                                 finish();
 
-                            } else{
+                            } else {
 
                                 Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
 

@@ -1,5 +1,7 @@
 package dao.cn.com.talkvip.bean;
 
+import java.io.Serializable;
+
 /**
  * @name dao.cn.com.talkvip.bean
  * @class name：TalkVip
@@ -11,7 +13,7 @@ package dao.cn.com.talkvip.bean;
  * @class describe
  */
 
-public class Custom {
+public class Custom implements Serializable{
 
     /*"id": "242752", //数据id
               "name": "聂喊\r\n", //数据标签
@@ -74,4 +76,6 @@ public class Custom {
                 ", inputtime='" + inputtime + '\'' +
                 '}';
     }
+
+
 }

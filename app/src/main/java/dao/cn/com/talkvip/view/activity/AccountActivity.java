@@ -1,11 +1,23 @@
 package dao.cn.com.talkvip.view.activity;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import dao.cn.com.talkvip.Constants;
 import dao.cn.com.talkvip.R;
+import dao.cn.com.talkvip.utils.DebugFlags;
+import dao.cn.com.talkvip.utils.SPUtils;
+import dao.cn.com.talkvip.utils.ToastUtil;
+import okhttp3.Call;
 
 /**
  * @name dao.cn.com.talkvip.view.activity
@@ -62,22 +74,84 @@ public class AccountActivity extends BaseActivity {
 mSave.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        mTvEdit.setVisibility(View.VISIBLE);
-        mSave.setVisibility(View.GONE);
 
-        mEmil.setFocusable(false);
-        mEmil.setFocusableInTouchMode(false);
-        mPhone.setFocusable(false);
-        mPhone.setFocusableInTouchMode(false);
+
+        SaveAcInfo( mEmil.getText().toString(), mPhone.getText().toString());
+
+
+
+
+
+
+
+
+
+
 
     }
 });
 
     }
 
+    private void SaveAcInfo(final String s, final String s1) {
+        String token=SPUtils.getString(AccountActivity.this,"token","");
+        OkHttpUtils.post().url(Constants.BASE_URL+"/Comment/updateAccountInformation")
+                .addHeader("Authorization", "Bearer" + " " + token)
+                .addParams("phone",s1)
+                .addParams("email",s)
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                DebugFlags.logD("邮箱电话"+response);
+                try {
+                    JSONObject j=new JSONObject(response);
+                    String code=j.getString("code");
+
+                    if ("1015".equals(code)) {
+
+                        SPUtils.putString(AccountActivity.this,"phone",s1);
+                        SPUtils.putString(AccountActivity.this,"email",s);
+                        mTvEdit.setVisibility(View.VISIBLE);
+                        mSave.setVisibility(View.GONE);
+                        mEmil.setFocusable(false);
+                        mEmil.setFocusableInTouchMode(false);
+                        mPhone.setFocusable(false);
+                        mPhone.setFocusableInTouchMode(false);
+
+
+                        ToastUtil.showInCenter("保存成功");
+
+
+
+                    }else if ("1013".equals(code)){
+
+                        ToastUtil.showInCenter("邮箱格式错误");
+                    }else if ("1014".equals(code)){
+
+                        ToastUtil.showInCenter("电话格式错误");
+                    }else{
+                        ToastUtil.showInCenter("保存失败");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+
+
+
+    }
+
     @Override
     protected void initView() {
-        ImageView iv= (ImageView) findViewById(R.id.iv_back);
+       RelativeLayout iv= ( RelativeLayout) findViewById(R.id.rl_acback);
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +161,15 @@ mSave.setOnClickListener(new View.OnClickListener() {
 
         mEmil = (EditText)findViewById(R.id.tv_email);
         mPhone = (EditText)findViewById(R.id.tv_phone);
+        String phone= SPUtils.getString(AccountActivity.this,"phone","");
+        String email= SPUtils.getString(AccountActivity.this,"email","");
+        if (!TextUtils.isEmpty(phone)&&!TextUtils.isEmpty(email)){
+            mPhone.setText(phone);
+            mEmil.setText(email);
+
+
+        }
+
         mEmil.setFocusable(false);
         mEmil.setFocusableInTouchMode(false);
         mPhone.setFocusable(false);

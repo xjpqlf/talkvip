@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_margin="5dp"
+                android:layout_height="65dp"
+                android:layout_margin="3dp"
                 android:descendantFocusability="blocksDescendants"
 
                >
@@ -11,8 +11,8 @@
         android:layout_width="20dp"
       android:layout_alignParentLeft="true"
         android:id="@+id/rl_guid"
-        android:layout_marginTop="10dp"
-        android:layout_height="80dp">
+      android:layout_margin="3dp"
+        android:layout_height="65dp">
 
 
         <ImageView
@@ -31,14 +31,15 @@
         android:id="@+id/rl_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="40dp"
 
         >
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="5dp"
     android:id="@+id/rl_id">
         <TextView
             android:id="@+id/tv_name"
@@ -49,7 +50,7 @@
             android:layout_centerVertical="true"
 
             android:textColor="@color/item_phone"
-            android:textSize="21sp"/>
+            android:textSize="20sp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -70,7 +71,7 @@
             android:layout_below="@+id/rl_id"
             android:layout_marginLeft="15dp"
              android:id="@+id/tv_dc"
-           android:layout_marginTop="5dp"
+           android:layout_marginTop="3dp"
             android:singleLine="false"
             android:textColor="@color/item_dc"
             android:text="我的一家是计算机技术"
@@ -78,16 +79,19 @@
 
     </RelativeLayout>
 
-
+<RelativeLayout
+    android:layout_width="30dp"
+    android:id="@+id/rl_gotode"
+    android:layout_alignParentRight="true"
+    android:layout_height="match_parent">
     <ImageView
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:id="@+id/iv_item_go"
-        android:layout_marginRight="7dp"
-        android:layout_alignParentRight="true"
+
         android:layout_centerVertical="true"
        android:focusable="false"
         android:clickable="true"
         android:src="@mipmap/go"/>
-
+</RelativeLayout>
 </RelativeLayout>

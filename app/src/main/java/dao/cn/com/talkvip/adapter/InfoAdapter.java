@@ -1,7 +1,11 @@
 package dao.cn.com.talkvip.adapter;
 
+import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +18,9 @@ import android.widget.TextView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -22,8 +29,10 @@ import java.util.Random;
 import dao.cn.com.talkvip.R;
 import dao.cn.com.talkvip.bean.Custom;
 import dao.cn.com.talkvip.bean.CustomFrist;
-import dao.cn.com.talkvip.utils.Rsa;
+import dao.cn.com.talkvip.utils.RsaCall;
+import dao.cn.com.talkvip.utils.ToastUtil;
 import dao.cn.com.talkvip.view.activity.Detail;
+import dao.cn.com.talkvip.view.activity.RemarkActivity;
 import okhttp3.Call;
 
 /**
@@ -102,12 +111,12 @@ holder.iv.setOnClickListener(new View.OnClickListener() {
 });
 
 
-        holder.rl.setOnClickListener(new View.OnClickListener() {
+      /*  holder.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-                getPhoneNum(list.get(position).getCustom().getMobile());
+              //  getPhoneNum(list.get(position).getCustom().getMobile(),list.get(position).getCustom().getId());
 
 
 
@@ -116,7 +125,7 @@ holder.iv.setOnClickListener(new View.OnClickListener() {
 
 
             }
-        });
+        });*/
         return convertView;
     }
     class ViewHolder {
@@ -128,8 +137,9 @@ holder.iv.setOnClickListener(new View.OnClickListener() {
       RelativeLayout rl;
 
     }
+    final public static int REQUEST_CODE_ASK_CALL_PHONE = 123;
 
-    private void getPhoneNum(String phone) {
+    private void getPhoneNum(String phone,String id) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm");
         Date curDate = new Date(System.currentTimeMillis());
@@ -145,21 +155,21 @@ holder.iv.setOnClickListener(new View.OnClickListener() {
         String sign = accountId + timeStamp + order;
 
 
-        String mSigns = Rsa.encryptByPublic(sign);
+        String mSigns = RsaCall.encryptByPublic(sign);
         Log.d("时间戳", mSigns);
         OkHttpUtils.post()
                 .url("http://c1.dev.talkvip.cn/Authorization")
                 .addParams("accuntID", accountId)
-                .addParams("callingPhone", "15102720175")
-                .addParams("calledPhone", "13659827958")
-                .addParams("dataID", 1 + "")
+                .addParams("callingPhone", "13971410254")
+                .addParams("calledPhone", "13971410254")
+                .addParams("dataID",id )
                 .addParams("order", order)
                 .addParams("timeStamp", timeStamp)
                 .addParams("resultURL", "www.baidu.com")
                 .addParams("notifyURL", "www.baidu.com")
                 .addParams("remark", "")
                 .addParams("type", "2")
-                .addParams("line", "2")
+                .addParams("line", "E")
                 .addParams("signInfo", mSigns).build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
@@ -169,10 +179,90 @@ holder.iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onResponse(String response, int id) {
                 Log.d("电话", "onResponse: " + response);
+
+                try {
+                    JSONObject json=new JSONObject(response);
+                    ToastUtil.showInCenter(json.getString("message"));
+                    String code=json.getString("resultCode");
+
+                    if ("8888".equals(code)){
+
+                      CallPhone("1397163738");
+
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
+    }
+
+
+
+
+
+    private void CallPhone(String phone) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_CALL);
+        //url:统一资源定位符
+        //uri:统一资源标示符（更广）
+        intent.setData(Uri.parse("tel:" + phone));
+        //开启系统拨号器
+       context. startActivity(intent);
+
 
     }
+
+
+
+
+
+
+
+    public class PhoneBroadcastReceiver extends BroadcastReceiver {
+
+
+        String TAG = "打电话";
+        TelephonyManager telMgr;
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+
+            telMgr = (TelephonyManager) context.getSystemService(Service.TELEPHONY_SERVICE);
+            switch (telMgr.getCallState()) {
+                //来电
+                case TelephonyManager.CALL_STATE_RINGING:
+                    String number = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
+                    Log.v(TAG, "number:" + number);
+
+
+                    break;
+                //响铃
+                case TelephonyManager.CALL_STATE_OFFHOOK:
+                    break;
+                //挂断
+                case TelephonyManager.CALL_STATE_IDLE:
+                    Log.v(TAG,"电话挂断了");
+
+                    Intent inten1=new Intent(context,RemarkActivity.class);
+
+                   context. startActivity(inten1);
+
+
+                    break;
+            }
+
+        }
+
+    }
+
+
+
+
+
+
 
 }

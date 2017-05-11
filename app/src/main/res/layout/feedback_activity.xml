@@ -8,7 +8,7 @@
 
     <EditText
 
-        android:id="@+id/tv_feedback"
+        android:id="@+id/et_feedback"
        android:layout_marginTop="15dp"
         android:textCursorDrawable="@null"
         android:layout_centerInParent="true"

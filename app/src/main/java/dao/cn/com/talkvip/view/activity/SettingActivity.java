@@ -2,13 +2,21 @@ package dao.cn.com.talkvip.view.activity;
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import dao.cn.com.talkvip.Constants;
 import dao.cn.com.talkvip.R;
 import dao.cn.com.talkvip.utils.DataCleanManager;
+import dao.cn.com.talkvip.utils.SPUtils;
 import dao.cn.com.talkvip.utils.ToastUtil;
+import okhttp3.Call;
 
 /**
  * @name dao.cn.com.talkvip.view.activity
@@ -26,7 +34,7 @@ public class SettingActivity  extends BaseActivity {
     protected void initHead() {
         TextView tvTheme= (TextView) findViewById(R.id.tv_theme);
         TextView tvEdit= (TextView) findViewById(R.id.tv_edit);
-        ImageView imageView= (ImageView) findViewById(R.id.iv_back);
+       RelativeLayout imageView= (RelativeLayout) findViewById(R.id.rl_back);
         tvTheme.setText("设置");
         tvEdit.setText("");
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -90,17 +98,61 @@ public class SettingActivity  extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(SettingActivity.this,LoginActivity.class));
-                finish();
+                loginout();
+
+
+
+
+
+
+
+
+
+
+
             }
         });
 
     }
 
+    private void loginout() {
+        String token= SPUtils.getString(SettingActivity.this,"token","");
+
+        OkHttpUtils.post().url(Constants.BASE_URL+"/login/loginOut")
+                .addParams("token",token)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+
+                        try {
+                            JSONObject json=new JSONObject(response);
+
+                            String code=json.getString("code");
+
+                            if ("8888".equals(code)){
+                                startActivity(new Intent(SettingActivity.this,LoginActivity.class));
+                                finish();
 
 
+                            }else
+                            {
 
+                                ToastUtil.showInCenter("退出失败");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
+                    }
+                });
+
+    }
 
 
 }

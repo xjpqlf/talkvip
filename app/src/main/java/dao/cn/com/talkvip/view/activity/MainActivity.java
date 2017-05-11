@@ -20,7 +20,7 @@ import dao.cn.com.talkvip.view.fragment.ExtractedFragment;
 import dao.cn.com.talkvip.view.fragment.FollowUpFragment;
 import dao.cn.com.talkvip.view.fragment.ImportFragment;
 import dao.cn.com.talkvip.view.fragment.NoDesireFragment;
-import dao.cn.com.talkvip.view.fragment.NotCallFragment;
+import dao.cn.com.talkvip.view.fragment.NotCallFragments;
 import dao.cn.com.talkvip.view.fragment.NotThroughFragment;
 
 
@@ -73,7 +73,7 @@ public class MainActivity extends BaseActivity implements Toolbar.OnMenuItemClic
                         break;
                 }
                 menuItem.setChecked(true);
-                drawerLayout.closeDrawers();
+             //   drawerLayout.closeDrawers();
                 return true;
             }
         });
@@ -117,7 +117,7 @@ public class MainActivity extends BaseActivity implements Toolbar.OnMenuItemClic
             f1.setArguments(bundle);
             fragmentList.add(f1);
         }*/
-      Fragment  f1=new NotCallFragment();
+      Fragment  f1=new NotCallFragments();
        Fragment  f2=new FollowUpFragment();
       Fragment  f3=new NotThroughFragment();
      Fragment  f4=new NoDesireFragment();

@@ -109,11 +109,11 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+             /*   Intent intent = new Intent(LoginActivity.this, MainActivity.class);
               //  intent.putExtra("name", name);
                 startActivity(intent);
                 finish();
-
+*/
                 Login();
             }
         });
@@ -177,7 +177,12 @@ public class LoginActivity extends BaseActivity {
 
                                 String token = json1.getString("token");
                                 String name = json1.getString("realname");
+                                String phone = json1.getString("phone");
+                                String email = json1.getString("email");
+                                SPUtils.putString(LoginActivity.this,"phone",phone);
+                                SPUtils.putString(LoginActivity.this,"email",email);
                                 Constants.TOKEN = token;
+                                SPUtils.putString(LoginActivity.this,"token",token);
                                 SPUtils.putString(LoginActivity.this,"ac",ac);
                                 SPUtils.putString(LoginActivity.this,"pwd",pwd);
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
