@@ -134,6 +134,7 @@ public class MainActivity extends BaseActivity implements Toolbar.OnMenuItemClic
 
         TabFragmentAdapter fragmentAdapter = new TabFragmentAdapter(getSupportFragmentManager(), fragmentList, tabList);
         viewPager.setAdapter(fragmentAdapter);//给ViewPager设置适配器
+        viewPager.setOffscreenPageLimit(5);
         tabLayout.setupWithViewPager(viewPager);//将TabLayout和ViewPager关联起来。
         tabLayout.setTabsFromPagerAdapter(fragmentAdapter);//给Tabs设置适配器
 
@@ -189,5 +190,8 @@ public class MainActivity extends BaseActivity implements Toolbar.OnMenuItemClic
 
 
     }
+
+
+
 
 }

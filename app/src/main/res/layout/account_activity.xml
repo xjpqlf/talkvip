@@ -92,7 +92,7 @@
 
         android:maxLength="20"
         android:textColorHint="@color/hint"
-        android:textSize="22sp"
+        android:textSize="18sp"
 
         />
 
@@ -139,7 +139,7 @@ android:layout_centerVertical="true"
             android:gravity="center_vertical"
             android:maxLength="20"
             android:textColorHint="@color/hint"
-            android:textSize="22sp"
+            android:textSize="18sp"
 
             />
 

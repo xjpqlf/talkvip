@@ -136,7 +136,9 @@ public class SettingActivity  extends BaseActivity {
                             String code=json.getString("code");
 
                             if ("8888".equals(code)){
-                                startActivity(new Intent(SettingActivity.this,LoginActivity.class));
+                                Intent intent=new Intent(SettingActivity.this,LoginActivity.class);
+                                intent. setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
                                 finish();
 
 

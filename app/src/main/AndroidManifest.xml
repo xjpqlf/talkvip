@@ -68,6 +68,7 @@
 
         <activity android:name=".view.activity.AccountActivity"></activity>
         <activity android:name=".view.activity.MainActivity"
+
                   ></activity>
         <activity android:name=".view.activity.FeedbackActivity"></activity>
         <activity android:name=".view.activity.LoginActivity"
@@ -78,7 +79,9 @@
         <activity android:name=".view.activity.Detail"></activity>
         <activity android:name=".view.activity.About"></activity>
         <activity android:name=".view.activity.Protocol"></activity>
-        <activity android:name=".view.activity.RemarkActivity"></activity>
+        <activity android:name=".view.activity.RemarkActivity"
+
+            ></activity>
 
 
 

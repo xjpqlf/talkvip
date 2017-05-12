@@ -459,4 +459,9 @@ String token=SPUtils.getString(RemarkActivity.this,"token","");
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

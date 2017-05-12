@@ -8,7 +8,7 @@
                >
 
     <RelativeLayout
-        android:layout_width="20dp"
+        android:layout_width="30dp"
       android:layout_alignParentLeft="true"
         android:id="@+id/rl_guid"
       android:layout_margin="3dp"
@@ -85,13 +85,23 @@
     android:layout_alignParentRight="true"
     android:layout_height="match_parent">
     <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:id="@+id/iv_item_go"
-
+android:layout_centerInParent="true"
         android:layout_centerVertical="true"
        android:focusable="false"
         android:clickable="true"
         android:src="@mipmap/go"/>
 </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+       android:layout_alignParentBottom="true"
+        android:background="@color/linec"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="5dp"
+        ></View>
+
 </RelativeLayout>

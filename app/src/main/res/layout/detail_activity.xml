@@ -64,8 +64,9 @@ android:id="@+id/rl_detail"
                android:text="待跟进"
 
                android:id="@+id/tv_type"
-               android:layout_centerVertical="true"
+
                android:textColor="@color/bule"
+               android:layout_marginTop="6dp"
                 android:layout_marginLeft="8dp"
 
 
@@ -80,7 +81,7 @@ android:id="@+id/rl_detail"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
 android:id="@+id/tv_deid"
-           android:textSize="30sp"
+           android:textSize="24sp"
        android:layout_centerHorizontal="true"
            android:textColor="@color/white"
            android:text="232323"/>
@@ -94,7 +95,7 @@ android:id="@+id/tv_deid"
         android:layout_marginTop="10dp"
         android:id="@+id/detail_phone"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="18sp"
        android:layout_centerHorizontal="true"
         android:text="1212121212121212"/>
     <TextView
@@ -105,7 +106,7 @@ android:id="@+id/tv_deid"
         android:layout_margin="8dp"
         android:id="@+id/de_name"
         android:textColor="@color/white"
-        android:textSize="17sp"
+        android:textSize="16sp"
         android:layout_centerHorizontal="true"
         android:text="我的睡觉觉阿斯兰的骄傲施蒂利克静安寺"/>
 </RelativeLayout>
@@ -113,18 +114,30 @@ android:id="@+id/tv_deid"
 
 
    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_below="@+id/ll_head"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content">
 
     <ListView
 
         android:id="@+id/lv"
         android:scrollbars="none"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/ll_head"
-        android:divider="#00000000"
+       android:divider="#00000000"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         />
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@mipmap/empty"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:id="@+id/detail_empty"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
 <ImageView
     android:id="@+id/iv_call"
     android:layout_width="wrap_content"

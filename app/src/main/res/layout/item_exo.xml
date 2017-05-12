@@ -91,7 +91,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:max="100"
 
-     android:layout_centerHorizontal="true"
+         android:layout_centerHorizontal="true"
         android:progressDrawable="@drawable/bar_color"
         android:layout_width="60dp"
         android:layout_height="5dp" />

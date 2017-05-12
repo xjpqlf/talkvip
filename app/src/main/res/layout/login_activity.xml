@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_iocn"
         android:layout_centerInParent="true"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textColor="#49617d"
         android:layout_marginTop="20dp"
         android:text="@string/app_name"/>
@@ -101,7 +101,7 @@
         <EditText
 
             android:id="@+id/tv_logpwd"
-
+         android:inputType="textPassword"
             android:textCursorDrawable="@null"
 
             android:layout_width="match_parent"
@@ -136,7 +136,7 @@
         android:layout_height="wrap_content"
        android:layout_centerInParent="true"
         android:textColor="@color/white"
-        android:textSize="22dp"
+        android:textSize="18dp"
         android:text="@string/login"/>
     </RelativeLayout>
 <RelativeLayout

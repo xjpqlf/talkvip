@@ -14,7 +14,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/bule"
+            android:background="@mipmap/ftop"
             app:layout_scrollFlags="scroll|enterAlways" >
   <TextView
                 android:layout_width="wrap_content"
@@ -24,23 +24,35 @@
                 android:text="@string/firstpager"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                />
         </android.support.v7.widget.Toolbar>
 
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    >
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabTextColor="#9CA7B5"
-            app:tabBackground="@color/white"
-            app:tabSelectedTextColor="#5a89ff"
-            app:tabIndicatorColor="#5a89ff"
-       app:tabTextAppearance="@style/MyStyle"
-            app:tabGravity="fill" />
+        android:src="@mipmap/touying"/>
 
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabTextColor="#9CA7B5"
+        app:tabBackground="@color/white"
+        app:tabSelectedTextColor="#5a89ff"
+        app:tabIndicatorColor="#5a89ff"
+        app:tabTextAppearance="@style/MyStyle"
+        app:tabGravity="fill" />
+
+</RelativeLayout>
 <!--<View
     android:layout_width="wrap_content"
     android:background="@color/bule"

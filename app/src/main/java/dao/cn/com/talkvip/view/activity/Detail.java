@@ -82,7 +82,7 @@ public class Detail  extends BaseActivity {
     private String mName;
     private String mMobile;
     private String mType;
-
+    private  ImageView iv;
     @Override
     protected void initHead() {
         mIvback = (RelativeLayout) findViewById(R.id.rl_ivback);
@@ -112,6 +112,9 @@ public class Detail  extends BaseActivity {
 
     @Override
     protected void initView() {
+   iv= (ImageView) findViewById(R.id.detail_empty);
+
+
 
       mLv = (ListView) findViewById(R.id.lv);
         if (getIntent()!=null){
@@ -154,8 +157,8 @@ public class Detail  extends BaseActivity {
 
 
         OkHttpUtils.post().url(Constants.BASE_URL+"/Comment/getHistoryNotes")
-                .addParams("id","1714")
-                .addHeader("Authorization", "Bearer" + " " + Constants.TOKEN)
+                .addParams("id",mId)
+                .addHeader("Authorization", "Bearer" + " " + SPUtils.getString(Detail.this,"token",""))
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -172,8 +175,14 @@ public class Detail  extends BaseActivity {
                         try {
                             JSONObject jsonObject =new JSONObject(response);
                             String json=jsonObject.getString("data");
-                          JSONObject j=new JSONObject(json);
+                             JSONObject j=new JSONObject(json);
                             String list=j.getString("list");
+                            DebugFlags.logD("备注"+list);
+                            if (list.equals("[]")){
+
+                                iv.setVisibility(View.VISIBLE);
+                                return;
+                            }
 
                             List<Remarks> detail=JSON.parseArray(list, Remarks.class);
                             handlers.obtainMessage(DATA_LOAD_SUCCESS, detail).sendToTarget();

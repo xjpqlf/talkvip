@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -13,9 +14,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.TelephonyManager;
@@ -57,7 +58,6 @@ import dao.cn.com.talkvip.utils.Rsa;
 import dao.cn.com.talkvip.utils.SPUtils;
 import dao.cn.com.talkvip.utils.ToastUtil;
 import dao.cn.com.talkvip.view.activity.RemarkActivity;
-import dao.cn.com.talkvip.widget.DividerItemDecoration;
 import dao.cn.com.talkvip.widget.MyAnimationDrawable;
 import dao.cn.com.talkvip.widget.MyPtrRefresher;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
@@ -157,8 +157,31 @@ public class NoDesireFragment extends Fragment {
                             if (Build.VERSION.SDK_INT >= 23) {
                                 int checkCallPhonePermission = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE);
                                 if(checkCallPhonePermission != PackageManager.PERMISSION_GRANTED){
-                                    ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CALL_PHONE,Manifest.permission.READ_PHONE_STATE,Manifest.permission.PROCESS_OUTGOING_CALLS},REQUEST_CODE_ASK_CALL_PHONE);
-                                    return;
+                                    AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());  //先得到构造器
+                                    builder.setTitle("申请授权"); //设置标题
+                                    builder.setMessage("拨打电话与读取电话状态需要授权,是否需要前往权限管理页面授权"); //设置内容
+                                    builder.setIcon(R.mipmap.ic_launcher);//设置图标，图片id即可
+                                    builder.setPositiveButton("前往授权", new DialogInterface.OnClickListener() { //设置确定按钮
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            getAppDetailSettingIntent(getActivity());
+
+                                            dialog.dismiss(); //关闭dialog
+
+                                        }
+                                    });
+                                    builder.setNegativeButton("暂不处理", new DialogInterface.OnClickListener() { //设置取消按钮
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+
+                                        }
+                                    });
+
+
+                                    //参数都设置完成了，创建并显示出来
+                                    builder.create().show();
                                 }else{
                                     SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmsss");
                                     Date curDate = new Date(System.currentTimeMillis());
@@ -351,7 +374,7 @@ public class NoDesireFragment extends Fragment {
 
         LinearLayoutManager  mLayoutManager = new LinearLayoutManager(getActivity());
         lv.setLayoutManager(mLayoutManager);
-        lv.addItemDecoration(new DividerItemDecoration( getActivity(), DividerItemDecoration.VERTICAL_LIST));
+
         //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
         lv.setHasFixedSize(true);
 
@@ -634,5 +657,19 @@ public class NoDesireFragment extends Fragment {
     public void onPause() {
         super.onPause();
 
+    }
+    // 以下代码可以跳转到应用详情，可以通过应用详情跳转到权限界面(6.0系统测试可用)
+    private void getAppDetailSettingIntent(Context context) {
+        Intent localIntent = new Intent();
+        localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (Build.VERSION.SDK_INT >= 9) {
+            localIntent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+            localIntent.setData(Uri.fromParts("package",getActivity(). getPackageName(), null));
+        } else if (Build.VERSION.SDK_INT <= 8) {
+            localIntent.setAction(Intent.ACTION_VIEW);
+            localIntent.setClassName("com.android.settings","com.android.settings.InstalledAppDetails");
+            localIntent.putExtra("com.android.settings.ApplicationPkgName",getActivity(). getPackageName());
+        }
+        startActivity(localIntent);
     }
 }
