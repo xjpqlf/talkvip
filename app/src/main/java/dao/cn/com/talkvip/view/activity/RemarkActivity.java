@@ -79,7 +79,12 @@ public class RemarkActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void initView() {
-
+        mName = (TextView) findViewById(R.id.tv_detailids);
+        mMobile = (TextView) findViewById(R.id.detail_phone);
+        mMs = (TextView) findViewById(R.id.tv_ms);
+        mRl = (RelativeLayout) findViewById(R.id.rl_bjback);
+        mCheckBox = (CheckBox) findViewById(R.id.iv_xuan);
+        mEt = (EditText) findViewById(R.id.tv_bjhint);
         mycodereceivers = new  PhoneBroadcastReceivers();
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.intent.action.PHONE_STATE");
@@ -93,19 +98,15 @@ public class RemarkActivity extends BaseActivity implements View.OnClickListener
             mCustom = (Custom) in.getSerializableExtra("p");
             mPostion = in.getIntExtra("postion",0);
 
-       //     Log.v("电话集合", "" + mInfos.getMsg().toString()+ mCustom.toString());
+          // Log.v("电话集合", "" + mInfos.getMsg().toString()+ mCustom.toString());
 
-            mName = (TextView) findViewById(R.id.tv_id);
-            mMobile = (TextView) findViewById(R.id.detail_phone);
-            mMs = (TextView) findViewById(R.id.tv_ms);
-            mRl = (RelativeLayout) findViewById(R.id.rl_bjback);
-            mCheckBox = (CheckBox) findViewById(R.id.iv_xuan);
-            mEt = (EditText) findViewById(R.id.tv_bjhint);
-            mCheckBox.setChecked(true);
-            mName.setText(mCustom.getId());
-            mMobile.setText(mCustom.getMobile());
-             mMs.setText(mCustom.getName());
 
+            if (mName!=null&&mMobile!=null&&mMs!=null) {
+                mCheckBox.setChecked(true);
+                mName.setText(mCustom.getId());
+                mMobile.setText(mCustom.getMobile());
+                mMs.setText(mCustom.getName());
+            }
             dgx = (TextView) findViewById(R.id.dgx);
             wjt= (TextView) findViewById(R.id.wjt);
             wyy= (TextView) findViewById(R.id.wyy);
@@ -348,10 +349,10 @@ String token=SPUtils.getString(RemarkActivity.this,"token","");
                         Log.e("响铃", "电话状态……RINGING");
                         break;
                     case TelephonyManager.CALL_STATE_OFFHOOK:
-                        Log.e("挂断", "电话状态……OFFHOOK");
+                        Log.e("空闲", "电话状态……OFFHOOK");
                         break;
                     case TelephonyManager.CALL_STATE_IDLE:
-                        Log.e("空闲", "电话状态……IDLE");
+                        Log.e("挂断", "电话状态……IDLE");
 
                         mCheckBox.setChecked(true);
                         mName.setText(mInfos.getMsg().get(mPostion).getId());

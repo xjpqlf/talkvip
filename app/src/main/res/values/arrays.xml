@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="loading_anim">
-        <item>@drawable/loadings_1</item>
-        <item>@drawable/loadings_2</item>
-        <item>@drawable/loadings_3</item>
-        <item>@drawable/loadings_4</item>
-        <item>@drawable/loadings_5</item>
-        <item>@drawable/loadings_6</item>
-        <item>@drawable/loadings_7</item>
-        <item>@drawable/loadings_8</item>
-        <item>@drawable/loadings_9</item>
+        <item>@drawable/loadings_10</item>
+        <item>@drawable/loadings_12</item>
+        <item>@drawable/loadings_13</item>
+        <item>@drawable/loadings_14</item>
+        <item>@drawable/loadings_15</item>
+        <item>@drawable/loadings_16</item>
+        <item>@drawable/loadings_17</item>
+        <item>@drawable/loadings_18</item>
+        <item>@drawable/loadings_19</item>
 
 
 

@@ -110,8 +110,8 @@
 
 
         <RelativeLayout
-            android:layout_width="70dp"
-            android:layout_height="30dp"
+            android:layout_width="50dp"
+            android:layout_height="25dp"
            android:layout_toLeftOf="@+id/iv_cleans_go"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
@@ -123,9 +123,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
               android:id="@+id/cache"
-                android:textSize="17sp"
+                android:textSize="14sp"
                 android:textColor="@color/cacecorlor"
-                android:text="15M"/>
+                android:text="15k"/>
 
         </RelativeLayout>
         <ImageView

@@ -32,6 +32,8 @@
     <color name="grey_word1">#abc5e6</color>
     <color name="cacecorlors">#bdd0ff</color>
     <color name="linec">#F0F3F7</color>
+    <color name="checked_color">#5a89ff</color>
+    <color name="unchecked_color">#76899e</color>
 
 
 </resources>

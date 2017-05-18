@@ -276,7 +276,7 @@ public class NoDesireFragment extends Fragment {
 
         ButterKnife.bind(this, mView);
 
-        MyAnimationDrawable.animateRawManuallyFromXML(R.drawable.loadings, image, new Runnable() {
+        MyAnimationDrawable.animateRawManuallyFromXML(R.drawable.loads, image, new Runnable() {
             @Override
             public void run() {
                 // TODO onStart
@@ -335,15 +335,34 @@ public class NoDesireFragment extends Fragment {
         ptrLayout.setPtrHandler(new PtrDefaultHandler2() {
             @Override
             public void onLoadMoreBegin(PtrFrameLayout frame) {
+                if (pager>1){
 
-                frame.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (ptrLayout != null) {
-                            ptrLayout.refreshComplete();
+                    pager--;
+                    frame.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (ptrLayout != null) {
+
+                                getData(pager);
+                                ptrLayout.refreshComplete();
+                            }
                         }
-                    }
-                }, 2000);
+                    }, 2000);
+                }else{
+                    frame.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (ptrLayout != null) {
+
+                                ToastUtil.showInCenter("没有更多的数据了");
+                                ptrLayout.refreshComplete();
+                            }
+                        }
+                    }, 2000);
+
+
+                }
+
             }
 
             @Override
@@ -363,7 +382,6 @@ public class NoDesireFragment extends Fragment {
 
             }
         });
-
 
     }
 
@@ -658,7 +676,7 @@ public class NoDesireFragment extends Fragment {
         super.onPause();
 
     }
-    // 以下代码可以跳转到应用详情，可以通过应用详情跳转到权限界面(6.0系统测试可用)
+
     private void getAppDetailSettingIntent(Context context) {
         Intent localIntent = new Intent();
         localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

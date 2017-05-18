@@ -50,7 +50,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_id"
+                android:id="@+id/tv_detailids"
                 android:textSize="30sp"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/white"
@@ -58,7 +58,7 @@
 
 
             <TextView
-                android:layout_below="@+id/tv_id"
+                android:layout_below="@id/tv_detailids"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

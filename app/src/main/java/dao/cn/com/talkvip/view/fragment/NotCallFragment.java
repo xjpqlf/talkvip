@@ -145,7 +145,7 @@ public class NotCallFragment extends Fragment {
 
         ButterKnife.bind(this, mView);
 
-        MyAnimationDrawable.animateRawManuallyFromXML(R.drawable.loadings, image, new Runnable() {
+        MyAnimationDrawable.animateRawManuallyFromXML(R.drawable.loads, image, new Runnable() {
             @Override
             public void run() {
                 // TODO onStart

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:layout_height="70dp"
                 android:layout_margin="3dp"
                 android:descendantFocusability="blocksDescendants"
 
                >
 
     <RelativeLayout
-        android:layout_width="30dp"
+        android:layout_width="20dp"
       android:layout_alignParentLeft="true"
         android:id="@+id/rl_guid"
       android:layout_margin="3dp"
@@ -50,7 +50,7 @@
             android:layout_centerVertical="true"
 
             android:textColor="@color/item_phone"
-            android:textSize="20sp"/>
+            android:textSize="16sp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
 
             android:textColor="@color/item_phone"
             android:text="13989999999"
-            android:textSize="16sp"/>
+            android:textSize="14sp"/>
 </RelativeLayout>
 
         <TextView
@@ -71,11 +71,11 @@
             android:layout_below="@+id/rl_id"
             android:layout_marginLeft="15dp"
              android:id="@+id/tv_dc"
-           android:layout_marginTop="3dp"
+           android:layout_marginTop="5dp"
             android:singleLine="false"
             android:textColor="@color/item_dc"
             android:text="我的一家是计算机技术"
-            android:textSize="14sp"/>
+            android:textSize="13sp"/>
 
     </RelativeLayout>
 

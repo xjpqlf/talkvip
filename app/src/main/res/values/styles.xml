@@ -17,10 +17,12 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+      <!--  <item name="android:windowIsTranslucent">true</item>-->
         <!--导航栏底色-->
         <item name="colorPrimary">@color/material_primary_color</item>
         <!--状态栏底色-->
-        <item name="colorPrimaryDark">@color/material_primary_color_dark</item>
+        <item name="colorPrimaryDark">#69ADFF</item>
+
         <!--导航栏上的标题颜色-->
         <item name="android:textColorPrimary">@android:color/black</item>
         <!--Activity窗口的颜色-->
@@ -34,6 +36,16 @@
         <!--EditText 输入框中字体的颜色-->
         <item name="editTextColor">@android:color/white</item>
         <item name="android:textColorHint">@color/hint_foreground_material_dark</item>
+      <!--  //全屏-->
+       <!-- <item name="android:windowFullscreen">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>-->
+      <!--  解决跳转黑屏-->
+
+
+
+
     </style>
     <style name="Notitle" parent="@style/Theme.AppCompat.Light.NoActionBar">
 
@@ -80,5 +92,9 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
-
+    <style name="ActionBarFullScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
 </resources>

@@ -1,6 +1,8 @@
 package dao.cn.com.talkvip.view.activity;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -53,9 +55,10 @@ public class MainActivity extends BaseActivity implements Toolbar.OnMenuItemClic
         decorView.setSystemUiVisibility(option);*/
     drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navigationView);
-
+        Resources resource=(Resources)getBaseContext().getResources();
+        ColorStateList csl=(ColorStateList)resource.getColorStateList(R.color.navigation_menu_item_color);
+        navigationView.setItemTextColor(csl);
         navigationView.getMenu().getItem(0).setChecked(true);
-
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -147,7 +150,7 @@ public class MainActivity extends BaseActivity implements Toolbar.OnMenuItemClic
         toolbar.setTitle("");
         toolbar.setSubtitle("");
 
-        toolbar.setNavigationIcon(R.mipmap.muen);
+        toolbar.setNavigationIcon(R.mipmap.xxhdpi_03);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setOnMenuItemClickListener(this);
 

@@ -293,7 +293,7 @@ public class NotCallFragments extends Fragment {
 
         ButterKnife.bind(this, mView);
 
-        MyAnimationDrawable.animateRawManuallyFromXML(R.drawable.loadings, image, new Runnable() {
+        MyAnimationDrawable.animateRawManuallyFromXML(R.drawable.loads, image, new Runnable() {
             @Override
             public void run() {
                 // TODO onStart
@@ -332,7 +332,7 @@ public class NotCallFragments extends Fragment {
     public void onResume() {
         super.onResume();
 
-
+DebugFlags.logD("界面重现");
 
     }
 
@@ -352,15 +352,34 @@ public class NotCallFragments extends Fragment {
         ptrLayout.setPtrHandler(new PtrDefaultHandler2() {
             @Override
             public void onLoadMoreBegin(PtrFrameLayout frame) {
+          if (pager>1){
 
-                frame.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (ptrLayout != null) {
-                            ptrLayout.refreshComplete();
-                        }
-                    }
-                }, 2000);
+              pager--;
+              frame.postDelayed(new Runnable() {
+                  @Override
+                  public void run() {
+                      if (ptrLayout != null) {
+
+                          getData(pager);
+                          ptrLayout.refreshComplete();
+                      }
+                  }
+              }, 2000);
+          }else{
+              frame.postDelayed(new Runnable() {
+                  @Override
+                  public void run() {
+                      if (ptrLayout != null) {
+
+                          ToastUtil.showInCenter("没有更多的数据了");
+                          ptrLayout.refreshComplete();
+                      }
+                  }
+              }, 2000);
+
+
+          }
+
             }
 
             @Override
@@ -673,6 +692,7 @@ public class NotCallFragments extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        DebugFlags.logD("界面F失去焦点");
 
     }
 

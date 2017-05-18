@@ -40,7 +40,7 @@ public class MyPtrRefresher extends FrameLayout implements PtrUIHandler {
         view = LayoutInflater.from(getContext()).inflate(R.layout.view_ptrrefresher, this, false);
         iv_refresh = (ImageView) view.findViewById(R.id.id_header_iv_img);
         tv_refresh = (TextView) view.findViewById(R.id.id_header_tv_tip);
-        iv_refresh.setBackgroundResource(R.drawable.loading);
+        iv_refresh.setBackgroundResource(R.drawable.loadings);
         AnimationDrawable anim = (AnimationDrawable) iv_refresh.getBackground();
         anim.start();
        ad = (AnimationDrawable) iv_refresh.getDrawable();

@@ -54,10 +54,11 @@ android:id="@+id/rl_detail"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
        <RelativeLayout
-           android:layout_width="70dp"
+           android:layout_width="60dp"
            android:layout_height="wrap_content"
            android:id="@+id/ll_neixing"
-           android:background="@mipmap/lable">
+           android:background="@mipmap/lable"
+         >
            <TextView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
@@ -66,8 +67,9 @@ android:id="@+id/rl_detail"
                android:id="@+id/tv_type"
 
                android:textColor="@color/bule"
-               android:layout_marginTop="6dp"
-                android:layout_marginLeft="8dp"
+           android:layout_centerVertical="true"
+
+             android:layout_marginLeft="5dp"
 
 
               />
