@@ -2,13 +2,14 @@ package dao.cn.com.talkvip.view.fragment;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -64,6 +65,7 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import okhttp3.Call;
+import okhttp3.OkHttpClient;
 
 /**
  * Description:
@@ -96,13 +98,13 @@ public class ImportFragment extends Fragment {
     private IndosAdapter mAdapter;
     private List<CustomFrist> mC;
     private int mA;
-    private  PhoneBroadcastReceiver mycodereceiver;
+    private   PhoneReceiverei mycodereceiver;
     private int pager = 1;
     final public static int REQUEST_CODE_ASK_CALL_PHONE = 123;
     private static final int DATA_LOAD_FAILED = 0X00123311;
     private static final int DATA_LOAD_SUCCESS = 0X43254564;
     private String mId;
-    private int mP;
+    private int mP=-1;
     private Infos mInfo;
     private Custom mCustom;
     private Handler handlers = new Handler() {
@@ -324,8 +326,9 @@ public class ImportFragment extends Fragment {
 
     private void initView() {
 
-        mycodereceiver = new  PhoneBroadcastReceiver();
+        mycodereceiver = new   PhoneReceiverei();
         IntentFilter filter = new IntentFilter();
+        filter.addAction("android.intent.action.BOOT_COMPLETED");
         filter.addAction("android.intent.action.PHONE_STATE");
         filter.addAction("android.intent.action.NEW_OUTGOING_CALL");
         getActivity(). registerReceiver(mycodereceiver, filter);
@@ -622,7 +625,7 @@ public class ImportFragment extends Fragment {
 
 
 
-    public class PhoneBroadcastReceiver extends BroadcastReceiver {
+   /* public class PhoneBroadcastReceiver extends BroadcastReceiver {
 
 
         String TAG = "打电话";
@@ -659,7 +662,99 @@ public class ImportFragment extends Fragment {
             }
         }
 
-    }
+    }*/
+   public class PhoneReceiverei extends BroadcastReceiver {
+       private int lastCallState  = TelephonyManager.CALL_STATE_IDLE;
+       private boolean isIncoming = false;
+       private  String contactNum;
+       Intent audioRecorderService;
+       OkHttpClient httpClient;
+       SharedPreferences sharedPreferences;
+       String type;
+       Bitmap bitmap;
+       Context  context;
+
+       @Override
+       public void onReceive(Context context, Intent intent) {
+           this.context =context;
+           Constants.isCall=true;  //判断是否在通话中
+           //如果是去电
+           if (intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)){
+               contactNum = intent.getExtras().getString(Intent.EXTRA_PHONE_NUMBER);
+           }else //android.intent.action.PHONE_STATE.查了下android文档，貌似没有专门用于接收来电的action,所以，非去电即来电.
+           {
+               String state = intent.getExtras().getString(TelephonyManager.EXTRA_STATE);
+               String phoneNumber = intent.getExtras().getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
+               int stateChange = 0;
+
+               if (state.equals(TelephonyManager.EXTRA_STATE_IDLE)){
+                   Constants.isCall =false;
+                   //空闲状态
+                   stateChange =TelephonyManager.CALL_STATE_IDLE;
+                   if (isIncoming){
+                       onIncomingCallEnded(context,phoneNumber);
+                   }else {
+                       onOutgoingCallEnded(context,phoneNumber);
+                   }
+               }else if (state.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)){
+                   //摘机状态
+                   Constants.isCall =false;
+                   stateChange = TelephonyManager.CALL_STATE_OFFHOOK;
+                   if (lastCallState != TelephonyManager.CALL_STATE_RINGING){
+                       //如果最近的状态不是来电响铃的话，意味着本次通话是去电
+                       isIncoming =false;
+                       onOutgoingCallStarted(context,phoneNumber);
+                   }else {
+                       //否则本次通话是来电
+                       isIncoming = true;
+                       onIncomingCallAnswered(context, phoneNumber);
+                   }
+               }else if (state.equals(TelephonyManager.EXTRA_STATE_RINGING)){
+                   //来电响铃状态
+                   Constants.isCall =false;
+                   stateChange = TelephonyManager.CALL_STATE_RINGING;
+                   lastCallState = stateChange;
+                   onIncomingCallReceived(context,contactNum);
+               }
+           }
+       }
+
+       protected void onIncomingCallStarted(Context context,String number){
+           Toast.makeText(context, "0", Toast.LENGTH_SHORT).show();
+       }
+       protected void onOutgoingCallStarted(Context context,String number){
+           //正在通话中会走这个方法。在这里处理自己的逻辑
+           //  putRed(context);
+       }
+       protected void onIncomingCallEnded(Context context,String number){
+           Toast.makeText(context,"end", Toast.LENGTH_SHORT).show();
+       }
+       protected void onOutgoingCallEnded(Context context,String number){
+           //电话挂断时候会走这个方法。在这里处理自己的逻辑
+
+           Constants.isCall =true;
+           Intent inten1=new Intent(getActivity(),RemarkActivity.class);
+           if(mCustom!=null&&mInfo!=null&&mP!=-1&&number!=null){
+               DebugFlags.logD("电话挂断了重点"+number);
+               inten1.putExtra("p",mCustom);
+               inten1.putExtra("list",mInfo);
+               inten1.putExtra("postion",mP);
+
+            //   getActivity(). unregisterReceiver(mycodereceiver);
+               getActivity().startActivity(inten1);
+               mP=-1;
+           }
+
+
+       }
+       protected void onIncomingCallReceived(Context context,String number){
+           Toast.makeText(context, "4", Toast.LENGTH_SHORT).show();
+       }
+       protected void onIncomingCallAnswered(Context context, String number) {
+           Toast.makeText(context, "5", Toast.LENGTH_SHORT).show();
+       }
+
+   }
     private void CallPhone(String phone) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_CALL);
@@ -692,5 +787,11 @@ public class ImportFragment extends Fragment {
             localIntent.putExtra("com.android.settings.ApplicationPkgName",getActivity(). getPackageName());
         }
         startActivity(localIntent);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity(). unregisterReceiver(mycodereceiver);
     }
 }

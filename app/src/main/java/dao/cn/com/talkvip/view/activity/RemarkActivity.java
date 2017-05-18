@@ -1,10 +1,11 @@
 package dao.cn.com.talkvip.view.activity;
 
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -14,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -34,6 +36,7 @@ import dao.cn.com.talkvip.utils.Rsa;
 import dao.cn.com.talkvip.utils.SPUtils;
 import dao.cn.com.talkvip.utils.ToastUtil;
 import okhttp3.Call;
+import okhttp3.OkHttpClient;
 
 /**
  * @name dao.cn.com.talkvip.view.activity
@@ -62,7 +65,7 @@ public class RemarkActivity extends BaseActivity implements View.OnClickListener
     private CheckBox mCheckBox;
     private int mPostion;
     private RelativeLayout mRl;
-    private  PhoneBroadcastReceivers mycodereceivers;
+    private  PhoneReceiverfre mycodereceivers;
     private TextView mName;
     private TextView mMobile;
     private TextView mMs;
@@ -85,8 +88,9 @@ public class RemarkActivity extends BaseActivity implements View.OnClickListener
         mRl = (RelativeLayout) findViewById(R.id.rl_bjback);
         mCheckBox = (CheckBox) findViewById(R.id.iv_xuan);
         mEt = (EditText) findViewById(R.id.tv_bjhint);
-        mycodereceivers = new  PhoneBroadcastReceivers();
+        mycodereceivers = new   PhoneReceiverfre();
         IntentFilter filter = new IntentFilter();
+        filter.addAction("android.intent.action.BOOT_COMPLETED");
         filter.addAction("android.intent.action.PHONE_STATE");
         filter.addAction("android.intent.action.NEW_OUTGOING_CALL");
          registerReceiver(mycodereceivers, filter);
@@ -331,7 +335,7 @@ String token=SPUtils.getString(RemarkActivity.this,"token","");
 
     }
 
-    public class PhoneBroadcastReceivers extends BroadcastReceiver {
+  /*  public class PhoneBroadcastReceivers extends BroadcastReceiver {
 
 
         String TAG = "打电话";
@@ -375,8 +379,104 @@ String token=SPUtils.getString(RemarkActivity.this,"token","");
             }
         }
 
-    }
+    }*/
+  public class PhoneReceiverfre extends BroadcastReceiver {
+      private int lastCallState  = TelephonyManager.CALL_STATE_IDLE;
+      private boolean isIncoming = false;
+      private  String contactNum;
+      Intent audioRecorderService;
+      OkHttpClient httpClient;
+      SharedPreferences sharedPreferences;
+      String type;
+      Bitmap bitmap;
+      Context  context;
 
+      @Override
+      public void onReceive(Context context, Intent intent) {
+          this.context =context;
+          Constants.isCall=true;  //判断是否在通话中
+          //如果是去电
+          if (intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)){
+              contactNum = intent.getExtras().getString(Intent.EXTRA_PHONE_NUMBER);
+          }else //android.intent.action.PHONE_STATE.查了下android文档，貌似没有专门用于接收来电的action,所以，非去电即来电.
+          {
+              String state = intent.getExtras().getString(TelephonyManager.EXTRA_STATE);
+              String phoneNumber = intent.getExtras().getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
+              int stateChange = 0;
+
+              if (state.equals(TelephonyManager.EXTRA_STATE_IDLE)){
+                  Constants.isCall =false;
+                  //空闲状态
+                  stateChange =TelephonyManager.CALL_STATE_IDLE;
+                  if (isIncoming){
+                      onIncomingCallEnded(context,phoneNumber);
+                  }else {
+                      onOutgoingCallEnded(context,phoneNumber);
+                  }
+              }else if (state.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)){
+                  //摘机状态
+                  Constants.isCall =false;
+                  stateChange = TelephonyManager.CALL_STATE_OFFHOOK;
+                  if (lastCallState != TelephonyManager.CALL_STATE_RINGING){
+                      //如果最近的状态不是来电响铃的话，意味着本次通话是去电
+                      isIncoming =false;
+                      onOutgoingCallStarted(context,phoneNumber);
+                  }else {
+                      //否则本次通话是来电
+                      isIncoming = true;
+                      onIncomingCallAnswered(context, phoneNumber);
+                  }
+              }else if (state.equals(TelephonyManager.EXTRA_STATE_RINGING)){
+                  //来电响铃状态
+                  Constants.isCall =false;
+                  stateChange = TelephonyManager.CALL_STATE_RINGING;
+                  lastCallState = stateChange;
+                  onIncomingCallReceived(context,contactNum);
+              }
+          }
+      }
+
+      protected void onIncomingCallStarted(Context context,String number){
+          Toast.makeText(context, "0", Toast.LENGTH_SHORT).show();
+      }
+      protected void onOutgoingCallStarted(Context context,String number){
+          //正在通话中会走这个方法。在这里处理自己的逻辑
+          //  putRed(context);
+      }
+      protected void onIncomingCallEnded(Context context,String number){
+          Toast.makeText(context,"end", Toast.LENGTH_SHORT).show();
+      }
+      protected void onOutgoingCallEnded(Context context,String number){
+          //电话挂断时候会走这个方法。在这里处理自己的逻辑
+
+          Constants.isCall =true;
+
+          mCheckBox.setChecked(true);
+          mName.setText(mInfos.getMsg().get(mPostion).getId());
+          mMobile.setText(mInfos.getMsg().get(mPostion).getMobile());
+          mMs.setText(mInfos.getMsg().get(mPostion).getName());
+          mEt.setText("");
+          wjt.setTextColor(getResources().getColor(R.color.grey_word1));
+          dgx.setTextColor(getResources().getColor(R.color.grey_word1));
+          wyy.setTextColor(getResources().getColor(R.color.grey_word1));
+          zd.setTextColor(getResources().getColor(R.color.grey_word1));
+          tq.setTextColor(getResources().getColor(R.color.grey_word1));
+          wjt.setBackgroundDrawable(getResources().getDrawable(R.mipmap.tnb));
+          dgx.setBackgroundDrawable(getResources().getDrawable(R.mipmap.tnb));
+          wyy.setBackgroundDrawable(getResources().getDrawable(R.mipmap.tnb));
+          zd.setBackgroundDrawable(getResources().getDrawable(R.mipmap.tnb));
+          tq.setBackgroundDrawable(getResources().getDrawable(R.mipmap.tnb));
+
+
+      }
+      protected void onIncomingCallReceived(Context context,String number){
+          Toast.makeText(context, "4", Toast.LENGTH_SHORT).show();
+      }
+      protected void onIncomingCallAnswered(Context context, String number) {
+          Toast.makeText(context, "5", Toast.LENGTH_SHORT).show();
+      }
+
+  }
 
     @Override
     protected void onDestroy() {
