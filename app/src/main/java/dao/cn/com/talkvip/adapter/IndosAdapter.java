@@ -3,6 +3,7 @@ package dao.cn.com.talkvip.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.cn.com.talkvip.R;
+import dao.cn.com.talkvip.bean.Custom;
 import dao.cn.com.talkvip.bean.CustomFrist;
+import dao.cn.com.talkvip.bean.Infos;
 import dao.cn.com.talkvip.view.activity.Detail;
 
 public class IndosAdapter extends RecyclerView.Adapter<IndosAdapter.ViewHolder> implements View.OnClickListener{
@@ -46,10 +50,20 @@ public class IndosAdapter extends RecyclerView.Adapter<IndosAdapter.ViewHolder> 
         viewHolder.dc.setText(list.get(position).getCustom().getName());
         if (list.get(position).isFirst()){
 
-            viewHolder.guid.getChildAt(0).setVisibility(View.VISIBLE);
+          //  viewHolder.guid.getChildAt(0).setVisibility(View.VISIBLE);
         }else{
-            viewHolder.guid.getChildAt(0).setVisibility(View.GONE);
+        //    viewHolder.guid.getChildAt(0).setVisibility(View.GONE);
         }
+
+        List<Custom> mlist=new ArrayList<>();
+        for (int i = 0; i <list.size(); i++) {
+            Custom c=list.get(i).getCustom();
+
+            mlist.add(c);
+        }
+
+        final Infos   mInfo = new Infos(mlist);
+
      viewHolder.rl.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
@@ -57,7 +71,12 @@ public class IndosAdapter extends RecyclerView.Adapter<IndosAdapter.ViewHolder> 
              intent.putExtra("id",list.get(position).getCustom().getId());
              intent.putExtra("name",list.get(position).getCustom().getName());
              intent.putExtra("mobile",list.get(position).getCustom().getMobile());
-             intent.putExtra("type","未拨打");
+             intent.putExtra("type",list.get(position).getType());
+             if (!TextUtils.isEmpty(list.get(position).getCustom().getSourceid())){
+             intent.putExtra("sid",list.get(position).getCustom().getSourceid());}
+             intent.putExtra("mP",position);
+             intent.putExtra("p",list.get(position).getCustom());
+             intent.putExtra("list",mInfo);
 
 
              context.startActivity(intent);

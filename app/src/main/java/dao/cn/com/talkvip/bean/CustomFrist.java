@@ -14,16 +14,25 @@ package dao.cn.com.talkvip.bean;
 public class CustomFrist {
     private Custom mCustom;
     private boolean isFirst;
+    private String type;
+
 
 
     public CustomFrist() {
     }
 
-    public CustomFrist(Custom custom, boolean isFirst) {
+    public CustomFrist(Custom custom, boolean isFirst,String type) {
         mCustom = custom;
         this.isFirst = isFirst;
+        this.type = type;
+    }
+    public String getType() {
+        return type;
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
     public Custom getCustom() {
         return mCustom;
     }

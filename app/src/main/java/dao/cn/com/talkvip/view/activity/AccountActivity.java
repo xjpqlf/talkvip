@@ -65,6 +65,9 @@ public class AccountActivity extends BaseActivity {
                 mEmil.setFocusableInTouchMode(true);
                 mPhone.setFocusable(true);
                 mPhone.setFocusableInTouchMode(true);
+                mEmil.setTextColor(getResources().getColor(R.color.black));
+                mPhone.setTextColor(getResources().getColor(R.color.black));
+
 
 
 
@@ -123,7 +126,8 @@ mSave.setOnClickListener(new View.OnClickListener() {
                         mPhone.setFocusable(false);
                         mPhone.setFocusableInTouchMode(false);
 
-
+                        mEmil.setTextColor(getResources().getColor(R.color.item_dc));
+                        mPhone.setTextColor(getResources().getColor(R.color.item_dc));
                         ToastUtil.showInCenter("保存成功");
 
 

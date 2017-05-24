@@ -88,7 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/view"
-        android:id="@+id/ll_choos"
+        android:id="@+id/ll_chooes"
         android:layout_marginTop="24dp"
         android:orientation="horizontal">
 

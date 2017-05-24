@@ -24,7 +24,7 @@
         android:layout_below="@+id/civ_image"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:text="嗨，探客"
+        android:text="嗨，客来"
         android:textStyle="bold"/>
 
 </RelativeLayout>

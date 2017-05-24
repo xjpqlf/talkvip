@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+       android:id="@+id/ll_relogin"
+    >
+    <RelativeLayout
+        android:background="@drawable/shap_popupwindow"
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_height="80dp">
+    <TextView
+        android:id="@+id/iv_notify"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:text="提示"/>
+    <TextView
+        android:layout_below="@id/iv_notify"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="你的登陆已失效请重新登录"/>
+    </RelativeLayout>
+
+
+</LinearLayout>

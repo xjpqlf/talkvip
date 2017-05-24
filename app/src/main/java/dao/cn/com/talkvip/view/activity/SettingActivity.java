@@ -87,13 +87,13 @@ public class SettingActivity  extends BaseActivity {
 
                     DataCleanManager.clearAllCache(SettingActivity.this);
                     ToastUtil.showInCenter("清理完成");
-                    tvahe.setText(0+"k");
+                    tvahe.setText(0+"kb");
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
         }
-      RelativeLayout rl= (RelativeLayout) findViewById(R.id.rl_out);
+     TextView rl= (TextView) findViewById(R.id.rl_out);
         rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

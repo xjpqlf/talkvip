@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">探客</string>
+    <string name="app_name">客来</string>
     <string name="assess">评价我们</string>
     <string name="about">关于</string>
     <string name="clean">清除缓存</string>
@@ -20,6 +20,7 @@
     <string name="Notconnected">未接通</string>
     <string name="edit">编辑</string>
     <string name="saves">保存</string>
+    <string name="netstatu">当前网络不可用，请检查你的网络设置</string>
 
 
     <string name="permission_get_accounts_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_GET_ACCOUNTS</string>

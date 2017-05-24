@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ import dao.cn.com.talkvip.utils.DebugFlags;
 import dao.cn.com.talkvip.utils.Rsa;
 import dao.cn.com.talkvip.utils.SPUtils;
 import dao.cn.com.talkvip.utils.ToastUtil;
+import dao.cn.com.talkvip.utils.Util;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 
@@ -53,6 +55,7 @@ public class RemarkActivity extends BaseActivity implements View.OnClickListener
 
 
     private String status="0";
+    private String s;
     private TextView dgx;
     private TextView tq;
     private TextView wyy;
@@ -69,7 +72,8 @@ public class RemarkActivity extends BaseActivity implements View.OnClickListener
     private TextView mName;
     private TextView mMobile;
     private TextView mMs;
-
+    private  LinearLayout ls;
+    private int mA;
     @Override
     protected void initHead() {
 
@@ -85,6 +89,7 @@ public class RemarkActivity extends BaseActivity implements View.OnClickListener
         mName = (TextView) findViewById(R.id.tv_detailids);
         mMobile = (TextView) findViewById(R.id.detail_phone);
         mMs = (TextView) findViewById(R.id.tv_ms);
+        ls= (LinearLayout) findViewById(R.id.ll_chooes);
         mRl = (RelativeLayout) findViewById(R.id.rl_bjback);
         mCheckBox = (CheckBox) findViewById(R.id.iv_xuan);
         mEt = (EditText) findViewById(R.id.tv_bjhint);
@@ -101,8 +106,18 @@ public class RemarkActivity extends BaseActivity implements View.OnClickListener
             mInfos = (Infos) in.getSerializableExtra("list");
             mCustom = (Custom) in.getSerializableExtra("p");
             mPostion = in.getIntExtra("postion",0);
+               s=in.getStringExtra("status");
 
+                DebugFlags.logD(s+"==标记");
           // Log.v("电话集合", "" + mInfos.getMsg().toString()+ mCustom.toString());
+
+               if ("已提取".equals(s)){
+
+
+                 ls.setVisibility(View.GONE);
+
+               }
+
 
 
             if (mName!=null&&mMobile!=null&&mMs!=null) {
@@ -229,11 +244,14 @@ public class RemarkActivity extends BaseActivity implements View.OnClickListener
 
                 if (!"0".equals(status)&&!TextUtils.isEmpty(mEt.getText().toString())){
 
+                 if (Util.isNetwork(this)) {
 
+                     save();
 
-                    save();
+                 }else{
 
-
+                     ToastUtil.show(R.string.netstatu);
+                 }
 
                     //产生日志
 
@@ -297,11 +315,14 @@ String token=SPUtils.getString(RemarkActivity.this,"token","");
                             mPostion++;
                             creatLog(mInfos.getMsg().get(mPostion).getId(),order);
                             DebugFlags.logD("连续拨打日志id"+mInfos.getMsg().get(mPostion).getId());
-                            getPhoneNum(mInfos.getMsg().get(mPostion).getMobile(),order);
-                            CallPhone(mInfos.getMsg().get(mPostion).getId());
+                            getPhoneNum(mInfos.getMsg().get(mPostion).getSourceid(),order);
+                           // CallPhone(mInfos.getMsg().get(mPostion).getId());
 
 
 
+                        }else{
+
+                            finish();
                         }
 
 
@@ -514,7 +535,7 @@ String token=SPUtils.getString(RemarkActivity.this,"token","");
 
     }
 
-    private void getPhoneNum(String phone,String order) {
+    private void getPhoneNum(String id,String order) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm");
         Date curDate = new Date(System.currentTimeMillis());
@@ -522,7 +543,7 @@ String token=SPUtils.getString(RemarkActivity.this,"token","");
         Random rand = new Random();
         int i = rand.nextInt(100);
 
-        int mA = rand.nextInt(10000000);
+        mA = rand.nextInt(10000000);
 
         String accountId = "1";
         String timeStamp = i + str;
@@ -534,17 +555,17 @@ String token=SPUtils.getString(RemarkActivity.this,"token","");
         Log.d("时间戳", mSigns);
         OkHttpUtils.post()
                 .url("http://c1.dev.talkvip.cn/Authorization")
-                .addParams("accuntID", accountId)
-                .addParams("callingPhone", "15102720175")
-                .addParams("calledPhone", "13659827958")
-                .addParams("dataID", 1 + "")
+                .addParams("accuntID", "1")
+                .addParams("callingPhone", SPUtils.getString(RemarkActivity.this,"phone",""))
+                .addParams("calledPhone", "")
+                .addParams("dataID", id)
                 .addParams("order", order)
                 .addParams("timeStamp", timeStamp)
                 .addParams("resultURL", "www.baidu.com")
                 .addParams("notifyURL", "www.baidu.com")
                 .addParams("remark", "")
-                .addParams("type", "2")
-                .addParams("line", "2")
+                .addParams("type", "1")
+                .addParams("line", "E")
                 .addParams("signInfo", mSigns).build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
@@ -553,7 +574,28 @@ String token=SPUtils.getString(RemarkActivity.this,"token","");
 
             @Override
             public void onResponse(String response, int id) {
-                Log.d("电话", "onResponse: " + response);
+                Log.d("单项隐私 电话", "onResponse: " + response);
+                try {
+                    JSONObject json=new JSONObject(response);
+                    String code=json.getString("resultCode");
+                    if ("8888".equals(code)){
+
+                        String num= json.getString("fromSerNum");
+                        CallPhone(num);
+
+
+                    }else{
+                        //TODO
+                        ToastUtil.show("拨打失败");
+                    }
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
             }
         });
 

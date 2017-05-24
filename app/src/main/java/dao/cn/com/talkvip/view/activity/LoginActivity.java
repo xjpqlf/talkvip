@@ -23,6 +23,7 @@ import dao.cn.com.talkvip.utils.DebugFlags;
 import dao.cn.com.talkvip.utils.RsaU;
 import dao.cn.com.talkvip.utils.SPUtils;
 import dao.cn.com.talkvip.utils.ToastUtil;
+import dao.cn.com.talkvip.utils.Util;
 import okhttp3.Call;
 
 /**
@@ -113,8 +114,15 @@ public class LoginActivity extends BaseActivity {
               //  intent.putExtra("name", name);
                 startActivity(intent);
                 finish();
-*/
+*/                  if (Util.isNetwork(LoginActivity.this)){
                 Login();
+            }else{
+
+                    ToastUtil.show(R.string.netstatu);
+
+                }
+
+
             }
         });
 
@@ -158,6 +166,8 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         DebugFlags.logD("失败" + e.toString());
+
+                        ToastUtil.show("连接服务器失败");
                     }
 
                     @Override
@@ -185,6 +195,7 @@ public class LoginActivity extends BaseActivity {
                                 SPUtils.putString(LoginActivity.this,"token",token);
                                 SPUtils.putString(LoginActivity.this,"ac",ac);
                                 SPUtils.putString(LoginActivity.this,"pwd",pwd);
+
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 intent.putExtra("name", name);
                                 startActivity(intent);

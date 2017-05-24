@@ -20,15 +20,17 @@ private List<Custom> list;
   private   String total;
    private String totalpage;
   private   String page;
+  private   String notifyURL;
 
-    public Data(List<Custom> list, String total, String totalpage, String page) {
+    public Data() {
+    }
+
+    public Data(List<Custom> list, String total, String totalpage, String page, String notifyURL) {
         this.list = list;
         this.total = total;
         this.totalpage = totalpage;
         this.page = page;
-    }
-
-    public Data() {
+        this.notifyURL = notifyURL;
     }
 
     public List<Custom> getList() {
@@ -62,4 +64,25 @@ private List<Custom> list;
     public void setPage(String page) {
         this.page = page;
     }
+
+    public String getNotifyURL() {
+        return notifyURL;
+    }
+
+    public void setNotifyURL(String notifyURL) {
+        this.notifyURL = notifyURL;
+    }
+
+    @Override
+    public String toString() {
+        return "Data{" +
+                "list=" + list +
+                ", total='" + total + '\'' +
+                ", totalpage='" + totalpage + '\'' +
+                ", page='" + page + '\'' +
+                ", notifyURL='" + notifyURL + '\'' +
+                '}';
+    }
 }
+
+

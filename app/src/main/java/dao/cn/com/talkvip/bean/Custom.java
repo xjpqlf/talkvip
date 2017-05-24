@@ -23,17 +23,19 @@ public class Custom implements Serializable{
     private String name;
     private String mobile;
     private String inputtime;
+    private String sourceid;
 
+    public Custom() {
+    }
 
-    public Custom(String id, String name, String mobile, String inputtime) {
+    public Custom(String id, String name, String mobile, String inputtime, String sourceid) {
         this.id = id;
         this.name = name;
         this.mobile = mobile;
         this.inputtime = inputtime;
+        this.sourceid = sourceid;
     }
 
-    public Custom() {
-    }
 
     public String getId() {
         return id;
@@ -67,6 +69,14 @@ public class Custom implements Serializable{
         this.inputtime = inputtime;
     }
 
+    public String getSourceid() {
+        return sourceid;
+    }
+
+    public void setSourceid(String sourceid) {
+        this.sourceid = sourceid;
+    }
+
     @Override
     public String toString() {
         return "Custom{" +
@@ -74,8 +84,7 @@ public class Custom implements Serializable{
                 ", name='" + name + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", inputtime='" + inputtime + '\'' +
+                ", sourceid='" + sourceid + '\'' +
                 '}';
     }
-
-
 }

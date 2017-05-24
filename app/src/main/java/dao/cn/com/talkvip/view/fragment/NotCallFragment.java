@@ -117,7 +117,7 @@ public class NotCallFragment extends Fragment {
                     //  tvPager.setText(1 + "/" + mList.size());
                     mC = new ArrayList<CustomFrist>();
                     for (int i = 0; i < mList.size(); i++) {
-                        mC.add(new CustomFrist(mList.get(i), false));
+                        mC.add(new CustomFrist(mList.get(i), false,"未拨打"));
 
                     }
 

@@ -3,7 +3,6 @@ package dao.cn.com.talkvip.view.activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -44,7 +43,7 @@ public class About extends BaseActivity {
     @Override
     protected void initView() {
         TextView version=(TextView)findViewById(R.id.tv_version);
-       version.setText("探客V"+getVersion());
+       version.setText("客来V"+getVersion());
 
 
 

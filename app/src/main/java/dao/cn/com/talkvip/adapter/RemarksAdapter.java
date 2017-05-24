@@ -88,7 +88,25 @@ public class RemarksAdapter extends BaseAdapter {
 
 
        if (remark.getDuration()!=null){
-           holder.callTime.setText(remark.getDuration());
+
+           long t = Long.parseLong(remark.getDuration());
+           long minute=t%3600/60;
+           long second=t%60;
+
+           if (minute<10&&second<10) {
+               holder.callTime.setText("0"+minute+":"+"0"+second);
+           }else if (minute>=10&&second>=10){
+
+               holder.callTime.setText(minute+":"+second);
+           }else if (minute>10&&second<10){
+
+               holder.callTime.setText(minute+":"+"0"+second);
+           }else if (minute<10&&second>10){
+
+               holder.callTime.setText("0"+minute+":"+second);
+           }
+
+
            holder.type.setImageResource(R.mipmap.boda_beizhu);
            holder.rlCall.setVisibility(View.VISIBLE);
 

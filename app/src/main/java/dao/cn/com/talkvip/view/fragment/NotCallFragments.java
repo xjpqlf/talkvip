@@ -38,6 +38,9 @@ import com.zhy.m.permission.MPermissions;
 import com.zhy.m.permission.PermissionDenied;
 import com.zhy.m.permission.PermissionGrant;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,6 +61,8 @@ import dao.cn.com.talkvip.utils.DebugFlags;
 import dao.cn.com.talkvip.utils.Rsa;
 import dao.cn.com.talkvip.utils.SPUtils;
 import dao.cn.com.talkvip.utils.ToastUtil;
+import dao.cn.com.talkvip.utils.Util;
+import dao.cn.com.talkvip.view.activity.LoginActivity;
 import dao.cn.com.talkvip.view.activity.RemarkActivity;
 import dao.cn.com.talkvip.widget.MyAnimationDrawable;
 import dao.cn.com.talkvip.widget.MyPtrRefresher;
@@ -98,6 +103,7 @@ public class NotCallFragments extends Fragment {
     private IndosAdapter mAdapter;
     private List<CustomFrist> mC;
     private int mA;
+    private String url;
     private PhoneReceiver mycodereceiver;
     private int pager = 1;
     final public static int REQUEST_CODE_ASK_CALL_PHONE = 123;
@@ -123,6 +129,7 @@ public class NotCallFragments extends Fragment {
                         ivNodata.setVisibility(View.VISIBLE);
                         return;
                     }
+                    url=data.getNotifyURL();
                     mList = data.getList();
                     DebugFlags.logD("刷到最后了" + mList.size() + "---" + mList);
                     if (mList.get(0) == null) {
@@ -134,7 +141,7 @@ public class NotCallFragments extends Fragment {
                     //  tvPager.setText(1 + "/" + mList.size());
                     mC = new ArrayList<CustomFrist>();
                     for (int i = 0; i < mList.size(); i++) {
-                        mC.add(new CustomFrist(mList.get(i), false));
+                        mC.add(new CustomFrist(mList.get(i), false,"未拨打"));
 
                     }
 
@@ -203,9 +210,13 @@ public class NotCallFragments extends Fragment {
 
                                     //产生日志
                                     creatLog(mList.get(position).getId(),order);
-                                    getPhoneNum(mList.get(position).getMobile(),order);
+                                    if (mList.get(position).getSourceid()!=null){
+                                        getPhoneNum(mList.get(position).getSourceid(),order);}else{
+
+                                        getPhoneNum("",order);
+                                    }
 //拨打电话
-                                    CallPhone(mList.get(position).getMobile());
+                               //     CallPhone(mList.get(position).getMobile());
                                 }
                             } else {
                                 //上面已经写好的拨号方法
@@ -216,9 +227,13 @@ public class NotCallFragments extends Fragment {
                                 int i = rand.nextInt(100000);
                                 String order=strs+"1"+i;
                                 creatLog(mList.get(position).getId(),order);
-                                getPhoneNum(mList.get(position).getMobile(),order);
+                                if (mList.get(position).getSourceid()!=null){
+                                    getPhoneNum(mList.get(position).getSourceid(),order);}else{
 
-                                CallPhone(mList.get(position).getMobile());
+                                    getPhoneNum("",order);
+                                }
+
+                        //        CallPhone(mList.get(position).getMobile());
                             }
 
 
@@ -334,7 +349,7 @@ public class NotCallFragments extends Fragment {
     public void onResume() {
         super.onResume();
 
-DebugFlags.logD("界面重现");
+   getData(pager);
 
     }
 
@@ -355,15 +370,19 @@ DebugFlags.logD("界面重现");
         ptrLayout.setPtrHandler(new PtrDefaultHandler2() {
             @Override
             public void onLoadMoreBegin(PtrFrameLayout frame) {
-          if (pager>1){
+            //    ToastUtil.show("下拉");
+          if (pager>0){
 
-              pager--;
+                pager++;
               frame.postDelayed(new Runnable() {
                   @Override
                   public void run() {
                       if (ptrLayout != null) {
+                        if (Util.isNetwork(getActivity())){
+                          getData(pager);}else{
 
-                          getData(pager);
+                            ToastUtil.show(R.string.netstatu);
+                        }
                           ptrLayout.refreshComplete();
                       }
                   }
@@ -387,13 +406,18 @@ DebugFlags.logD("界面重现");
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                pager++;
+
+            //    ToastUtil.show("上拉");
                 frame.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         //ToastUtil.showInCenter(pager+"");
                         if (ptrLayout != null) {
-                            getData(pager);
+                            if (Util.isNetwork(getActivity())){
+                                getData(pager);}else{
+
+                                ToastUtil.show(R.string.netstatu);
+                            }
                             ptrLayout.refreshComplete();
                         }
                     }
@@ -422,7 +446,18 @@ DebugFlags.logD("界面重现");
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                getData(pager);
+
+                if (Util.isNetwork(getActivity())) {
+
+
+                    getData(pager);
+
+                }else{
+
+                  ToastUtil.show("当前网络不可用，请检查网络设置");
+                }
+
+
             }
         }, 200);
 
@@ -538,7 +573,7 @@ DebugFlags.logD("界面重现");
 
     }
 
-    private void getPhoneNum(String phone,String order) {
+    private void getPhoneNum(String id,String order) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm");
         Date curDate = new Date(System.currentTimeMillis());
@@ -558,26 +593,48 @@ DebugFlags.logD("界面重现");
         Log.d("时间戳", mSigns);
         OkHttpUtils.post()
                 .url("http://c1.dev.talkvip.cn/Authorization")
-                .addParams("accuntID", accountId)
-                .addParams("callingPhone", "15102720175")
-                .addParams("calledPhone", "13659827958")
-                .addParams("dataID", 1 + "")
+                .addParams("accuntID", "1")
+                .addParams("callingPhone", SPUtils.getString(getActivity(),"phone",""))
+                .addParams("calledPhone", "")
+                .addParams("dataID", id)
                 .addParams("order", order)
                 .addParams("timeStamp", timeStamp)
                 .addParams("resultURL", "www.baidu.com")
-                .addParams("notifyURL", "www.baidu.com")
+                .addParams("notifyURL", url)
                 .addParams("remark", "")
-                .addParams("type", "2")
-                .addParams("line", "2")
+                .addParams("type", "1")
+                .addParams("line", "E")
                 .addParams("signInfo", mSigns).build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-
+                ToastUtil.show("连接服务器失败");
             }
 
             @Override
             public void onResponse(String response, int id) {
-                Log.d("电话", "onResponse: " + response);
+                Log.d("单项隐私 电话", "onResponse: " + response);
+                try {
+                    JSONObject json=new JSONObject(response);
+                    String code=json.getString("resultCode");
+                    String msg=json.getString("message");
+                    if ("8888".equals(code)){
+
+                  String num= json.getString("fromSerNum");
+                        CallPhone(num);
+
+
+                    }else{
+
+                        ToastUtil.show(msg);
+                    }
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
             }
         });
 
@@ -605,7 +662,41 @@ DebugFlags.logD("界面重现");
             @Override
             public void onResponse(String response, int id) {
                 DebugFlags.logD("数据" + response);
-                hiddenLoadingView();
+
+             hiddenLoadingView();
+
+                try {
+                    JSONObject jsonObject=new  JSONObject(response);
+                    String code=jsonObject.getString("code");
+                    if ("1006".equals(code)||"1009".equals(code)){
+
+                        LayoutInflater inflater = getActivity().getLayoutInflater();
+                        View layout = inflater.inflate(R.layout.dialog_relogin, (ViewGroup) getActivity().findViewById(R.id.ll_relogin));
+                        new AlertDialog.Builder(getActivity()).setTitle("").setView(layout)
+                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+
+                                    @Override
+                                    public void onClick(DialogInterface dialog1, int which) {
+                                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                        startActivity(intent);
+
+                                    }
+                                }).show();
+
+
+                        return;
+                    }
+
+
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
                 Message ms = JSON.parseObject(response, Message.class);
 
 
@@ -717,6 +808,7 @@ DebugFlags.logD("界面重现");
                 inten1.putExtra("p",mCustom);
                 inten1.putExtra("list",mInfo);
                 inten1.putExtra("postion",mP);
+                inten1.putExtra("status","未拨打");
 
                //   getActivity(). unregisterReceiver(mycodereceiver);
                 getActivity().startActivity(inten1);
