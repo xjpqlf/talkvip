@@ -24,6 +24,7 @@ import dao.cn.com.talkvip.utils.RsaU;
 import dao.cn.com.talkvip.utils.SPUtils;
 import dao.cn.com.talkvip.utils.ToastUtil;
 import dao.cn.com.talkvip.utils.Util;
+import dao.cn.com.talkvip.widget.SweetAlertDialog;
 import okhttp3.Call;
 
 /**
@@ -47,6 +48,7 @@ public class LoginActivity extends BaseActivity {
     private RelativeLayout mRl;
     private RelativeLayout mAc;
     private RelativeLayout mPwd;
+    private  SweetAlertDialog dialog;
 
     @Override
     protected void initHead() {
@@ -62,7 +64,8 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+    dialog = new SweetAlertDialog(LoginActivity.this);
+        dialog.setTitleText("登录中...");
         tvTest = (TextView) findViewById(R.id.tv_pro);
 
 
@@ -115,6 +118,8 @@ public class LoginActivity extends BaseActivity {
                 startActivity(intent);
                 finish();
 */                  if (Util.isNetwork(LoginActivity.this)){
+
+                    dialog.show();
                 Login();
             }else{
 
@@ -150,7 +155,7 @@ public class LoginActivity extends BaseActivity {
 
 
         if (TextUtils.isEmpty(ac) || TextUtils.isEmpty(pwd)) {
-
+                    dialog.cancel();
             ToastUtil.showInCenter("密码账号不能为空");
             return;
         }
@@ -166,14 +171,14 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         DebugFlags.logD("失败" + e.toString());
-
+                            dialog.cancel();
                         ToastUtil.show("连接服务器失败");
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
                         DebugFlags.logD("登录" + response);
-
+                        dialog.cancel();
                         try {
                             JSONObject json = new JSONObject(response);
 

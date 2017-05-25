@@ -108,6 +108,7 @@ public class FeedbackActivity extends BaseActivity {
                     if (result.equals("success")){
 
                         ToastUtil.showInCenter("发送成功");
+                        finish();
                     }else{
                         ToastUtil.showInCenter("发送失败");
                     }

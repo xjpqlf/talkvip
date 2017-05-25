@@ -15,6 +15,8 @@ import org.json.JSONObject;
 import dao.cn.com.talkvip.Constants;
 import dao.cn.com.talkvip.R;
 import dao.cn.com.talkvip.utils.DebugFlags;
+import dao.cn.com.talkvip.utils.ToastUtil;
+import dao.cn.com.talkvip.widget.SweetAlertDialog;
 import okhttp3.Call;
 
 /**
@@ -24,6 +26,7 @@ public class Protocol extends BaseActivity {
 
 
     private WebView mWebView;
+    private SweetAlertDialog dialog;
 
     @Override
     protected void initHead() {
@@ -36,7 +39,7 @@ public class Protocol extends BaseActivity {
                 finish();
             }
         });
-        tv.setText("用户协议");
+        tv.setText("用户许可协议");
     }
 
     @Override
@@ -47,9 +50,11 @@ public class Protocol extends BaseActivity {
     @Override
     protected void initView() {
 
+     dialog =new SweetAlertDialog(Protocol.this) ;
+
         mWebView = (WebView) findViewById(R.id.wv_shop_webView);
 
-
+      dialog.show();
         init();
 
 
@@ -61,17 +66,20 @@ public class Protocol extends BaseActivity {
         OkHttpUtils
                 .post()
                 .url(url)
-                .addParams("did", "225")
+                .addParams("did", "1")
 
                 .build()
                 .execute(new StringCallback() {
                              @Override
                              public void onError(Call call, Exception e, int id) {
+                                 dialog.cancel();
+                                 ToastUtil.show("服务器连接失败");
 
                              }
 
                              @Override
                              public void onResponse(String response, int id) {
+                                 dialog.cancel();
                                  DebugFlags.logD("我的协议"+response);
 
                                  try {
@@ -83,7 +91,7 @@ public class Protocol extends BaseActivity {
                                      WebSettings webSettings = mWebView.getSettings();
                                      webSettings.setDefaultTextEncodingName("UTF-8");
                                      mWebView.loadData(text, "text/html; charset=UTF-8", null);
-                                     DebugFlags.logD("我的协议"+text);
+
                                  } catch (JSONException e) {
                                      e.printStackTrace();
                                  }

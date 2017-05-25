@@ -66,6 +66,7 @@ import dao.cn.com.talkvip.view.activity.LoginActivity;
 import dao.cn.com.talkvip.view.activity.RemarkActivity;
 import dao.cn.com.talkvip.widget.MyAnimationDrawable;
 import dao.cn.com.talkvip.widget.MyPtrRefresher;
+import dao.cn.com.talkvip.widget.SweetAlertDialog;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -105,6 +106,7 @@ public class FollowUpFragment extends Fragment {
     private int mA;
     private String url;
     private   PhoneReceiverf mycodereceiver;
+    private SweetAlertDialog dialog;
     private int pager = 1;
     final public static int REQUEST_CODE_ASK_CALL_PHONE = 123;
     private static final int DATA_LOAD_FAILED = 0X00123311;
@@ -123,12 +125,9 @@ public class FollowUpFragment extends Fragment {
                 case DATA_LOAD_SUCCESS:
                     Message ms = (Message) msg.obj;
                     Data data = ms.getData();
-                    if ("0".equals(data.getTotal())) {
-                        rlBar.setVisibility(View.GONE);
-                        ptrLayout.setMode(PtrFrameLayout.Mode.NONE);
-                        ivNodata.setVisibility(View.VISIBLE);
-                        return;
-                    }
+                    DebugFlags.logD(data.getList().size()+"");
+
+                    ivNodata.setVisibility(View.GONE);
                     mList = data.getList();
                     url=data.getNotifyURL();
                     DebugFlags.logD("刷到最后了" + mList.size() + "---" + mList);
@@ -154,10 +153,11 @@ public class FollowUpFragment extends Fragment {
 
                     }
 
+
                     mAdapter.setOnItemClickListener(new IndosAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(View view, int position) {
-
+                           dialog.show();
                             mP = position;
                             mCustom = mList.get(mP);
 
@@ -340,14 +340,15 @@ public class FollowUpFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-getData(pager);
+     getData(1);
 
     }
 
 
 
     private void initView() {
-
+        dialog = new SweetAlertDialog(getActivity());
+        dialog.setTitleText("拨打中...");
         mycodereceiver = new   PhoneReceiverf();
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.intent.action.PHONE_STATE");
@@ -565,7 +566,7 @@ getData(pager);
 
         mA = rand.nextInt(10000000);
 
-        String accountId = "1";
+        String accountId = "1803c7cadc";
         String timeStamp = i + str;
 
         String sign = accountId + timeStamp + order;
@@ -574,8 +575,8 @@ getData(pager);
         String mSigns = Rsa.encryptByPublic(sign);
         Log.d("时间戳", mSigns);
         OkHttpUtils.post()
-                .url("http://c1.dev.talkvip.cn/Authorization")
-                .addParams("accuntID", "1")
+                .url(Constants.C1_URL+"/Authorization")
+                .addParams("accuntID", accountId)
                 .addParams("callingPhone", SPUtils.getString(getActivity(),"phone",""))
                 .addParams("calledPhone", "")
                 .addParams("dataID", id)
@@ -589,11 +590,14 @@ getData(pager);
                 .addParams("signInfo", mSigns).build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
+
+                dialog.cancel();
                 ToastUtil.show("连接服务器失败");
             }
 
             @Override
             public void onResponse(String response, int id) {
+                dialog.cancel();
                 Log.d("单项隐私 电话", "onResponse: " + response);
                 try {
                     JSONObject json=new JSONObject(response);
@@ -679,10 +683,18 @@ getData(pager);
 
 
                 Message ms = JSON.parseObject(response, Message.class);
+                Data datas=ms.getData();
+                if ("0".equals(datas.getTotal())){
 
+                    rlBar.setVisibility(View.GONE);
+                    ptrLayout.setMode(PtrFrameLayout.Mode.NONE);
+                    ivNodata.setVisibility(View.VISIBLE);
+                    lv.setAdapter(null);
 
-                DebugFlags.logD("数据" + ms.getData());
-                handlers.obtainMessage(DATA_LOAD_SUCCESS, ms).sendToTarget();
+                }else{
+                    handlers.obtainMessage(DATA_LOAD_SUCCESS, ms).sendToTarget();
+
+                }
                /* Data data = ms.getData();
                 mList = data.getList();
                 //tvPager.setText(1 + "/" + mList.size());

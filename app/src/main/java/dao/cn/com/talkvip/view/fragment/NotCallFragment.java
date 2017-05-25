@@ -46,7 +46,6 @@ import dao.cn.com.talkvip.bean.Message;
 import dao.cn.com.talkvip.utils.DebugFlags;
 import dao.cn.com.talkvip.utils.Rsa;
 import dao.cn.com.talkvip.utils.SPUtils;
-import dao.cn.com.talkvip.utils.ToastUtil;
 import dao.cn.com.talkvip.view.activity.RemarkActivity;
 import dao.cn.com.talkvip.widget.MyAnimationDrawable;
 import dao.cn.com.talkvip.widget.MyPtrRefresher;
@@ -109,7 +108,7 @@ public class NotCallFragment extends Fragment {
                     mList = data.getList();
                     DebugFlags.logD(  "刷到最后了"+mList.size()+"---"+mList);
                  if (mList.get(0)==null){
-                     ToastUtil.showInCenter("没有更多数据了");
+                   //  ToastUtil.showInCenter("没有更多数据了");
                     DebugFlags.logD(mList.size()+"---"+mList);
                      return;
                  }
@@ -328,7 +327,7 @@ public class NotCallFragment extends Fragment {
 
         mA = rand.nextInt(10000000);
 
-        String accountId = "1";
+        String accountId = "b6458ae8a4";
         String timeStamp = i + str;
         String order = mA + "";
         String sign = accountId + timeStamp + order;

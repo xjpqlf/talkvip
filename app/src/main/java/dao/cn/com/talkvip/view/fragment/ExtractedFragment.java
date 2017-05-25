@@ -63,9 +63,10 @@ import dao.cn.com.talkvip.utils.SPUtils;
 import dao.cn.com.talkvip.utils.ToastUtil;
 import dao.cn.com.talkvip.utils.Util;
 import dao.cn.com.talkvip.view.activity.LoginActivity;
-import dao.cn.com.talkvip.view.activity.RemarkActivity;
+import dao.cn.com.talkvip.view.activity.RemarkExtraActivity;
 import dao.cn.com.talkvip.widget.MyAnimationDrawable;
 import dao.cn.com.talkvip.widget.MyPtrRefresher;
+import dao.cn.com.talkvip.widget.SweetAlertDialog;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -112,6 +113,7 @@ public class ExtractedFragment extends Fragment {
     private String mId;
     private int mP=-1;
     private Infos mInfo;
+    private SweetAlertDialog dialog;
     private Custom mCustom;
     private Handler handlers = new Handler() {
         @Override
@@ -123,119 +125,115 @@ public class ExtractedFragment extends Fragment {
                 case DATA_LOAD_SUCCESS:
                     Message ms = (Message) msg.obj;
                     Data data = ms.getData();
-                    if ("0".equals(data.getTotal())) {
-                        rlBar.setVisibility(View.GONE);
-                        ptrLayout.setMode(PtrFrameLayout.Mode.NONE);
-                        ivNodata.setVisibility(View.VISIBLE);
-                        return;
-                    }
-                    mList = data.getList();
-                    url=data.getNotifyURL();
-                    DebugFlags.logD("刷到最后了" + mList.size() + "---" + mList);
+                    ivNodata.setVisibility(View.GONE);
+                        mList = data.getList();
+                        url = data.getNotifyURL();
+
                     if (mList.get(0) == null) {
                         ToastUtil.showInCenter("没有更多数据了");
                         DebugFlags.logD(mList.size() + "---" + mList);
                         return;
                     }
 
-                    //  tvPager.setText(1 + "/" + mList.size());
-                    mC = new ArrayList<CustomFrist>();
-                    for (int i = 0; i < mList.size(); i++) {
-                        mC.add(new CustomFrist(mList.get(i), false,"已提取"));
+                        mC = new ArrayList<CustomFrist>();
+                        for (int i = 0; i < mList.size(); i++) {
+                            mC.add(new CustomFrist(mList.get(i), false, "已提取"));
 
-                    }
+                        }
 
-                    mC.get(0).setFirst(true);
+                        mC.get(0).setFirst(true);
 
-                    mAdapter = new IndosAdapter(getActivity(), mC);
+                        mAdapter = new IndosAdapter(getActivity(), mC);
 
-                    if (lv != null) {
-                        lv.setAdapter(mAdapter);
+                        if (lv != null) {
+                            lv.setAdapter(mAdapter);
 
-                    }
+                        }
 
-                    mAdapter.setOnItemClickListener(new IndosAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int position) {
+                        mAdapter.setOnItemClickListener(new IndosAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+dialog.show();
+                                mP = position;
+                                mCustom = mList.get(mP);
 
-                            mP = position;
-                            mCustom = mList.get(mP);
+                                mInfo = new Infos(mList);
 
-                            mInfo = new Infos(mList);
+                                if (Build.VERSION.SDK_INT >= 23) {
+                                    int checkCallPhonePermission = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE);
+                                    if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
+                                        //    ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CALL_PHONE,Manifest.permission.READ_PHONE_STATE,Manifest.permission.PROCESS_OUTGOING_CALLS},REQUEST_CODE_ASK_CALL_PHONE);
+                                        //   return;
 
-                            if (Build.VERSION.SDK_INT >= 23) {
-                                int checkCallPhonePermission = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE);
-                                if(checkCallPhonePermission != PackageManager.PERMISSION_GRANTED){
-                                //    ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CALL_PHONE,Manifest.permission.READ_PHONE_STATE,Manifest.permission.PROCESS_OUTGOING_CALLS},REQUEST_CODE_ASK_CALL_PHONE);
-                                 //   return;
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());  //先得到构造器
+                                        builder.setTitle("申请授权"); //设置标题
+                                        builder.setMessage("拨打电话与读取电话状态需要授权,是否需要前往权限管理页面授权"); //设置内容
+                                        builder.setIcon(R.mipmap.ic_launcher);//设置图标，图片id即可
+                                        builder.setPositiveButton("前往授权", new DialogInterface.OnClickListener() { //设置确定按钮
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
 
-                                    AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());  //先得到构造器
-                                    builder.setTitle("申请授权"); //设置标题
-                                    builder.setMessage("拨打电话与读取电话状态需要授权,是否需要前往权限管理页面授权"); //设置内容
-                                    builder.setIcon(R.mipmap.ic_launcher);//设置图标，图片id即可
-                                    builder.setPositiveButton("前往授权", new DialogInterface.OnClickListener() { //设置确定按钮
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
+                                                getAppDetailSettingIntent(getActivity());
 
-                                            getAppDetailSettingIntent(getActivity());
+                                                dialog.dismiss(); //关闭dialog
 
-                                            dialog.dismiss(); //关闭dialog
+                                            }
+                                        });
+                                        builder.setNegativeButton("暂不处理", new DialogInterface.OnClickListener() { //设置取消按钮
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
 
+                                            }
+                                        });
+
+
+                                        //参数都设置完成了，创建并显示出来
+                                        builder.create().show();
+
+                                    } else {
+                                        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmsss");
+                                        Date curDate = new Date(System.currentTimeMillis());
+                                        String strs = formatter.format(curDate);
+                                        Random rand = new Random();
+                                        int i = rand.nextInt(100000);
+                                        String order = strs + "1" + i;
+
+
+                                        //产生日志
+                                        creatLog(mList.get(position).getId(), order);
+
+                                        if (mList.get(position).getSourceid() != null) {
+                                            getPhoneNum(mList.get(position).getSourceid(), order);
+                                        } else {
+
+                                            getPhoneNum("", order);
                                         }
-                                    });
-                                    builder.setNegativeButton("暂不处理", new DialogInterface.OnClickListener() { //设置取消按钮
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-
-                                        }
-                                    });
-
-
-                                    //参数都设置完成了，创建并显示出来
-                                    builder.create().show();
-
-                                }else{
+//拨打电话}
+                                        //   CallPhone(mList.get(position).getMobile());
+                                    }
+                                } else {
+                                    //上面已经写好的拨号方法
                                     SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmsss");
                                     Date curDate = new Date(System.currentTimeMillis());
                                     String strs = formatter.format(curDate);
                                     Random rand = new Random();
                                     int i = rand.nextInt(100000);
-                                    String order=strs+"1"+i;
+                                    String order = strs + "1" + i;
+                                    creatLog(mList.get(position).getId(), order);
+                                    if (mList.get(position).getSourceid() != null) {
+                                        getPhoneNum(mList.get(position).getSourceid(), order);
+                                    } else {
 
-
-                                    //产生日志
-                                    creatLog(mList.get(position).getId(),order);
-
-                                    if (mList.get(position).getSourceid()!=null){
-                                    getPhoneNum(mList.get(position).getSourceid(),order);
-                                    }else{
-
-                                        getPhoneNum("",order);
+                                        getPhoneNum("", order);
                                     }
-//拨打电话}
-                                 //   CallPhone(mList.get(position).getMobile());
                                 }
-                            } else {
-                                //上面已经写好的拨号方法
-                                SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmsss");
-                                Date curDate = new Date(System.currentTimeMillis());
-                                String strs = formatter.format(curDate);
-                                Random rand = new Random();
-                                int i = rand.nextInt(100000);
-                                String order=strs+"1"+i;
-                                creatLog(mList.get(position).getId(),order);
-                                if (mList.get(position).getSourceid()!=null){
-                                    getPhoneNum(mList.get(position).getSourceid(),order);}else{
 
-                                    getPhoneNum("",order);
-                                }
+
                             }
+                        });
+                    }
 
-
-                        }
-                    });
-            }
         }
     };
 
@@ -345,14 +343,15 @@ public class ExtractedFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-getData(pager);
+       getData(1);
 
     }
 
 
 
     private void initView() {
-
+        dialog = new SweetAlertDialog(getActivity());
+        dialog.setTitleText("拨打中...");
         mycodereceiver = new  PhoneReceivere();
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.intent.action.BOOT_COMPLETED");
@@ -571,7 +570,7 @@ pager++;
 
         mA = rand.nextInt(10000000);
 
-        String accountId = "1";
+        String accountId = "1803c7cadc";
         String timeStamp = i + str;
 
         String sign = accountId + timeStamp + order;
@@ -580,8 +579,8 @@ pager++;
         String mSigns = Rsa.encryptByPublic(sign);
         Log.d("时间戳", mSigns);
         OkHttpUtils.post()
-                .url("http://c1.dev.talkvip.cn/Authorization")
-                .addParams("accuntID", "1")
+                .url(Constants.C1_URL+"/Authorization")
+                .addParams("accuntID", accountId)
                 .addParams("callingPhone",SPUtils.getString(getActivity(),"phone",""))
                 .addParams("calledPhone", "")
                 .addParams("dataID", id)
@@ -595,11 +594,13 @@ pager++;
                 .addParams("signInfo", mSigns).build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
+                dialog.cancel();
                 ToastUtil.show("连接服务器失败");
             }
 
             @Override
             public void onResponse(String response, int id) {
+                dialog.cancel();
                 Log.d("单项隐私 电话", "onResponse: " + response);
                 try {
                     JSONObject json=new JSONObject(response);
@@ -687,10 +688,18 @@ pager++;
 
 
                 Message ms = JSON.parseObject(response, Message.class);
+                Data datas=ms.getData();
+                if ("0".equals(datas.getTotal())){
 
+                    rlBar.setVisibility(View.GONE);
+                    ptrLayout.setMode(PtrFrameLayout.Mode.NONE);
+                    ivNodata.setVisibility(View.VISIBLE);
+                    lv.setAdapter(null);
 
-                DebugFlags.logD("数据" + ms.getData());
-                handlers.obtainMessage(DATA_LOAD_SUCCESS, ms).sendToTarget();
+                }else{
+                    handlers.obtainMessage(DATA_LOAD_SUCCESS, ms).sendToTarget();
+
+                }
                /* Data data = ms.getData();
                 mList = data.getList();
                 //tvPager.setText(1 + "/" + mList.size());
@@ -792,7 +801,7 @@ pager++;
             //电话挂断时候会走这个方法。在这里处理自己的逻辑
 
             Constants.isCall =true;
-            Intent inten1=new Intent(getActivity(),RemarkActivity.class);
+            Intent inten1=new Intent(getActivity(), RemarkExtraActivity.class);
             if (mCustom!=null&&mInfo!=null&&mP!=-1&&number!=null){
                 DebugFlags.logD("电话挂断了提取"+number);
                 inten1.putExtra("p",mCustom);

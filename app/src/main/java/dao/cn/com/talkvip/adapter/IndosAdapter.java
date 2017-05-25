@@ -45,9 +45,11 @@ public class IndosAdapter extends RecyclerView.Adapter<IndosAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+        if (viewHolder.name!=null&&viewHolder.mobile!=null&& viewHolder.dc!=null){
+
         viewHolder.name.setText(list.get(position).getCustom().getId());
         viewHolder.mobile.setText(list.get(position).getCustom().getMobile());
-        viewHolder.dc.setText(list.get(position).getCustom().getName());
+        viewHolder.dc.setText(list.get(position).getCustom().getName());}
         if (list.get(position).isFirst()){
 
           //  viewHolder.guid.getChildAt(0).setVisibility(View.VISIBLE);

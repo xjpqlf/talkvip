@@ -66,6 +66,7 @@ import dao.cn.com.talkvip.view.activity.LoginActivity;
 import dao.cn.com.talkvip.view.activity.RemarkActivity;
 import dao.cn.com.talkvip.widget.MyAnimationDrawable;
 import dao.cn.com.talkvip.widget.MyPtrRefresher;
+import dao.cn.com.talkvip.widget.SweetAlertDialog;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -103,6 +104,7 @@ public class NotThroughFragment extends Fragment {
     private IndosAdapter mAdapter;
     private List<CustomFrist> mC;
     private int mA;
+    private SweetAlertDialog dialog;
     private  String url;
     private  PhoneReceivert mycodereceiver;
     private int pager = 1;
@@ -123,41 +125,43 @@ public class NotThroughFragment extends Fragment {
                 case DATA_LOAD_SUCCESS:
                     Message ms = (Message) msg.obj;
                     Data data = ms.getData();
-                    if ("0".equals(data.getTotal())) {
-                        rlBar.setVisibility(View.GONE);
-                        ptrLayout.setMode(PtrFrameLayout.Mode.NONE);
-                        ivNodata.setVisibility(View.VISIBLE);
-                        return;
-                    }
-                    mList = data.getList();
-                 url=data.getNotifyURL();
-                    DebugFlags.logD("刷到最后了" + mList.size() + "---" + mList);
+                    DebugFlags.logD(data.getList().size()+"");
+
+                        ivNodata.setVisibility(View.GONE);
+                        mList = data.getList();
+                        url=data.getNotifyURL();
+                        DebugFlags.logD("刷到最后了" + mList.size() + "---" + mList);
                     if (mList.get(0) == null) {
                         ToastUtil.showInCenter("没有更多数据了");
                         DebugFlags.logD(mList.size() + "---" + mList);
                         return;
                     }
 
-                    //  tvPager.setText(1 + "/" + mList.size());
-                    mC = new ArrayList<CustomFrist>();
-                    for (int i = 0; i < mList.size(); i++) {
-                        mC.add(new CustomFrist(mList.get(i), false,"未接通"));
 
-                    }
+                        //  tvPager.setText(1 + "/" + mList.size());
+                        mC = new ArrayList<CustomFrist>();
+                        for (int i = 0; i < mList.size(); i++) {
+                            mC.add(new CustomFrist(mList.get(i), false,"未接通"));
 
-                    mC.get(0).setFirst(true);
+                        }
 
-                    mAdapter = new IndosAdapter(getActivity(), mC);
+                        mC.get(0).setFirst(true);
 
-                    if (lv != null) {
-                        lv.setAdapter(mAdapter);
+                        mAdapter = new IndosAdapter(getActivity(), mC);
 
-                    }
+                        if (lv != null) {
+                            lv.setAdapter(mAdapter);
+
+                        }
+
+
+
+
 
                     mAdapter.setOnItemClickListener(new IndosAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(View view, int position) {
-
+                             dialog.show();
                             mP = position;
                             mCustom = mList.get(mP);
 
@@ -232,6 +236,7 @@ public class NotThroughFragment extends Fragment {
                     });
             }
         }
+
     };
 
     private void creatLog(String id, final String order) {
@@ -339,15 +344,15 @@ public class NotThroughFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        getData(pager);
-
+DebugFlags.logD("未接通重现了");
+     getData(1);
     }
 
 
 
     private void initView() {
-
+        dialog = new SweetAlertDialog(getActivity());
+        dialog.setTitleText("拨打中...");
         mycodereceiver = new PhoneReceivert();
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.intent.action.PHONE_STATE");
@@ -427,12 +432,12 @@ public class NotThroughFragment extends Fragment {
         LinearLayoutManager  mLayoutManager = new LinearLayoutManager(getActivity());
         lv.setLayoutManager(mLayoutManager);
 
-        //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
+
         lv.setHasFixedSize(true);
 
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        Handler handlers = new Handler();
+        handlers.postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (Util.isNetwork(getActivity())){
@@ -565,7 +570,7 @@ public class NotThroughFragment extends Fragment {
 
         mA = rand.nextInt(10000000);
 
-        String accountId = "1";
+        String accountId = "1803c7cadc";
         String timeStamp = i + str;
 
         String sign = accountId + timeStamp + order;
@@ -574,8 +579,8 @@ public class NotThroughFragment extends Fragment {
         String mSigns = Rsa.encryptByPublic(sign);
         Log.d("时间戳", mSigns);
         OkHttpUtils.post()
-                .url("http://c1.dev.talkvip.cn/Authorization")
-                .addParams("accuntID", "1")
+                .url(Constants.C1_URL+"/Authorization")
+                .addParams("accuntID", accountId)
                 .addParams("callingPhone", SPUtils.getString(getActivity(),"phone",""))
                 .addParams("calledPhone", "")
                 .addParams("dataID", id)
@@ -589,11 +594,13 @@ public class NotThroughFragment extends Fragment {
                 .addParams("signInfo", mSigns).build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
+                dialog.cancel();
                 ToastUtil.show("连接服务器失败");
             }
 
             @Override
             public void onResponse(String response, int id) {
+                dialog.cancel();
                 Log.d("单项隐私 电话", "onResponse: " + response);
                 try {
                     JSONObject json=new JSONObject(response);
@@ -643,12 +650,14 @@ public class NotThroughFragment extends Fragment {
 
             @Override
             public void onResponse(String response, int id) {
-                DebugFlags.logD("数据" + response);
+                DebugFlags.logD("未接通数据" + response);
                 hiddenLoadingView();
 
                 try {
                     JSONObject jsonObject=new  JSONObject(response);
                     String code=jsonObject.getString("code");
+
+
                     if ("1006".equals(code)||"1009".equals(code)){
 
                         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -678,11 +687,31 @@ public class NotThroughFragment extends Fragment {
                 }
 
 
+
+
+
+
+
+
+
                 Message ms = JSON.parseObject(response, Message.class);
+                Data datas=ms.getData();
+                if ("0".equals(datas.getTotal())){
+
+                    rlBar.setVisibility(View.GONE);
+                    ptrLayout.setMode(PtrFrameLayout.Mode.NONE);
+                    ivNodata.setVisibility(View.VISIBLE);
+                    lv.setAdapter(null);
+
+                }else{
+                   handlers.obtainMessage(DATA_LOAD_SUCCESS, ms).sendToTarget();
+
+                }
 
 
-                DebugFlags.logD("数据" + ms.getData());
-                handlers.obtainMessage(DATA_LOAD_SUCCESS, ms).sendToTarget();
+
+              //  DebugFlags.logD("数据" + ms.getData());
+
                /* Data data = ms.getData();
                 mList = data.getList();
                 //tvPager.setText(1 + "/" + mList.size());
@@ -882,4 +911,9 @@ public class NotThroughFragment extends Fragment {
         super.onDestroy();
         getActivity(). unregisterReceiver(mycodereceiver);
     }
+
+
+
+
+
 }

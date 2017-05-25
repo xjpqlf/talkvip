@@ -51,7 +51,7 @@ import okhttp3.OkHttpClient;
  * @class describe
  */
 
-public class RemarkActivity extends BaseActivity implements View.OnClickListener {
+public class RemarkExtraActivity extends BaseActivity implements View.OnClickListener {
 
 
     private String status="0";
@@ -93,6 +93,7 @@ public class RemarkActivity extends BaseActivity implements View.OnClickListener
         mRl = (RelativeLayout) findViewById(R.id.rl_bjback);
         mCheckBox = (CheckBox) findViewById(R.id.iv_xuan);
         mEt = (EditText) findViewById(R.id.tv_bjhint);
+        ls.setVisibility(View.GONE);
         mycodereceivers = new   PhoneReceiverfre();
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.intent.action.BOOT_COMPLETED");
@@ -106,9 +107,7 @@ public class RemarkActivity extends BaseActivity implements View.OnClickListener
             mInfos = (Infos) in.getSerializableExtra("list");
             mCustom = (Custom) in.getSerializableExtra("p");
             mPostion = in.getIntExtra("postion",0);
-               s=in.getStringExtra("status");
 
-                DebugFlags.logD(s+"==标记");
           // Log.v("电话集合", "" + mInfos.getMsg().toString()+ mCustom.toString());
 
 
@@ -240,10 +239,10 @@ public class RemarkActivity extends BaseActivity implements View.OnClickListener
 
 
 
-                if (!"0".equals(status)&&!TextUtils.isEmpty(mEt.getText().toString())){
+                if (!TextUtils.isEmpty(mEt.getText().toString())){
 
                  if (Util.isNetwork(this)) {
-                     bc.setClickable(false);
+                  bc.setClickable(false);
                      save();
 
                  }else{
@@ -278,7 +277,7 @@ public class RemarkActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void save() {
-String token=SPUtils.getString(RemarkActivity.this,"token","");
+String token=SPUtils.getString(RemarkExtraActivity.this,"token","");
         DebugFlags.logD("备注id"+mInfos.getMsg().get(mPostion).getId()+"=="+status);
         OkHttpUtils.post().url(Constants.BASE_URL+"/Comment/phoneNotes")
                 .addHeader("Authorization", "Bearer" + " " + token)
@@ -294,13 +293,12 @@ String token=SPUtils.getString(RemarkActivity.this,"token","");
 
             @Override
             public void onResponse(String response, int id) {
-
                 bc.setClickable(true);
                 try {
                     DebugFlags.logD("保存备注"+response);
                     JSONObject jsonObject=new JSONObject(response);
-                    String result= jsonObject.getString("result");
-                    String msg= jsonObject.getString("msg");
+                      String result= jsonObject.getString("result");
+                      String msg= jsonObject.getString("msg");
                     if ("success".equals(result)){
 
                        ToastUtil.showInCenter("保存成功");
@@ -509,7 +507,7 @@ String token=SPUtils.getString(RemarkActivity.this,"token","");
 
     private void creatLog(String id, final String order) {
 
-        String token= SPUtils.getString(RemarkActivity.this,"token","");
+        String token= SPUtils.getString(RemarkExtraActivity.this,"token","");
 
         DebugFlags.logD("测试"+token+id);
         OkHttpUtils.post()
@@ -558,13 +556,13 @@ String token=SPUtils.getString(RemarkActivity.this,"token","");
         OkHttpUtils.post()
                 .url(Constants.C1_URL+"/Authorization")
                 .addParams("accuntID", accountId)
-                .addParams("callingPhone", SPUtils.getString(RemarkActivity.this,"phone",""))
+                .addParams("callingPhone", SPUtils.getString(RemarkExtraActivity.this,"phone",""))
                 .addParams("calledPhone", "")
                 .addParams("dataID", id)
                 .addParams("order", order)
                 .addParams("timeStamp", timeStamp)
                 .addParams("resultURL", "www.baidu.com")
-                .addParams("notifyURL",SPUtils.getString(RemarkActivity.this,"nurl",""))
+                .addParams("notifyURL",SPUtils.getString(RemarkExtraActivity.this,"nurl",""))
                 .addParams("remark", "")
                 .addParams("type", "1")
                 .addParams("line", "E")

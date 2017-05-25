@@ -81,7 +81,7 @@
               android:textColor="@color/cacecorlor"
             android:typeface="sans"
             android:textStyle="bold"
-            android:text="2/1"/>
+            android:text=""/>
 
     <ProgressBar
 

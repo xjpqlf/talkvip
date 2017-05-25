@@ -9,7 +9,6 @@ import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
-import com.alibaba.fastjson.JSON;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -18,14 +17,10 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import dao.cn.com.talkvip.Constants;
 import dao.cn.com.talkvip.R;
-import dao.cn.com.talkvip.bean.Aurl;
-import dao.cn.com.talkvip.bean.Display;
 import dao.cn.com.talkvip.utils.DebugFlags;
-import dao.cn.com.talkvip.utils.ImageHelper;
 import dao.cn.com.talkvip.utils.RsaU;
 import dao.cn.com.talkvip.utils.SPUtils;
 import okhttp3.Call;
@@ -52,8 +47,11 @@ public class WelcomeActivity extends BaseActivity {
     protected void initView() {
         iv = (ImageView) findViewById(R.id.welcome_iv);
 
+
+
+
         //    String url = "http://a3.qpic.cn/psb?/V130mBVT10Mxsi/rmpNG7SBqfj8UY.G*exBQz8kCr21PGxnp8WuHw3N0AE!/b/dB8BAAAAAAAA&bo=gAJyBAAAAAADB9Y!&rf=viewer_4";
-        OkHttpUtils.get().url(Constants.BASE_URL + "/Agreement/getImgUrl").build().execute(new StringCallback() {
+       /* OkHttpUtils.get().url(Constants.BASE_URL + "/Agreement/getImgUrl").build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
 
@@ -73,7 +71,7 @@ public class WelcomeActivity extends BaseActivity {
 
 
             }
-        });
+        });*/
 
         //
 
@@ -153,6 +151,7 @@ public class WelcomeActivity extends BaseActivity {
     private void goNextUi() {
         String ac = SPUtils.getString(WelcomeActivity.this, "ac", "");
         String pwd = SPUtils.getString(WelcomeActivity.this, "pwd", "");
+        DebugFlags.logD("记住密码"+ac+pwd);
         if (!TextUtils.isEmpty(ac) && !TextUtils.isEmpty(pwd)) {
 
             Wlogin(ac, pwd);

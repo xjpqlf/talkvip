@@ -50,6 +50,7 @@ import dao.cn.com.talkvip.utils.Rsa;
 import dao.cn.com.talkvip.utils.SPUtils;
 import dao.cn.com.talkvip.utils.ToastUtil;
 import dao.cn.com.talkvip.utils.Util;
+import dao.cn.com.talkvip.widget.SweetAlertDialog;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 
@@ -65,7 +66,7 @@ import okhttp3.OkHttpClient;
  */
 
 public class Detail  extends BaseActivity {
-
+    private SweetAlertDialog dialog;
     private RelativeLayout mIvback;
     private RelativeLayout medit;
     private ListView mLv;
@@ -142,8 +143,11 @@ public class Detail  extends BaseActivity {
 
     @Override
     protected void initView() {
+
+        dialog = new SweetAlertDialog(Detail.this);
+        dialog.setTitleText("拨打中...");
         mycodereceiver = new  PhoneReceivers();
-        IntentFilter filter = new IntentFilter();
+        final IntentFilter filter = new IntentFilter();
         filter.addAction("android.intent.action.PHONE_STATE");
         filter.addAction("android.intent.action.NEW_OUTGOING_CALL");
         filter.addAction("android.intent.action.BOOT_COMPLETED");
@@ -181,7 +185,8 @@ public class Detail  extends BaseActivity {
         ivcall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ivcall.setClickable(false);
+                  dialog.show();
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmsss");
                 Date curDate = new Date(System.currentTimeMillis());
                 String strs = formatter.format(curDate);
@@ -219,11 +224,7 @@ public class Detail  extends BaseActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getDetail();
-    }
+
 
     private void getDetail() {
 
@@ -537,39 +538,42 @@ public class Detail  extends BaseActivity {
 
         mA = rand.nextInt(10000000);
 
-        String accountId = "1";
+        String accountId = "1803c7cadc";
         String timeStamp = i + str;
 
         String sign = accountId + timeStamp + order;
 
 
         String mSigns = Rsa.encryptByPublic(sign);
-        Log.d("时间戳", mSigns);
+        Log.d("详情",str);
         OkHttpUtils.post()
-                .url("http://c1.dev.talkvip.cn/Authorization")
-                .addParams("accuntID", "1")
+                .url(Constants.C1_URL+"/Authorization")
+                .addParams("accuntID", accountId)
                 .addParams("callingPhone", SPUtils.getString(Detail.this,"phone",""))
                 .addParams("calledPhone", "")
                 .addParams("dataID", id)
                 .addParams("order", order)
                 .addParams("timeStamp", timeStamp)
                 .addParams("resultURL", "www.baidu.com")
-                .addParams("notifyURL", "www.baidu.com")
+                .addParams("notifyURL", SPUtils.getString(Detail.this,"nurl",""))
                 .addParams("remark", "")
                 .addParams("type", "1")
                 .addParams("line", "E")
                 .addParams("signInfo", mSigns).build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-
+ivcall.setClickable(true);
             }
 
             @Override
             public void onResponse(String response, int id) {
+                ivcall.setClickable(true);
+                dialog.cancel();
                 Log.d("单项隐私 电话", "onResponse: " + response);
                 try {
                     JSONObject json=new JSONObject(response);
                     String code=json.getString("resultCode");
+                    String msg=json.getString("message");
                     if ("8888".equals(code)){
 
                         String num= json.getString("fromSerNum");
@@ -578,7 +582,7 @@ public class Detail  extends BaseActivity {
 
                     }else{
 
-                        ToastUtil.show("拨打失败");
+                        ToastUtil.show(msg);
                     }
 
 
@@ -686,12 +690,13 @@ public class Detail  extends BaseActivity {
                 inten1.putExtra("postion",mPostion);
 
                 //   getActivity(). unregisterReceiver(mycodereceiver);
-              startActivity(inten1);
+                startActivity(inten1);
                 mPostion=-1;
             }
 
 
         }
+
         protected void onIncomingCallReceived(Context context,String number){
             Toast.makeText(context, "4", Toast.LENGTH_SHORT).show();
         }
@@ -700,7 +705,12 @@ public class Detail  extends BaseActivity {
         }
 
     }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getDetail();
+        mPostion= getIntent().getIntExtra("postion",0);
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

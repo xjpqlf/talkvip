@@ -120,6 +120,7 @@ android:id="@+id/tv_deid"
         android:layout_width="match_parent"
         android:layout_below="@+id/ll_head"
         android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_height="wrap_content">
 
     <ListView
@@ -137,6 +138,7 @@ android:id="@+id/tv_deid"
             android:visibility="gone"
             android:layout_centerInParent="true"
             android:id="@+id/detail_empty"
+
             android:layout_height="wrap_content"/>
 
     </RelativeLayout>
@@ -144,6 +146,7 @@ android:id="@+id/tv_deid"
     android:id="@+id/iv_call"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+
     android:src="@mipmap/call"
     android:layout_centerHorizontal="true"
     android:layout_alignParentBottom="true"
