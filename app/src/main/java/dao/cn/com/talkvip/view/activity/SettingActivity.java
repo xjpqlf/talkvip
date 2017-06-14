@@ -1,6 +1,8 @@
 package dao.cn.com.talkvip.view.activity;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -71,7 +73,9 @@ public class SettingActivity  extends BaseActivity {
         coument.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               ToastUtil.showInCenter("评价我们");
+                launchAppDetail("dao.cn.com.talkvip","com.tencent.android.qqdownloader"
+
+                );
 
             }
         });
@@ -156,5 +160,24 @@ public class SettingActivity  extends BaseActivity {
 
     }
 
+    public void launchAppDetail(String appPkg, String marketPkg) {
+        try {
+            if (TextUtils.isEmpty(appPkg)) return;
+            Uri uri = Uri.parse("market://details?id=" + appPkg);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            if (!TextUtils.isEmpty(marketPkg)) {
+                intent.setPackage(marketPkg);
+            }
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } catch (Exception e) {
 
+            Intent intent = new Intent();
+            intent.setAction("android.intent.action.VIEW");
+            Uri content_url = Uri.parse("http://app.qq.com/#id=detail&appid=1106183726");
+            intent.setData(content_url);
+            startActivity(intent);
+            e.printStackTrace();
+        }
+    }
 }

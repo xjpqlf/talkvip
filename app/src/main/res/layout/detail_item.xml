@@ -61,8 +61,8 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:layout_marginLeft="20dp"
-      android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+
         android:layout_width="wrap_content"
         android:layout_height="100dp">
 
@@ -74,7 +74,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="12dp"
             android:text="这点电话不好试试水几点啦看得见阿来得及阿拉山口就爱上了肯德基阿卡丽圣诞节啊"
-           android:textSize="15sp"/>
+           android:textSize="12sp"/>
 
        <RelativeLayout
            android:layout_width="wrap_content"

@@ -242,6 +242,8 @@ public class NotCallFragments extends Fragment {
             }
         }
     };
+    private String mPage;
+    private String mTotal;
 
     private void creatLog(String id, final String order) {
 
@@ -364,20 +366,24 @@ public class NotCallFragments extends Fragment {
         filter.addAction("android.intent.action.NEW_OUTGOING_CALL");
         filter.addAction("android.intent.action.BOOT_COMPLETED");
         getActivity(). registerReceiver(mycodereceiver, filter);
-        MyPtrRefresher myPtrRefresher = new MyPtrRefresher(getActivity());
+        final MyPtrRefresher myPtrRefresher = new MyPtrRefresher(getActivity());
         ptrLayout.setHeaderView(myPtrRefresher);
         // ptrLayout.setFooterView(myPtrRefresher);
         ptrLayout.addPtrUIHandler(myPtrRefresher);
         ptrLayout.setPtrHandler(new PtrDefaultHandler2() {
             @Override
             public void onLoadMoreBegin(PtrFrameLayout frame) {
-            //    ToastUtil.show("下拉");
-          if (pager>0){
+             //  ToastUtil.show("上拉");
+        /*  if (pager>0){
 
-                pager++;
+                pager++;*/
               frame.postDelayed(new Runnable() {
                   @Override
                   public void run() {
+
+                      if (pager>0){
+                          pager++;
+
                       if (ptrLayout != null) {
                         if (Util.isNetwork(getActivity())){
                           getData(pager);}else{
@@ -385,10 +391,17 @@ public class NotCallFragments extends Fragment {
                             ToastUtil.show(R.string.netstatu);
                         }
                           ptrLayout.refreshComplete();
+                      } }else{
+
+                          if (ptrLayout != null) {
+
+
+                              ptrLayout.refreshComplete();
+                          }
                       }
                   }
               }, 2000);
-          }else{
+         /* }else{
               frame.postDelayed(new Runnable() {
                   @Override
                   public void run() {
@@ -401,17 +414,20 @@ public class NotCallFragments extends Fragment {
               }, 2000);
 
 
-          }
+          }*/
 
             }
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
 
-            //    ToastUtil.show("上拉");
+              //  ToastUtil.show("下拉");
                 frame.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        if (pager>0&&Integer.parseInt(mPage)!=1){
+                            pager--;
+
                         //ToastUtil.showInCenter(pager+"");
                         if (ptrLayout != null) {
                             if (Util.isNetwork(getActivity())){
@@ -421,7 +437,14 @@ public class NotCallFragments extends Fragment {
                             }
                             ptrLayout.refreshComplete();
                         }
-                    }
+                    }else{
+                            if (ptrLayout != null) {
+
+
+                                ptrLayout.refreshComplete();
+                            }
+
+                        } }
                 }, 2000);
 
 
@@ -495,7 +518,7 @@ public class NotCallFragments extends Fragment {
                    int firstVisibleItem = linearManager.findFirstVisibleItemPosition();
                    int totalItemCount = linearManager.getItemCount();
                    progressBar04Id.setMax(totalItemCount);
-                   tvPager.setText((firstVisibleItem + 1 + "/" + totalItemCount));
+                   tvPager.setText(((Integer.parseInt(mPage)-1)*20+firstVisibleItem + 1 + "/" + mTotal));
                    progressBar04Id.setProgress(firstVisibleItem);
                    if (mC != null) {
                        for (int i = 0; i < mC.size(); i++) {
@@ -616,7 +639,7 @@ public class NotCallFragments extends Fragment {
 
             @Override
             public void onResponse(String response, int id) {
-                dialog.cancel();
+
                 Log.d("单项隐私 电话", "onResponse: " + response);
                 try {
                     JSONObject json=new JSONObject(response);
@@ -706,6 +729,22 @@ public class NotCallFragments extends Fragment {
 
 
                 Data datas=ms.getData();
+
+                mPage = datas.getPage();
+                mTotal = datas.getTotal();
+              String  totalpage = datas.getTotalpage();
+                if (mPage!=null&&totalpage!=null){
+
+                    if (mPage.equals(totalpage)){
+                        DebugFlags.logD(mPage.equals( totalpage)+"刷新");
+
+                        ptrLayout.setMode(PtrFrameLayout.Mode.REFRESH);
+                    }else{
+
+                        ptrLayout.setMode(PtrFrameLayout.Mode.BOTH);
+                    }}
+
+
                 if ("0".equals(datas.getTotal())){
 
                     rlBar.setVisibility(View.GONE);
@@ -714,6 +753,7 @@ public class NotCallFragments extends Fragment {
                     lv.setAdapter(null);
 
                 }else{
+
                     handlers.obtainMessage(DATA_LOAD_SUCCESS, ms).sendToTarget();
 
                 }
@@ -891,6 +931,7 @@ public class NotCallFragments extends Fragment {
         //uri:统一资源标示符（更广）
         intent.setData(Uri.parse("tel:" + phone));
         //开启系统拨号器
+        dialog.cancel();
         getActivity(). startActivity(intent);
 
 

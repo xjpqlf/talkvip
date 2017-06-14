@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="dao.cn.com.talkvip">
+          package="dao.cn.com.talkvip"
+     >
 
 
 
@@ -71,6 +72,7 @@
 
                   ></activity>
         <activity android:name=".view.activity.FeedbackActivity"></activity>
+        <activity android:name=".view.activity.AssessUsActivity"></activity>
         <activity android:name=".view.activity.LoginActivity"
 
                   android:windowSoftInputMode="adjustPan"

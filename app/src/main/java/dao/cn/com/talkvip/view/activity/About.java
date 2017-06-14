@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import dao.cn.com.talkvip.R;
 import dao.cn.com.talkvip.TVApplication;
+import dao.cn.com.talkvip.utils.DebugFlags;
 
 /**
  * @name dao.cn.com.talkvip.view.activity
@@ -44,7 +45,7 @@ public class About extends BaseActivity {
     protected void initView() {
         TextView version=(TextView)findViewById(R.id.tv_version);
        version.setText("客来V"+getVersion());
-
+        DebugFlags.logD(getVersion());
 
 
     }
@@ -63,4 +64,6 @@ public class About extends BaseActivity {
             return "";
         }
     }
+
+
 }

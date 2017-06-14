@@ -98,6 +98,8 @@ public class FollowUpFragment extends Fragment {
     @Bind(R.id.id_main_lv_lv)
     RecyclerView lv;
 
+    private String mTotal;
+    private String mPage;
 
     private View mView;
     private List<Custom> mList;
@@ -362,14 +364,63 @@ public class FollowUpFragment extends Fragment {
         ptrLayout.setPtrHandler(new PtrDefaultHandler2() {
             @Override
             public void onLoadMoreBegin(PtrFrameLayout frame) {
-                if (pager>0){
+                //  ToastUtil.show("上拉");
+        /*  if (pager>0){
 
-                    pager++;
-                    frame.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
+                pager++;*/
+                frame.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if (pager>0){
+                            pager++;
+
+                            if (ptrLayout != null) {
+                                if (Util.isNetwork(getActivity())){
+                                    getData(pager);}else{
+
+                                    ToastUtil.show(R.string.netstatu);
+                                }
+                                ptrLayout.refreshComplete();
+                            } }else{
+
                             if (ptrLayout != null) {
 
+
+                                ptrLayout.refreshComplete();
+                            }
+                        }
+                    }
+                }, 2000);
+         /* }else{
+              frame.postDelayed(new Runnable() {
+                  @Override
+                  public void run() {
+                      if (ptrLayout != null) {
+
+                          ToastUtil.showInCenter("没有更多的数据了");
+                          ptrLayout.refreshComplete();
+                      }
+                  }
+              }, 2000);
+
+
+          }*/
+
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+
+                //  ToastUtil.show("下拉");
+                frame.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (pager>0&&Integer.parseInt(mPage)!=1){
+                            pager--;
+
+                            //ToastUtil.showInCenter(pager+"");
+                            if (ptrLayout != null) {
                                 if (Util.isNetwork(getActivity())){
                                     getData(pager);}else{
 
@@ -377,41 +428,14 @@ public class FollowUpFragment extends Fragment {
                                 }
                                 ptrLayout.refreshComplete();
                             }
-                        }
-                    }, 2000);
-                }else{
-                    frame.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
+                        }else{
                             if (ptrLayout != null) {
 
-                                ToastUtil.showInCenter("没有更多的数据了");
+
                                 ptrLayout.refreshComplete();
                             }
-                        }
-                    }, 2000);
 
-
-                }
-
-            }
-
-            @Override
-            public void onRefreshBegin(PtrFrameLayout frame) {
-
-                frame.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        //ToastUtil.showInCenter(pager+"");
-                        if (ptrLayout != null) {
-                            if (Util.isNetwork(getActivity())){
-                                getData(pager);}else{
-
-                                ToastUtil.show(R.string.netstatu);
-                            }
-                            ptrLayout.refreshComplete();
-                        }
-                    }
+                        } }
                 }, 2000);
 
 
@@ -477,7 +501,7 @@ public class FollowUpFragment extends Fragment {
                     int firstVisibleItem = linearManager.findFirstVisibleItemPosition();
                     int totalItemCount = linearManager.getItemCount();
                     progressBar04Id.setMax(totalItemCount);
-                    tvPager.setText((firstVisibleItem + 1 + "/" + totalItemCount));
+                    tvPager.setText(((Integer.parseInt(mPage)-1)*20+firstVisibleItem + 1 + "/" + mTotal));
                     progressBar04Id.setProgress(firstVisibleItem);
                     if (mC != null) {
                         for (int i = 0; i < mC.size(); i++) {
@@ -597,7 +621,7 @@ public class FollowUpFragment extends Fragment {
 
             @Override
             public void onResponse(String response, int id) {
-                dialog.cancel();
+
                 Log.d("单项隐私 电话", "onResponse: " + response);
                 try {
                     JSONObject json=new JSONObject(response);
@@ -684,6 +708,20 @@ public class FollowUpFragment extends Fragment {
 
                 Message ms = JSON.parseObject(response, Message.class);
                 Data datas=ms.getData();
+                mPage = datas.getPage();
+                mTotal = datas.getTotal();
+                String  totalpage = datas.getTotalpage();
+
+                if (mPage!=null&&totalpage!=null){
+
+                    if (mPage.equals(totalpage)){
+                        DebugFlags.logD(mPage.equals( totalpage)+"刷新");
+
+                        ptrLayout.setMode(PtrFrameLayout.Mode.REFRESH);
+                    }else{
+
+                        ptrLayout.setMode(PtrFrameLayout.Mode.BOTH);
+                    }}
                 if ("0".equals(datas.getTotal())){
 
                     rlBar.setVisibility(View.GONE);
@@ -692,6 +730,7 @@ public class FollowUpFragment extends Fragment {
                     lv.setAdapter(null);
 
                 }else{
+
                     handlers.obtainMessage(DATA_LOAD_SUCCESS, ms).sendToTarget();
 
                 }
@@ -868,6 +907,7 @@ public class FollowUpFragment extends Fragment {
         //uri:统一资源标示符（更广）
         intent.setData(Uri.parse("tel:" + phone));
         //开启系统拨号器
+        dialog.cancel();
         getActivity(). startActivity(intent);
 
 

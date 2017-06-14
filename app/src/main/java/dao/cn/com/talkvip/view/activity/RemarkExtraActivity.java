@@ -37,6 +37,7 @@ import dao.cn.com.talkvip.utils.Rsa;
 import dao.cn.com.talkvip.utils.SPUtils;
 import dao.cn.com.talkvip.utils.ToastUtil;
 import dao.cn.com.talkvip.utils.Util;
+import dao.cn.com.talkvip.widget.SweetAlertDialog;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 
@@ -74,6 +75,8 @@ public class RemarkExtraActivity extends BaseActivity implements View.OnClickLis
     private TextView mMs;
     private  LinearLayout ls;
     private int mA;
+    private SweetAlertDialog dialog;
+    private SweetAlertDialog dialog1;
     @Override
     protected void initHead() {
 
@@ -86,6 +89,10 @@ public class RemarkExtraActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void initView() {
+        dialog = new SweetAlertDialog(this);
+        dialog.setTitleText("拨打中...");
+        dialog1 = new SweetAlertDialog(this);
+        dialog1.setTitleText("保存中...");
         mName = (TextView) findViewById(R.id.tv_detailids);
         mMobile = (TextView) findViewById(R.id.detail_phone);
         mMs = (TextView) findViewById(R.id.tv_ms);
@@ -242,6 +249,16 @@ public class RemarkExtraActivity extends BaseActivity implements View.OnClickLis
                 if (!TextUtils.isEmpty(mEt.getText().toString())){
 
                  if (Util.isNetwork(this)) {
+
+                     if (mCheckBox.isChecked()){
+                         dialog.show();
+
+                     } else{
+
+                         dialog1.show();
+                     }
+
+
                   bc.setClickable(false);
                      save();
 
@@ -315,13 +332,14 @@ String token=SPUtils.getString(RemarkExtraActivity.this,"token","");
                             mPostion++;
                             creatLog(mInfos.getMsg().get(mPostion).getId(),order);
                             DebugFlags.logD("连续拨打日志id"+mInfos.getMsg().get(mPostion).getId());
+
                             getPhoneNum(mInfos.getMsg().get(mPostion).getSourceid(),order);
                            // CallPhone(mInfos.getMsg().get(mPostion).getId());
 
 
 
                         }else{
-
+                            dialog1.cancel();
                             finish();
                         }
 
@@ -351,6 +369,7 @@ String token=SPUtils.getString(RemarkExtraActivity.this,"token","");
         //uri:统一资源标示符（更广）
         intent.setData(Uri.parse("tel:" + phone));
         //开启系统拨号器
+        dialog.cancel();
      startActivity(intent);
 
 
@@ -560,6 +579,7 @@ String token=SPUtils.getString(RemarkExtraActivity.this,"token","");
                 .addParams("calledPhone", "")
                 .addParams("dataID", id)
                 .addParams("order", order)
+
                 .addParams("timeStamp", timeStamp)
                 .addParams("resultURL", "www.baidu.com")
                 .addParams("notifyURL",SPUtils.getString(RemarkExtraActivity.this,"nurl",""))
