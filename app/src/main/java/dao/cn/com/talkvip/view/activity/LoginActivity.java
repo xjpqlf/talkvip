@@ -185,7 +185,7 @@ public class LoginActivity extends BaseActivity {
                             String result = json.getString("result");
                             String code = json.getString("code");
                             String data = json.getString("data");
-
+                            String msg = json.getString("msg");
 
                             if ("8888".equals(code)) {
                                 JSONObject json1 = new JSONObject(data);
@@ -194,8 +194,16 @@ public class LoginActivity extends BaseActivity {
                                 String name = json1.getString("realname");
                                 String phone = json1.getString("phone");
                                 String email = json1.getString("email");
+                                String continuous_cal = json1.getString("continuous_call");
+                                String headurl = json1.getString("headurl");
+
+                                String extract_state = json1.getString("extract_state");
+
+                                SPUtils.putString(LoginActivity.this,"extract_state",extract_state);
                                 SPUtils.putString(LoginActivity.this,"phone",phone);
-                                SPUtils.putString(LoginActivity.this,"email",email);
+                                SPUtils.putString(LoginActivity.this,"username",name);
+                                SPUtils.putString(LoginActivity.this,"cc", continuous_cal);
+                                SPUtils.putString(LoginActivity.this,"hurl", headurl);
                                 Constants.TOKEN = token;
                                 SPUtils.putString(LoginActivity.this,"token",token);
                                 SPUtils.putString(LoginActivity.this,"ac",ac);
@@ -203,9 +211,15 @@ public class LoginActivity extends BaseActivity {
 
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 intent.putExtra("name", name);
-                                startActivity(intent);
+
+                                intent.putExtra("headurl", headurl);
+                              startActivity(intent);
                                  finish();
-                            } else if ("1001".equals(code)) {
+                            }
+                            else {
+                                ToastUtil.showInCenter(msg);
+                            }
+                            /*else if ("1001".equals(code)) {
 
                                 ToastUtil.showInCenter("用户名有误");
 
@@ -226,7 +240,7 @@ public class LoginActivity extends BaseActivity {
 
                                 ToastUtil.showInCenter("账号已关闭");
 
-                            }
+                            }*/
 
 
                         } catch (JSONException e) {

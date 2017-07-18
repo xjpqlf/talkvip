@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/bule"
+        android:layout_height="50dp">
+
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:id="@+id/rl_acback"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/iv_back"
+                android:src="@mipmap/back"
+
+                />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/tv_theme"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:text="头 像"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_edit"
+
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/edithi"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_saveimg"
+
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/saveiv"
+            android:visibility="gone"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"/>
+
+
+    </RelativeLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+         android:id="@+id/iv_image"
+        />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_margin="10dp"
+       android:layout_centerInParent="true"
+        android:src="@mipmap/notx"
+        android:visibility="gone"
+        android:id="@+id/no_image"
+        />
+
+</RelativeLayout>
+</LinearLayout>

@@ -128,6 +128,7 @@
             android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:background="@mipmap/tnb"
+            android:visibility="gone"
             android:text="@string/follwup"
             android:textColor="@color/grey_word"
             android:gravity="center"
@@ -184,14 +185,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
       android:layout_marginTop="20dp"
+        android:id="@+id/rl_check"
         android:layout_marginLeft="12dp">
 
         <CheckBox
             android:id="@+id/iv_xuan"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:background="@drawable/check_selector"
             android:layout_centerVertical="true"
+            android:padding="20dp"
             android:button="@null"  />
         <TextView
             android:layout_width="wrap_content"

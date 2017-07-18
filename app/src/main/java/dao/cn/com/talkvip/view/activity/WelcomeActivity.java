@@ -213,15 +213,23 @@ public class WelcomeActivity extends BaseActivity {
                             String code = json.getString("code");
                             String data = json.getString("data");
                             JSONObject json1 = new JSONObject(data);
+                            String extract_state = json1.getString("extract_state");
+                            String continuous_cal = json1.getString("continuous_call");
+                            SPUtils.putString(WelcomeActivity.this,"cc", continuous_cal);
+                            String name = json1.getString("realname");
+                            String headurl = json1.getString("headurl");
+                            SPUtils.putString(WelcomeActivity.this,"username",name);
 
+                            SPUtils.putString(WelcomeActivity.this,"hurl", headurl);
+                            SPUtils.putString(WelcomeActivity.this,"extract_state",extract_state);
                             String token = json1.getString("token");
                             SPUtils.putString(WelcomeActivity.this,"token",token);
-                            String name = json1.getString("realname");
+
                             Constants.TOKEN = token;
                             if ("8888".equals(code)) {
-
-                                Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+                              Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
                                 intent.putExtra("name", name);
+
                                 startActivity(intent);
                                 finish();
 

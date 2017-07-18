@@ -73,7 +73,10 @@ public class SettingActivity  extends BaseActivity {
         coument.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //跳转应用宝
                 launchAppDetail("dao.cn.com.talkvip","com.tencent.android.qqdownloader"
+                        //跳转360市场
+              //  launchAppDetail("dao.cn.com.talkvip","com.tencent.android.qqdownloader"
 
                 );
 
@@ -174,7 +177,10 @@ public class SettingActivity  extends BaseActivity {
 
             Intent intent = new Intent();
             intent.setAction("android.intent.action.VIEW");
+            //跳转应用宝
             Uri content_url = Uri.parse("http://app.qq.com/#id=detail&appid=1106183726");
+            //360市场
+         //   Uri content_url = Uri.parse("http://m.app.so.com/detail/index?pname=dao.cn.com.talkvip&id=3851131");
             intent.setData(content_url);
             startActivity(intent);
             e.printStackTrace();

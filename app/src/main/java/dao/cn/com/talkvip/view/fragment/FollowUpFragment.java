@@ -592,7 +592,7 @@ public class FollowUpFragment extends Fragment {
 
         String accountId = "1803c7cadc";
         String timeStamp = i + str;
-
+       // String accountId = "b6458ae8a4";
         String sign = accountId + timeStamp + order;
 
 
@@ -634,7 +634,7 @@ public class FollowUpFragment extends Fragment {
 
 
                     }else{
-
+                        dialog.cancel();
                         ToastUtil.show(msg);
                     }
 
@@ -667,6 +667,7 @@ public class FollowUpFragment extends Fragment {
             public void onError(Call call, Exception e, int id) {
                 hiddenLoadingView();
                 ToastUtil.show("连接服务器失败");
+
             }
 
             @Override

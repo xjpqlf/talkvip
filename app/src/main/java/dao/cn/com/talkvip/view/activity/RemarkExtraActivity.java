@@ -116,13 +116,27 @@ public class RemarkExtraActivity extends BaseActivity implements View.OnClickLis
             mPostion = in.getIntExtra("postion",0);
 
           // Log.v("电话集合", "" + mInfos.getMsg().toString()+ mCustom.toString());
+            String ccall= SPUtils.getString(RemarkExtraActivity.this,"cc","");
+
+            if (!TextUtils.isEmpty(ccall)){
+                if ("0".equals(ccall)) {
+                    DebugFlags.logD("不联播");
+                    mCheckBox.setChecked(false);
+                    mCheckBox.setSelected(false);
+
+                }else if ("1".equals(ccall)){
+                    mCheckBox.setChecked(true);
+                    mCheckBox.setSelected(true);
+
+                }
+            }
 
 
 
 
 
             if (mName!=null&&mMobile!=null&&mMs!=null) {
-                mCheckBox.setChecked(true);
+
                 mName.setText(mCustom.getId());
                 mMobile.setText(mCustom.getMobile());
                 mMs.setText(mCustom.getName());
@@ -300,6 +314,7 @@ String token=SPUtils.getString(RemarkExtraActivity.this,"token","");
                 .addHeader("Authorization", "Bearer" + " " + token)
                 .addParams("id",mInfos.getMsg().get(mPostion).getId())
                 .addParams("status",status)
+                .addParams("continuous_call",mCheckBox.isChecked()?"1":"0")
                 .addParams("note",mEt.getText().toString())
                 .build().execute(new StringCallback() {
             @Override
@@ -564,7 +579,9 @@ String token=SPUtils.getString(RemarkExtraActivity.this,"token","");
 
         mA = rand.nextInt(10000000);
 
-        String accountId ="1803c7cadc";
+        //   String accountId ="1803c7cadc";
+        //沙箱id
+        String accountId = "b6458ae8a4";
         String timeStamp = i + str;
 
         String sign = accountId + timeStamp + order;

@@ -207,7 +207,7 @@ public class NotCallFragments extends Fragment {
                                     int i = rand.nextInt(100000);
                                       String order=strs+"1"+i;
 
-
+                                    DebugFlags.logD("订单号"+order);
                                     //产生日志
                                     creatLog(mList.get(position).getId(),order);
                                     if (mList.get(position).getSourceid()!=null){
@@ -227,6 +227,7 @@ public class NotCallFragments extends Fragment {
                                 int i = rand.nextInt(100000);
                                 String order=strs+"1"+i;
                                 creatLog(mList.get(position).getId(),order);
+                                DebugFlags.logD("订单号"+order);
                                 if (mList.get(position).getSourceid()!=null){
                                     getPhoneNum(mList.get(position).getSourceid(),order);}else{
 
@@ -607,7 +608,9 @@ public class NotCallFragments extends Fragment {
 
         mA = rand.nextInt(10000000);
 
-        String accountId ="1803c7cadc";
+       // String accountId ="1803c7cadc";
+        //沙箱id
+        String accountId = "b6458ae8a4";
         String timeStamp = i + str;
 
         String sign = accountId + timeStamp + order;
@@ -652,7 +655,7 @@ public class NotCallFragments extends Fragment {
 
 
                     }else{
-
+              dialog.cancel();
                         ToastUtil.show(msg);
                     }
 

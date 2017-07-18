@@ -617,7 +617,7 @@ getData(pager);
 
             @Override
             public void onResponse(String response, int id) {
-
+                dialog.cancel();
                 Log.d("单项隐私 电话", "onResponse: " + response);
                 try {
                     JSONObject json=new JSONObject(response);
@@ -630,7 +630,7 @@ getData(pager);
 
 
                     }else{
-
+                        dialog.cancel();
                         ToastUtil.show(msg);
                     }
 
@@ -662,13 +662,14 @@ getData(pager);
             @Override
             public void onError(Call call, Exception e, int id) {
                 hiddenLoadingView();
-
+                dialog.cancel();
             }
 
             @Override
             public void onResponse(String response, int id) {
                 DebugFlags.logD("待跟进数据" + response);
                 hiddenLoadingView();
+
                 try {
                     JSONObject jsonObject=new  JSONObject(response);
                     String code=jsonObject.getString("code");

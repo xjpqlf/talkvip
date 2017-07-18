@@ -15,10 +15,12 @@ public class Constants {
 
     //public static final String BASE_URL = "http://120.52.12.200:80";
  // public static final String BASE_URL = "http://mt.talkvip.cn";
-  public static final String BASE_URL = "http://120.52.12.201:81";
+ //public static final String BASE_URL = "http://120.52.12.201:81";
   // public static final String BASE_URL = "http://mt.dev.talkvip.cn/";
-   public static final String C1_URL = "http://c1.talkvip.cn/";
-   // public static final String BASE_URL = "http://mt.sandbox.talkvip.cn";
+   //public static final String C1_URL = "http://c1.talkvip.cn/";
+    //沙箱c1
+   public static final String C1_URL = "http://c1.sandbox.talkvip.cn";
+  public static final String BASE_URL = "http://mt.sandbox.talkvip.cn";
     public static String TOKEN = "";
     public  static  boolean isCall=false;
 

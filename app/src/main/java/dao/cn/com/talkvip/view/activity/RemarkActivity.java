@@ -77,6 +77,8 @@ public class RemarkActivity extends BaseActivity implements View.OnClickListener
     private int mA;
     private SweetAlertDialog dialog;
     private SweetAlertDialog dialog1;
+    private RelativeLayout mMrlc;
+
     @Override
     protected void initHead() {
 
@@ -99,6 +101,7 @@ public class RemarkActivity extends BaseActivity implements View.OnClickListener
         mMs = (TextView) findViewById(R.id.tv_ms);
         ls= (LinearLayout) findViewById(R.id.ll_chooes);
         mRl = (RelativeLayout) findViewById(R.id.rl_bjback);
+        mMrlc = (RelativeLayout) findViewById(R.id.rl_check);
         mCheckBox = (CheckBox) findViewById(R.id.iv_xuan);
         mEt = (EditText) findViewById(R.id.tv_bjhint);
         mycodereceivers = new   PhoneReceiverfre();
@@ -118,24 +121,50 @@ public class RemarkActivity extends BaseActivity implements View.OnClickListener
 
                 DebugFlags.logD(s+"==标记");
           // Log.v("电话集合", "" + mInfos.getMsg().toString()+ mCustom.toString());
+          String ccall= SPUtils.getString(RemarkActivity.this,"cc","");
+
+                if (!TextUtils.isEmpty(ccall)){
+                    if ("0".equals(ccall)) {
+                        DebugFlags.logD("不联播");
+                        mCheckBox.setChecked(false);
+                        mCheckBox.setSelected(false);
+
+                    }else if ("1".equals(ccall)){
+                        mCheckBox.setChecked(true);
+                        mCheckBox.setSelected(true);
+
+                    }
+                    }
+
+
 
 
 
 
 
             if (mName!=null&&mMobile!=null&&mMs!=null) {
-                mCheckBox.setChecked(true);
+               // mCheckBox.setChecked(true);
                 mName.setText(mCustom.getId());
                 mMobile.setText(mCustom.getMobile());
                 mMs.setText(mCustom.getName());
             }
             dgx = (TextView) findViewById(R.id.dgx);
             wjt= (TextView) findViewById(R.id.wjt);
+
             wyy= (TextView) findViewById(R.id.wyy);
             tq= (TextView) findViewById(R.id.tq);
            zd= (TextView) findViewById(R.id.zd);
 
              bc= (TextView) findViewById(R.id.tv_bc);
+            if ("1".equals(SPUtils.getString(RemarkActivity.this, "extract_state",""))){
+
+tq.setVisibility(View.GONE);
+
+            }
+
+
+
+
             dgx.setOnClickListener(this);
             wjt.setOnClickListener(this);
             wyy.setOnClickListener(this);
@@ -297,12 +326,18 @@ public class RemarkActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void save() {
+    /*  String ss="1";
+        if (!mCheckBox.isChecked()){
+            ss="0";
+        }*/
+
 String token=SPUtils.getString(RemarkActivity.this,"token","");
-        DebugFlags.logD("备注id"+mInfos.getMsg().get(mPostion).getId()+"=="+status);
+        DebugFlags.logD("备注id"+(mCheckBox.isChecked()?"1":"0"));
         OkHttpUtils.post().url(Constants.BASE_URL+"/Comment/phoneNotes")
                 .addHeader("Authorization", "Bearer" + " " + token)
                 .addParams("id",mInfos.getMsg().get(mPostion).getId())
                 .addParams("status",status)
+                .addParams("continuous_call",(mCheckBox.isChecked()?"1":"0"))
                 .addParams("note",mEt.getText().toString())
                 .build().execute(new StringCallback() {
             @Override
@@ -568,7 +603,9 @@ String token=SPUtils.getString(RemarkActivity.this,"token","");
 
         mA = rand.nextInt(10000000);
 
-        String accountId ="1803c7cadc";
+       // String accountId ="1803c7cadc";
+        //沙箱id
+       String accountId = "b6458ae8a4";
         String timeStamp = i + str;
 
         String sign = accountId + timeStamp + order;

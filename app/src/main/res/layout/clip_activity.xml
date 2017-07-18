@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="#82837B">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:background="@color/bule">
+        <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/return_topleft"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_centerVertical="true"
+                />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="缩放与裁剪"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:layout_centerInParent="true"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/saveiv"
+            android:id="@+id/iv_save"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+            android:id="@+id/rl"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            >
+
+        <ImageView
+                android:id="@+id/src_pic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                />
+        <dao.cn.com.talkvip.widget.ClipView
+                android:id="@+id/clipView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+
+    </RelativeLayout>
+
+
+
+
+
+</LinearLayout>

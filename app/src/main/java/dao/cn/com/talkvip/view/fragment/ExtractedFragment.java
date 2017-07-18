@@ -173,18 +173,18 @@ dialog.show();
                                         builder.setIcon(R.mipmap.ic_launcher);//设置图标，图片id即可
                                         builder.setPositiveButton("前往授权", new DialogInterface.OnClickListener() { //设置确定按钮
                                             @Override
-                                            public void onClick(DialogInterface dialog, int which) {
+                                            public void onClick(DialogInterface dialogs, int which) {
 
                                                 getAppDetailSettingIntent(getActivity());
 
-                                                dialog.dismiss(); //关闭dialog
+                                                dialogs.dismiss(); //关闭dialog
 
                                             }
                                         });
                                         builder.setNegativeButton("暂不处理", new DialogInterface.OnClickListener() { //设置取消按钮
                                             @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
+                                            public void onClick(DialogInterface dialogs, int which) {
+                                                dialogs.dismiss();
 
                                             }
                                         });
@@ -595,6 +595,8 @@ dialog.show();
         mA = rand.nextInt(10000000);
 
         String accountId = "1803c7cadc";
+        //沙箱id
+      //  String accountId = "b6458ae8a4";
         String timeStamp = i + str;
 
         String sign = accountId + timeStamp + order;
@@ -618,13 +620,13 @@ dialog.show();
                 .addParams("signInfo", mSigns).build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-
+                dialog.cancel();
                 ToastUtil.show("连接服务器失败");
             }
 
             @Override
             public void onResponse(String response, int id) {
-                dialog.cancel();
+
                 Log.d("单项隐私 电话", "onResponse: " + response);
                 try {
                     JSONObject json=new JSONObject(response);
@@ -637,7 +639,7 @@ dialog.show();
 
 
                     }else{
-
+                        dialog.cancel();
                         ToastUtil.show(msg);
                     }
 
@@ -670,6 +672,7 @@ dialog.show();
             public void onError(Call call, Exception e, int id) {
                 hiddenLoadingView();
                 ToastUtil.show("连接服务器失败");
+                dialog.cancel();
 
             }
 

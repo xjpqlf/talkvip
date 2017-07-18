@@ -594,6 +594,7 @@ DebugFlags.logD("未接通重现了");
         mA = rand.nextInt(10000000);
 
         String accountId = "1803c7cadc";
+
         String timeStamp = i + str;
 
         String sign = accountId + timeStamp + order;
@@ -636,7 +637,7 @@ DebugFlags.logD("未接通重现了");
 
 
                     }else{
-
+                        dialog.cancel();
                         ToastUtil.show(msg);
                     }
 

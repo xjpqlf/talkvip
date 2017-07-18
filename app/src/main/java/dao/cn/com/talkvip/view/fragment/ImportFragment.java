@@ -588,6 +588,7 @@ getData(pager);
         mA = rand.nextInt(10000000);
 
         String accountId = "1803c7cadc";
+       // String accountId = "b6458ae8a4";
         String timeStamp = i + str;
 
         String sign = accountId + timeStamp + order;
@@ -631,7 +632,7 @@ getData(pager);
 
 
                     }else{
-
+                        dialog.cancel();
                         ToastUtil.show(msg);
                     }
 
@@ -664,6 +665,7 @@ getData(pager);
             public void onError(Call call, Exception e, int id) {
                 hiddenLoadingView();
                 ToastUtil.show("连接服务器失败");
+                dialog.cancel();
             }
 
             @Override

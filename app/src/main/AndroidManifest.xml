@@ -22,7 +22,9 @@
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.READ_SMS"/>
-
+<!--    相机权限-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -82,7 +84,9 @@
         <activity android:name=".view.activity.About"></activity>
         <activity android:name=".view.activity.RemarkExtraActivity"></activity>
         <activity android:name=".view.activity.Protocol"></activity>
-        <activity android:name=".view.activity.RemarkActivity"
+        <activity android:name=".view.activity.RemarkActivity"></activity>
+        <activity android:name=".view.activity.ClipHeaderActivity"></activity>
+        <activity android:name=".view.activity.HeadImageActivity"
 
 
             ></activity>
