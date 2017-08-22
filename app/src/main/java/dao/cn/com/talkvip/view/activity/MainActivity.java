@@ -25,6 +25,7 @@ import dao.cn.com.talkvip.adapter.TabFragmentAdapter;
 import dao.cn.com.talkvip.utils.SPUtils;
 import dao.cn.com.talkvip.utils.ToastUtil;
 import dao.cn.com.talkvip.view.fragment.ExtractedFragment;
+import dao.cn.com.talkvip.view.fragment.FollowUpFragment;
 import dao.cn.com.talkvip.view.fragment.ImportFragment;
 import dao.cn.com.talkvip.view.fragment.NoDesireFragment;
 import dao.cn.com.talkvip.view.fragment.NotCallFragments;
@@ -123,12 +124,13 @@ public class MainActivity extends BaseActivity implements Toolbar.OnMenuItemClic
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         List<String> tabList = new ArrayList<>();
 
-        if ("0".equals(SPUtils.getString(MainActivity.this, "extract_state",""))){
+        if ("0".equals(SPUtils.getString(MainActivity.this, "extract_state", ""))) {
             tabList.add("未拨打");
-            ;
+            tabList.add("重点");
             tabList.add("未接通");
             tabList.add("无意愿");
-            tabList.add("重点");
+            tabList.add("待跟进");
+
             tabList.add("已提取");
 
             tabLayout.addTab(tabLayout.newTab().setText(tabList.get(0)));//添加tab选项卡
@@ -136,36 +138,30 @@ public class MainActivity extends BaseActivity implements Toolbar.OnMenuItemClic
             tabLayout.addTab(tabLayout.newTab().setText(tabList.get(2)));
             tabLayout.addTab(tabLayout.newTab().setText(tabList.get(3)));
             tabLayout.addTab(tabLayout.newTab().setText(tabList.get(4)));
+            tabLayout.addTab(tabLayout.newTab().setText(tabList.get(5)));
 
-        }else{
+
+        } else {
 
             tabList.add("未拨打");
-
+            tabList.add("重点");
             tabList.add("未接通");
             tabList.add("无意愿");
-            tabList.add("重点");
+            tabList.add("待跟进 ");
 
             tabLayout.addTab(tabLayout.newTab().setText(tabList.get(0)));//添加tab选项卡
             tabLayout.addTab(tabLayout.newTab().setText(tabList.get(1)));
             tabLayout.addTab(tabLayout.newTab().setText(tabList.get(2)));
             tabLayout.addTab(tabLayout.newTab().setText(tabList.get(3)));
+            tabLayout.addTab(tabLayout.newTab().setText(tabList.get(4)));
 
 
         }
 
 
-
-       // tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);//设置tab模式，当前为系统默认模式
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);//设置tab模式，当前为系统默认模式
         //此处代码设置无效，不知道为啥？？？xml属性是可以的
 //        tabLayout.setTabTextColors(android.R.color.white, android.R.color.holo_red_dark);//设置TabLayout两种状态
-
-
-
-
-
-
-
-
 
 
         List<Fragment> fragmentList = new ArrayList<>();
@@ -177,53 +173,54 @@ public class MainActivity extends BaseActivity implements Toolbar.OnMenuItemClic
             fragmentList.add(f1);
         }*/
 
-        if ("0".equals(SPUtils.getString(MainActivity.this, "extract_state",""))){
-            Fragment  f1=new NotCallFragments();
+        if ("0".equals(SPUtils.getString(MainActivity.this, "extract_state", ""))) {
+            Fragment f1 = new NotCallFragments();
 
-            Fragment  f3=new NotThroughFragment();
-            Fragment  f4=new NoDesireFragment();
+            Fragment f3 = new NotThroughFragment();
+            Fragment f4 = new NoDesireFragment();
 
-            Fragment  f6=new ImportFragment();
-            Fragment  f5=new ExtractedFragment();
+            Fragment f6 = new ImportFragment();
+            Fragment f2 = new FollowUpFragment();
+            Fragment f5 = new ExtractedFragment();
             fragmentList.add(f1);
-
-            fragmentList.add(f3);
-            fragmentList.add(f4);
             fragmentList.add(f6);
+            fragmentList.add(f3);
+            fragmentList.add(f4);
+            fragmentList.add(f2);
+
             fragmentList.add(f5);
-        }else{
+        } else {
 
-            Fragment  f1=new NotCallFragments();
-
-            Fragment  f3=new NotThroughFragment();
-            Fragment  f4=new NoDesireFragment();
-            Fragment  f5=new ImportFragment();
+            Fragment f1 = new NotCallFragments();
+            Fragment f2 = new FollowUpFragment();
+            Fragment f3 = new NotThroughFragment();
+            Fragment f4 = new NoDesireFragment();
+            Fragment f5 = new ImportFragment();
 
             fragmentList.add(f1);
 
-            fragmentList.add(f3);
-            fragmentList.add(f4);
             fragmentList.add(f5);
+            fragmentList.add(f4);
+            fragmentList.add(f3);
+            fragmentList.add(f2);
 
 
         }
 
 
-
-
-
-
         TabFragmentAdapter fragmentAdapter = new TabFragmentAdapter(getSupportFragmentManager(), fragmentList, tabList);
         viewPager.setAdapter(fragmentAdapter);//给ViewPager设置适配器
 
-        if ("0".equals(SPUtils.getString(MainActivity.this, "extract_state",""))){
+        if ("0".equals(SPUtils.getString(MainActivity.this, "extract_state", ""))) {
 
+            viewPager.setOffscreenPageLimit(5);
+        } else {
             viewPager.setOffscreenPageLimit(4);
-        }else{ viewPager.setOffscreenPageLimit(3);}
+        }
         tabLayout.setupWithViewPager(viewPager);//将TabLayout和ViewPager关联起来。
         tabLayout.setTabsFromPagerAdapter(fragmentAdapter);//给Tabs设置适配器
-
     }
+
 
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);

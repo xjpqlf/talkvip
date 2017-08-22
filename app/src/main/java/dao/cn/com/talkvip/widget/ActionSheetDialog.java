@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.cn.com.talkvip.R;
+import dao.cn.com.talkvip.utils.Util;
 
 public class ActionSheetDialog {
 	private Context context;
@@ -121,6 +122,7 @@ public class ActionSheetDialog {
 			LayoutParams params = (LayoutParams) sLayout_content
 					.getLayoutParams();
 			params.height = display.getHeight() / 2;
+
 			sLayout_content.setLayoutParams(params);
 		}
 
@@ -175,7 +177,7 @@ public class ActionSheetDialog {
 			int height = (int) (45 * scale + 0.5f);
 			lLayout_content.setGravity(Gravity.CENTER);
 			textView.setLayoutParams(new LayoutParams(
-					600, height));
+					Util.dip2px(context,300), height));
 
 			// ����¼�
 			textView.setOnClickListener(new OnClickListener() {

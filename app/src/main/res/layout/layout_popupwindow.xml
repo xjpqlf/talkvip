@@ -96,7 +96,7 @@
            android:layout_gravity="center"
            android:layout_width="0dp"
            android:layout_weight="1"
-android:visibility="gone"
+
            android:textColor="@color/grey_word1"
            android:background="@mipmap/tnb"
            android:text="@string/follwup"

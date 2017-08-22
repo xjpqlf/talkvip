@@ -6,9 +6,15 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import dao.cn.com.talkvip.Constants;
 import dao.cn.com.talkvip.R;
 import dao.cn.com.talkvip.TVApplication;
 import dao.cn.com.talkvip.utils.DebugFlags;
+import dao.cn.com.talkvip.utils.SPUtils;
+import okhttp3.Call;
 
 /**
  * @name dao.cn.com.talkvip.view.activity
@@ -44,9 +50,14 @@ public class About extends BaseActivity {
     @Override
     protected void initView() {
         TextView version=(TextView)findViewById(R.id.tv_version);
-       version.setText("客来V"+getVersion());
+         version.setText("客来V"+getVersion());
         DebugFlags.logD(getVersion());
-
+version.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        getData(0);
+    }
+});
 
     }
 
@@ -65,5 +76,28 @@ public class About extends BaseActivity {
         }
     }
 
+    private void getData(int page) {
+        String token= SPUtils.getString(About.this,"token","");
 
+
+        OkHttpUtils.post()
+                .url(Constants.BASE_URL + "/Callphone/serviceFollowUp")
+                // .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                .addHeader("Authorization", "Bearer" + " " + token)
+                .addParams("size", "20")
+                .addParams("page", page + "")
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                DebugFlags.logD("待跟进错误"+e.toString());
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                DebugFlags.logD("待跟进测试"+response);
+
+            }
+        });
+
+    }
 }

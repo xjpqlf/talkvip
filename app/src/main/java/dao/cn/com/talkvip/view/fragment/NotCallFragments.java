@@ -608,9 +608,9 @@ public class NotCallFragments extends Fragment {
 
         mA = rand.nextInt(10000000);
 
-       // String accountId ="1803c7cadc";
+        String accountId ="1803c7cadc";
         //沙箱id
-        String accountId = "b6458ae8a4";
+        //  String accountId = "b6458ae8a4";
         String timeStamp = i + str;
 
         String sign = accountId + timeStamp + order;

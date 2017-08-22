@@ -29,7 +29,7 @@ public class ClipView extends View {
             | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG | Canvas.FULL_COLOR_LAYER_SAVE_FLAG
             | Canvas.CLIP_TO_LAYER_SAVE_FLAG;
 
-    private float radiusWidthRatio  = 2f/9;//裁剪圆框的半径占view的宽度的比
+    private float radiusWidthRatio  =  2f/5;//裁剪圆框的半径占view的宽度的比
 
     int width;
     int height;
@@ -71,7 +71,7 @@ public class ClipView extends View {
 
         //saveLayer相当于新入栈一个图层，接下来的操作都会在该图层上进行
         canvas.saveLayer(0, 0, width, height, null, LAYER_FLAGS);
-        canvas.drawColor(Color.parseColor("#a8000000"));
+        canvas.drawColor(Color.parseColor("#64000000"));
         paint.setXfermode(xfermode);
         //中间的透明的圆
         canvas.drawCircle(width / 2, height / 2, width * radiusWidthRatio, paint);

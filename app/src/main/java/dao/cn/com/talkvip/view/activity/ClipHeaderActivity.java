@@ -21,6 +21,7 @@ import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -91,6 +92,7 @@ public class ClipHeaderActivity extends Activity implements OnTouchListener{
     private Bitmap bitmap;
 
     private int side_length;//裁剪区域边长
+    private RelativeLayout mCjback;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,7 +109,7 @@ public class ClipHeaderActivity extends Activity implements OnTouchListener{
         srcPic = (ImageView) findViewById(R.id.src_pic);
         clipview =  (ClipView)findViewById(R.id.clipView);
         bt_ok = (ImageView) findViewById(R.id.iv_save);
-
+        mCjback = (RelativeLayout) findViewById(R.id.cjback);
         srcPic.setOnTouchListener(this);
 
         //clipview中有初始化原图所需的参数，所以需要等到clipview绘制完毕再初始化原图
@@ -128,7 +130,7 @@ public class ClipHeaderActivity extends Activity implements OnTouchListener{
             }
         });
 
-        iv_back.setOnClickListener(new OnClickListener() {
+        mCjback.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -150,7 +152,7 @@ public class ClipHeaderActivity extends Activity implements OnTouchListener{
         }
         //原图可能很大，现在手机照出来都3000*2000左右了，直接加载可能会OOM
         //这里 decode 出 720*1280 左右的照片
-        bitmap = BitmapUtil.decodeSampledBitmap(path,200,200);
+        bitmap = BitmapUtil.decodeSampledBitmap(path,700,1280);
 
         if (bitmap == null) {
             return;
@@ -169,7 +171,7 @@ public class ClipHeaderActivity extends Activity implements OnTouchListener{
                 scale = minScale;
             }
         }else {//高图
-            scale = (float)srcPic.getWidth()/2/bitmap.getWidth();//宽缩放到imageview的宽的1/2
+            scale = (float)srcPic.getWidth()/1/bitmap.getWidth();//宽缩放到imageview的宽的1/2
         }
 
         // 缩放
@@ -297,14 +299,14 @@ public class ClipHeaderActivity extends Activity implements OnTouchListener{
             return;
         }
 
-        Uri mSaveUri = Uri.fromFile(new File(getCacheDir(), "cropped_"+System.currentTimeMillis()+".jpg"));
+        Uri mSaveUri = Uri.fromFile(new File(getCacheDir(), "cropped_"+System.currentTimeMillis()+".png"));
 
         if (mSaveUri != null) {
             OutputStream outputStream = null;
             try {
                 outputStream = getContentResolver().openOutputStream(mSaveUri);
                 if (outputStream != null) {
-                    zoomedCropBitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+                    zoomedCropBitmap.compress(Bitmap.CompressFormat.PNG, 90, outputStream);
                 }
             } catch (IOException ex) {
                 // TODO: report error to caller
@@ -346,7 +348,7 @@ public class ClipHeaderActivity extends Activity implements OnTouchListener{
                     .execute(new StringCallback() {
                         @Override
                         public void onError(Call call, Exception e, int id) {
-                            ToastUtil.show("保存失败");
+                            ToastUtil.show("上传失败");
                         }
 
                         @Override
@@ -357,10 +359,10 @@ public class ClipHeaderActivity extends Activity implements OnTouchListener{
 
                                 SPUtils.putString(ClipHeaderActivity.this,"hurl", is.getData().getHeadurl());
                                 finish();
-
+                               ToastUtil.showInCenter("上传成功");
                             }else {
 
-                                ToastUtil.show("保存失败");
+                                ToastUtil.show("上传失败");
                             }
                         }
                     });

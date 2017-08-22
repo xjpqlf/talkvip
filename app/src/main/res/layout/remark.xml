@@ -128,7 +128,7 @@
             android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:background="@mipmap/tnb"
-            android:visibility="gone"
+
             android:text="@string/follwup"
             android:textColor="@color/grey_word"
             android:gravity="center"
@@ -161,7 +161,7 @@
         android:textCursorDrawable="@null"
    android:layout_marginLeft="5dp"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="150dp"
 
         android:gravity="top"
         android:background="@null"
@@ -177,21 +177,123 @@
         />
     <View
         android:layout_width="match_parent"
-        android:background="@color/linecorlor"
-        android:layout_marginTop="12dp"
+        android:background="@color/lines"
+
+        android:layout_height="1dp"></View>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="30dp">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:id="@+id/pens"
+            android:src="@mipmap/pens"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:layout_centerInParent="true"
+    android:layout_toRightOf="@+id/pens"
+    >
+        <TextView
+            android:layout_width="wrap_content"
+            android:background="@drawable/shap_remark"
+            android:text="@string/nothinks"
+            android:layout_gravity="center"
+            android:id="@+id/nothinks"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:background="@drawable/shap_remark"
+            android:text="@string/cbreaks"
+            android:layout_gravity="center"
+            android:id="@+id/cbreaks"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+
+
+</LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/pens"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:background="@drawable/shap_remark"
+                android:text="@string/noanswer"
+                android:layout_gravity="center"
+                android:id="@+id/noanswer"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:background="@drawable/shap_remark"
+                android:text="@string/breaks"
+                android:layout_gravity="center"
+                android:id="@+id/breaks"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="12sp"
+                android:background="@drawable/shap_remark"
+                android:text="@string/close"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:id="@+id/close"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/lines"
+
         android:layout_height="1dp"></View>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-      android:layout_marginTop="20dp"
+      android:layout_marginTop="5dp"
         android:id="@+id/rl_check"
         android:layout_marginLeft="12dp">
 
         <CheckBox
             android:id="@+id/iv_xuan"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:background="@drawable/check_selector"
             android:layout_centerVertical="true"
             android:padding="20dp"
@@ -202,12 +304,15 @@
             android:layout_marginLeft="7dp"
             android:layout_toRightOf="@+id/iv_xuan"
             android:textColor="@color/drawcorlor"
-            android:textSize="19sp"
+            android:textSize="14sp"
             android:layout_centerVertical="true"
             android:text="开启保存后连续拨打功能"/>
 
 
     </RelativeLayout>
+
+
+
 </LinearLayout>
     <TextView
         android:layout_width="match_parent"

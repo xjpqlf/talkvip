@@ -667,7 +667,7 @@ getData(pager);
 
             @Override
             public void onResponse(String response, int id) {
-                DebugFlags.logD("待跟进数据" + response);
+                DebugFlags.logD("无意愿数据" + response);
                 hiddenLoadingView();
 
                 try {

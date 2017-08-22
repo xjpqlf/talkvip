@@ -3,16 +3,17 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:background="#82837B">
+             >
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="46dp"
+            android:id="@+id/cjback"
             android:background="@color/bule">
         <ImageView
                 android:id="@+id/iv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/return_topleft"
+                android:background="@mipmap/back"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_centerVertical="true"
@@ -37,8 +38,8 @@
     <RelativeLayout
             android:id="@+id/rl"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
+
             >
 
         <ImageView
@@ -51,6 +52,7 @@
                 android:id="@+id/clipView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 />
 
 

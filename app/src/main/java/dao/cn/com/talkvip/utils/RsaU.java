@@ -21,17 +21,17 @@ public class RsaU {
     private static final String ALGORITHM = "RSA";
 
 //沙箱
-    private static final String RSA_PUBLICE ="\n" +
+ /*   private static final String RSA_PUBLICE ="\n" +
             "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDiU9OAIZB+T/Nw+jmW1XJfhaju\n" +
             "tsgY2cmQicOB/3LXIhIRxWy555bEvxlhf/j0xGO3T95ZiXXnI75mW5DU6A2C9DQj\n" +
             "rHDUj7iq0V6yFiSLcuzyxedsFndEIV2ky7jdJKlZBoeybaFAni6ESFBB8tpELZ+S\n" +
-            "tk9P3K6nY9VgLS30gQIDAQAB";
+*//*            "tk9P3K6nY9VgLS30gQIDAQAB";*/
 //正式
-  /*  private static final String RSA_PUBLICE ="\n" +
+   private static final String RSA_PUBLICE ="\n" +
         "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDZ+I4cuH7qrgfOdGx4YG3zw8hR\n" +
         "XwJGZ3iPhIpxRwvYiZ2oJAPAQZeuDWuQxbEXl0KuYzDnLaGBBf8xTDP7S9JEV9D6\n" +
         "TqI433oxz7HFXz/0CfuI6Glp5LuyW5R5+OvyRBRJ6MHhR9PZvnmQx+LhXohkqtab\n" +
-        "a0+b0ejB8YXSsnV4qQIDAQAB";*/
+        "a0+b0ejB8YXSsnV4qQIDAQAB";
 
     /**
      * 得到公钥

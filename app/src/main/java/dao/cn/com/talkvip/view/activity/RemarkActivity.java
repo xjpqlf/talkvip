@@ -293,6 +293,7 @@ tq.setVisibility(View.GONE);
 
                      bc.setClickable(false);
                      save();
+                     setLb();
 
                  }else{
                      bc.setClickable(true);
@@ -325,6 +326,49 @@ tq.setVisibility(View.GONE);
 
     }
 
+    private void setLb() {
+
+        String token=SPUtils.getString(RemarkActivity.this,"token","");
+        DebugFlags.logD("备注id"+(mCheckBox.isChecked()?"1":"0"));
+        OkHttpUtils.post().url(Constants.BASE_URL+"/Comment/modifyState")
+                .addHeader("Authorization", "Bearer" + " " + token)
+
+                .addParams("continuous_call",(mCheckBox.isChecked()?"1":"0"))
+
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+
+                DebugFlags.logD("更改状态"+response);
+                try {
+                    JSONObject js=new JSONObject(response);
+
+                    String code=js.getString("code");
+                    if ("1030".equals(code)) {
+                        SPUtils.putString(RemarkActivity.this,"cc",(mCheckBox.isChecked()?"1":"0"));
+                    }
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
+
+
+
+
+
+    }
+
     private void save() {
     /*  String ss="1";
         if (!mCheckBox.isChecked()){
@@ -337,7 +381,7 @@ String token=SPUtils.getString(RemarkActivity.this,"token","");
                 .addHeader("Authorization", "Bearer" + " " + token)
                 .addParams("id",mInfos.getMsg().get(mPostion).getId())
                 .addParams("status",status)
-                .addParams("continuous_call",(mCheckBox.isChecked()?"1":"0"))
+
                 .addParams("note",mEt.getText().toString())
                 .build().execute(new StringCallback() {
             @Override
@@ -603,9 +647,9 @@ String token=SPUtils.getString(RemarkActivity.this,"token","");
 
         mA = rand.nextInt(10000000);
 
-       // String accountId ="1803c7cadc";
+        String accountId ="1803c7cadc";
         //沙箱id
-       String accountId = "b6458ae8a4";
+     //  String accountId = "b6458ae8a4";
         String timeStamp = i + str;
 
         String sign = accountId + timeStamp + order;

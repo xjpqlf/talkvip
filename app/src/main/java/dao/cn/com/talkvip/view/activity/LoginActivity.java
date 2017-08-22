@@ -178,7 +178,8 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onResponse(String response, int id) {
                         DebugFlags.logD("登录" + response);
-                        dialog.cancel();
+
+                      dialog.cancel();
                         try {
                             JSONObject json = new JSONObject(response);
 

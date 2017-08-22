@@ -76,7 +76,7 @@ public class SettingActivity  extends BaseActivity {
                 //跳转应用宝
                 launchAppDetail("dao.cn.com.talkvip","com.tencent.android.qqdownloader"
                         //跳转360市场
-              //  launchAppDetail("dao.cn.com.talkvip","com.tencent.android.qqdownloader"
+              //  launchAppDetail("dao.cn.com.talkvip","com.qihoo.appstore.activities.SearchDistributionActivity""
 
                 );
 

@@ -18,6 +18,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -54,6 +55,7 @@ public class HeadImageActivity extends Activity {
     private static final int RESULT_PICK = 101;
     private static final int CROP_PHOTO = 102;
     private ImageView mImageView;
+    private RelativeLayout mTxBack;
 
 
     @Override
@@ -70,9 +72,13 @@ public class HeadImageActivity extends Activity {
 
     protected void initHead() {
 
+
+
         mIv_b = (ImageView) findViewById(R.id.iv_back);
         mIv_e = (TextView) findViewById(R.id.tv_edit);
         mIsave = (TextView) findViewById(R.id.tv_saveimg);
+        mTxBack = (RelativeLayout) findViewById(R.id.rl_txback);
+
 
     }
 
@@ -89,7 +95,7 @@ DebugFlags.logD("图片地址"+SPUtils.getString(HeadImageActivity.this,"hurl","
 
 
 
-        mIv_b.setOnClickListener(new View.OnClickListener() {
+        mTxBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -143,7 +149,7 @@ DebugFlags.logD("图片地址"+SPUtils.getString(HeadImageActivity.this,"hurl","
             tempFile = (File) savedInstanceState.getSerializable("tempFile");
         }else{
             tempFile = new File(checkDirPath(Environment.getExternalStorageDirectory().getPath()+"/clipHeaderLikeQQ/image/"),
-                    System.currentTimeMillis() + ".jpg");
+                    System.currentTimeMillis() + ".png");
         }
     }
 
@@ -409,7 +415,7 @@ DebugFlags.logD("图片地址"+SPUtils.getString(HeadImageActivity.this,"hurl","
         if (tempFile!=null){
 
             OkHttpUtils.post()
-                  .addFile("userfile",  System.currentTimeMillis() + ".jpg", tempFile)
+                  .addFile("userfile",  System.currentTimeMillis() + ".png", tempFile)
 
                     .url(Constants.BASE_URL+"/Comment/uploadHead")
 

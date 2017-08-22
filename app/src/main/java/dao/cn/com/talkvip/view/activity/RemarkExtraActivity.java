@@ -275,7 +275,7 @@ public class RemarkExtraActivity extends BaseActivity implements View.OnClickLis
 
                   bc.setClickable(false);
                      save();
-
+                     setLb();
                  }else{
                      bc.setClickable(true);
                      ToastUtil.show(R.string.netstatu);
@@ -307,6 +307,48 @@ public class RemarkExtraActivity extends BaseActivity implements View.OnClickLis
 
     }
 
+    private void setLb() {
+
+        String token=SPUtils.getString(RemarkExtraActivity.this,"token","");
+        DebugFlags.logD("备注id"+(mCheckBox.isChecked()?"1":"0"));
+        OkHttpUtils.post().url(Constants.BASE_URL+"/Comment/modifyState")
+                .addHeader("Authorization", "Bearer" + " " + token)
+
+                .addParams("continuous_call",(mCheckBox.isChecked()?"1":"0"))
+
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+
+                DebugFlags.logD("更改状态"+response);
+                try {
+                    JSONObject js=new JSONObject(response);
+
+                    String code=js.getString("code");
+                    if ("1030".equals(code)) {
+                        SPUtils.putString(RemarkExtraActivity.this,"cc",(mCheckBox.isChecked()?"1":"0"));
+                    }
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
+
+
+
+
+
+    }
     private void save() {
 String token=SPUtils.getString(RemarkExtraActivity.this,"token","");
         DebugFlags.logD("备注id"+mInfos.getMsg().get(mPostion).getId()+"=="+status);
@@ -334,7 +376,7 @@ String token=SPUtils.getString(RemarkExtraActivity.this,"token","");
                     if ("success".equals(result)){
 
                        ToastUtil.showInCenter("保存成功");
-
+                        SPUtils.putString(RemarkExtraActivity.this,"cc", (mCheckBox.isChecked()?"1":"0"));
                         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmsss");
                         Date curDate = new Date(System.currentTimeMillis());
                         String strs = formatter.format(curDate);
@@ -579,9 +621,9 @@ String token=SPUtils.getString(RemarkExtraActivity.this,"token","");
 
         mA = rand.nextInt(10000000);
 
-        //   String accountId ="1803c7cadc";
+           String accountId ="1803c7cadc";
         //沙箱id
-        String accountId = "b6458ae8a4";
+       // String accountId = "b6458ae8a4";
         String timeStamp = i + str;
 
         String sign = accountId + timeStamp + order;

@@ -672,7 +672,7 @@ public class FollowUpFragment extends Fragment {
 
             @Override
             public void onResponse(String response, int id) {
-                DebugFlags.logD("数据" + response);
+                DebugFlags.logD("待更进" + response);
                 hiddenLoadingView();
 
                 try {
